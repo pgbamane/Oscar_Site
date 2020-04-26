@@ -30,21 +30,25 @@ ALLOWED_HOSTS = []
 # Application definition
 
 from oscar import get_core_apps
+
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+                     'django.contrib.admin',
+                     'django.contrib.auth',
+                     'django.contrib.contenttypes',
+                     'django.contrib.sessions',
+                     'django.contrib.messages',
+                     'django.contrib.staticfiles',
 
-    'django.contrib.sites',
-    'django.contrib.flatpages',
+                     'django.contrib.sites',
+                     'django.contrib.flatpages',
 
-    # 'compressor',
-    # 3rd-party apps that oscar depends on
-    'widget_tweaks',
-] + get_core_apps()
+                     # project apps
+                     # 'catalogue',
+
+                     'compressor',
+                     # 3rd-party apps that oscar depends on
+                     'widget_tweaks',
+                 ] + get_core_apps(['catalogue'])
 
 SITE_ID = 1
 
@@ -108,7 +112,7 @@ WSGI_APPLICATION = 'Oscar_Site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'eoscar_db',
+        'NAME': 'eos_db',
         'USER': 'pradnya',
         'PASSWORD': 'girish',
         # 'HOST': '',
