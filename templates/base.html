@@ -1,7 +1,8 @@
+{% load static %}
+{#{% load smart_load %}#}
+{% load category_tags %}
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -231,152 +232,7 @@
                     </div><!--  End .dropdown-card-dropdown -->
 
                     <nav class="main-nav">
-                        <ul class="menu sf-arrows sf-js-enabled" style="touch-action: auto;">
-                            <li><a href="#">Home</a></li>
-                            <li class="">
-                                <a href="javascript:void(0);" class="sf-with-ul">Categories</a>
-                                <div class="megamenu megamenu-fixed-width" style="width: 1100px; display: none;">
-                                    <div class="row">
-                                        <div class="col-lg-8">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="menu-title text-center">
-                                                        <a href="javascript:void(0);">Shop By category<span
-                                                                class="tip tip-new">New!</span></a>
-                                                    </div>
-                                                    <div class="row" style="max-height: 250px;overflow-y: scroll;">
-                                                        <div class="col-lg-6">
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Almond%20Oil&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Almond
-                                                                        Oil</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Audio%20Card&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Audio
-                                                                        Card</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Coconut%20Oil&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Coconut
-                                                                        Oil</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Flaxseed%20Oil&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Flaxseed
-                                                                        Oil</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Groundnut%20Oil&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Groundnut
-                                                                        Oil</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Jaggery%20Powder&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Jaggery
-                                                                        Powder</a></li>
-
-                                                            </ul>
-                                                        </div> <!-- End .col-lg-6-->
-                                                        <div class="col-lg-6">
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Rock%20Salt&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Rock
-                                                                        Salt</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Safflower%20Oil&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Safflower
-                                                                        Oil</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Sesame%20Oil&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Sesame
-                                                                        Oil</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Sugar%20Cane&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Sugar
-                                                                        Cane</a></li>
-                                                                <li>
-                                                                    <a href="https://www.orgatma.com/public/category.php?protype=Turmeric%20Powder&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Turmeric
-                                                                        Powder</a></li>
-                                                            </ul>
-                                                        </div>
-
-                                                    </div> <!-- End .col-lg-6-->
-
-                                                </div><!-- End .row -->
-                                            </div>
-                                        </div><!-- End .col-lg-8 -->
-
-                                        <div class="col-lg-4">
-                                            <div class="banner">
-
-                                                <a href="https://www.orgatma.com/public/index.php">
-                                                    <img src="{% static 'images/category.png' %}"
-                                                         width="250" height="250" alt="Menu banner">
-                                                </a>
-                                            </div><!-- End .banner -->
-                                        </div><!-- End .col-lg-4 -->
-
-                                    </div><!-- End .megamenu -->
-                                </div>
-                            </li>
-                            <li class="megamenu-container">
-                                <a href="javascript:void(0);" class="sf-with-ul">Products</a>
-                                <div class="megamenu" style="display: none;">
-                                    <div class="row">
-                                        <div class="col-lg-8">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="menu-title text-center">
-                                                        <a href="javascript:void(0);">Our Products</a>
-                                                    </div>
-                                                    <div class="row" style="max-height: 250px;
-    overflow-y: scroll;">
-                                                        <div class="col-lg-6">
-                                                            <ul>
-
-                                                                <li style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                                                                    <a href="https://www.orgatma.com/public/product.php?id=9&amp;name=almond-oil-100-ml&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Almond
-                                                                        Oil
-                                                                        100 ML</a></li>
-
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <ul>
-                                                                <li style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                                                                    <a href="https://www.orgatma.com/public/product.php?id=20&amp;name=gul-kali-450-gm&amp;token=80fa57e24ac234331133384d24b3f123e2c2ab5489cd026a157473987f828f52"><span
-                                                                            style="font-size:16px;">•</span>&nbsp;&nbsp;Gul
-                                                                        Kali 450
-                                                                        GM</a></li>
-
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- End .col-lg-12 -->
-
-                                            </div><!-- End .row -->
-                                        </div><!-- End .col-lg-8 -->
-                                        <div class="col-lg-4">
-                                            <div class="banner">
-                                                <a href="https://www.orgatma.com/public/index.php">
-                                                    <img src="{% static 'images/product.png' %}"
-                                                         width="250"
-                                                         height="250" alt="Menu banner" class="product-promo">
-                                                </a>
-                                            </div><!-- End .banner -->
-                                        </div><!-- End .col-lg-4 -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .megamenu -->
-                            </li>
-                            <li><a href="https://www.orgatma.com/public/specialoffers.php">Special Offers</a></li>
-                            <li><a href="https://www.orgatma.com/public/myorders.php">My Orders</a></li>
-                            <!-- <li><a href="./mypayments.php">My Payments</a></li>
-
-                             <li><a href="./returnandrefund.php">Returns & Refunds</a></li> -->
-                            <li><a href="https://www.orgatma.com/public/enquiry.php">Enquiry/Feedback</a></li>
-                            <li><a href="https://www.orgatma.com/public/about.php">About Us</a></li>
-
-                        </ul>
+                        {% include 'partials/nav_primary.html' %}
                     </nav>
                 </div><!-- End .header-bottom -->
             </div>
