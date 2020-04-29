@@ -1,0 +1,98 @@
+     
+    .bootstrap-touchspin-down
+    {
+        width:35px;
+        height:35px;
+        background:linear-gradient(#fff,#f9f9f9);
+        display:inline-block;
+        border:1px solid #c2c2c2;
+        cursor:pointer;
+        font-size:16px;
+        padding-top:1px;
+        line-height:1;
+        vertical-align:middle;
+    }
+
+    .bootstrap-touchspin-up
+    {
+        width:35px;
+        height:35px;
+        background:linear-gradient(#fff,#f9f9f9);
+        display:inline-block;
+        border:1px solid #c2c2c2;
+        cursor:pointer;
+        font-size:16px;
+        padding-top:1px;
+        line-height:1;
+        vertical-align:middle;
+    }
+
+    .abc
+    {
+        border:none;
+        width:100%;
+        font-size:14px;
+        font-weight:500;
+        vertical-align:middle;
+        text-align:center;
+        background:#fff;
+        outline:none;
+        display:inline-block;
+        padding:3px 6px;
+        width:calc(100% - 60px);
+        height:100%;
+        width:50px;
+        height:35px;
+        background-color:#fff;
+        border:1px solid #c2c2c2;
+        margin: 0px -5px;
+
+    }
+/* Featured Box */
+.featured-box {
+    background: #F5F5F5;
+    background: -webkit-linear-gradient( top , #FFF 1%, #fcfcfc 98%) repeat scroll 0 0 transparent;
+    background: linear-gradient(to bottom, #FFF 1%, #fcfcfc 98%) repeat scroll 0 0 transparent;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #DFDFDF;
+    border-left: 1px solid #ECECEC;
+    border-radius: 8px;
+    border-right: 1px solid #ECECEC;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    min-height: 100px;
+    position: relative;
+    text-align: center;
+    z-index: 1;
+}
+
+.featured-box h4 {
+    font-size: 1.3em;
+    font-weight: 400;
+    letter-spacing: -0.7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.featured-box .box-content {
+    border-radius: 8px;
+    border-top: 1px solid #CCC;
+    border-top-width: 4px;
+    padding: 30px 30px 10px 30px;
+    position: relative;
+    top: -1px;
+}
+
+.featured-box .learn-more {
+    display: block;
+    margin-top: 10px;
+}
+td {
+  
+  vertical-align: center;
+}
