@@ -1,6 +1,6 @@
 {% extends "oscar/layout.html" %}
-{#{% load staticfiles %}#}
-{#{% load promotion_tags %}#}
+{% load staticfiles %}
+{% load promotion_tags %}
 {##}
 {#{% block styles %}#}
 {#    {% comment %}#}
@@ -17,56 +17,188 @@
 {#    <link rel="stylesheet" type="text/css" href="{% static "oscar/css/datetimepicker.css" %}" />#}
 {#{% endblock %}#}
 {##}
-{#{% block layout %}#}
-{# Top-horizontal bar with account, notifictions, dashboard links #}
-{#    {% include "partials/nav_accounts.html" %}#}
-{##}
-{# Site logo/title, mini-basket, browse dropdown and searchbox #}
-{#    <header class="header container-fluid">#}
-{#        <div class="page_inner">#}
-{#            <div class="row">#}
-{#                {% include "partials/brand.html" %}#}
-{# Mini-basket wrapped in a block so some templates can now display it #}
-{#                {% block mini_basket %}{% include "partials/mini_basket.html" %}{% endblock %}#}
-{#            </div>#}
-{#        </div>#}
-{#        {% block navigation %}#}
-{#            {% include "partials/nav_primary.html" %}#}
-{#        {% endblock %}#}
-{#    </header>#}
-{##}
-{# Main content of page - other layout templates may override this block #}
-{#    {% block content_wrapper %}#}
-{#        <div class="container-fluid page">#}
-{#            <div class="page_inner">#}
-{#                {% block breadcrumbs %}{% endblock %}#}
-{#                {% block header %}#}
-{#                    <div class="page-header action">#}
-{#                        <h1>{% block headertext %}{% endblock %}</h1>#}
-{#                    </div>#}
-{#                {% endblock %}#}
-{#                {% include "partials/alert_messages.html" %}#}
-{#                {% block subnavigation %}{% endblock %}#}
-{#                <div class="content">#}
-{#                    {% block subheader %}{% endblock subheader %}#}
-{##}
-{# Render promotions #}
-{#                    <div id="promotions">#}
-{#                        {% for promotion in promotions_page %}#}
-{#                            {% render_promotion promotion %}#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{##}
-{# Div exists for AJAX updates to entire content section #}
-{#                    <div id="content_inner">{% block content %}{% endblock %}</div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    {% endblock %}#}
-{##}
-{#    {% include "partials/footer.html" %}#}
-{#{% endblock %}#}
-{##}
+{% block layout %}
+    {#    Top-horizontal bar with account, notifictions, dashboard links#}
+    {% include "oscar/partials/nav_accounts.html" %}
+
+    <header id="header" class="header">
+        {#    Site logo/title, mini-basket, browse dropdown and searchbox#}
+        {#        <header class="header container-fluid">#}
+        {#        <div class="page_inner">#}
+        {#            <div class="row">#}
+        {#                {% include "oscar/partials/brand.html" %}#}
+        {#                Mini-basket wrapped in a block so some templates can now display it#}
+        {#                {% block mini_basket %}{% include "oscar/partials/mini_basket.html" %}{% endblock %}#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        {% block navigation %}#}
+        {#            {% include "partials/nav_primary.html" %}#}
+        {#        {% endblock %}#}
+        {#    </header>#}
+        <div class="header-top">
+            <div class="container">
+                <div class="header-left header-dropdowns">
+                    <div class="header-dropdown dropdown-expanded">
+{#                        <a href="#">Support</a>#}
+                        <div class="header-menu">
+                            <ul>
+                                <li><a href="https://www.orgatma.com/public/faqs.php">FAQ'S </a></li>
+                                <li><a href="https://www.orgatma.com/public/support.php">Support</a></li>
+
+                                <li><a href="mailto:sales@orgatma.com?Subject=Hello%20again" target="_top">Email us</a>
+                                </li>
+                                <li><a href="tel:9325493217">Call us</a></li>
+                                <li><a class="compare" style="cursor:pointer;">Compare</a></li>
+                            </ul>
+                        </div><!-- End .header-menu -->
+                    </div>
+                </div>
+
+
+                <div class="header-center text-uppercase">
+                    <a href="javascript:void(0);">WELCOME
+                        {% if user.is_authenticated %}
+                            {{ user.first_name }}
+                        {% else %}
+                            GUEST
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="header-right">
+                    <div class="header-dropdown dropdown-expanded">
+                        <a href="index.php"><i class="icon-user"></i></a>
+                        <div class="header-menu text-uppercase">
+                            <ul>
+                                <li><a href="https://www.orgatma.com/public/my-account.php">MY ACCOUNT </a></li>
+                                <!-- <li><a href="dailydeals.php">DAILY DEAL</a></li> -->
+                                <li><a href="https://www.orgatma.com/public/wishlist.php">MY WISHLIST </a></li>
+                                <li><a href="">Register</a></li>
+                                <li>
+                                    {#                                {% if user.is_authenticated %}#}
+                                    {#                                    <a href="{% url 'account_logout' %}" class="login-link">LOG OUT</a>#}
+                                    {#                                {% else %}#}
+                                    {#                                <a href="{% url 'account_login' %}" class="logout-link">LOG IN</a>#}
+                                    <a href="" class="logout-link">LOG IN</a>
+                                    {#                            {% endif %}#}
+                                </li>
+                            </ul>
+                        </div><!-- End .header-menu -->
+                    </div><!-- End .header-dropown -->
+                </div><!-- End .header-right -->
+            </div><!-- End .container -->
+        </div><!-- End .header-top -->
+
+        <div class="header-middle">
+            <div class="container">
+                <div class="header-left">
+                    <a href="#" class="logo">
+                        <img src="{% static 'oscar/img/logo.png' %}" alt="Logo">
+                    </a>
+                </div><!-- End .header-left -->
+
+                <div class="header-center">
+                    <div class="header-search">
+                        {#                    <a href="./Orgatma Organic Science Pvt. Ltd._files/index.php" class="search-toggle"#}
+                        {#                       role="button"><i class="icon-magnifier"></i></a>#}
+                        <form action="https://www.orgatma.com/public/category.php" id="frm" method="get">
+                            <div class="header-search-wrapper">
+                                <label for="search"></label><input type="search" class="form-control" autocomplete="off"
+                                                                   name="proname" id="search"
+                                                                   placeholder="Search..." required="">
+
+                                <button class="btn" type="submit">
+                                    {#                                <i class="icon-magnifier"></i>#}
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </button>
+                            </div><!-- End .header-search-wrapper -->
+                        </form>
+                    </div><!-- End .header-search -->
+                </div><!-- End .headeer-center -->
+
+                <div class="header-right">
+                    {#                <button type="button" class="mobile-menu-toggler" data-toggle="collapse"#}
+                    {#                        data-target="#collapsibleNavbar">#}
+                    {#                    <i class="icon-menu"></i>#}
+                    {#                </button>#}
+                    <div class="header-contact">
+                        <span>Call us now</span>
+
+
+                        <a href="tel:9325493217"><strong>+91 9325493217</strong></a>
+                    </div><!-- End .header-contact -->
+
+                    <div class="dropdown cart-dropdown">
+                        <a href="#" class="dropdown-toggle"
+                           role="button">
+                            <span class="cart-count" id="mycount">0</span>
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <div class="dropdownmenu-wrapper">
+                                <div class="dropdown-cart-products">
+                                    <span id="prod"><div class="product-details "><h4
+                                            class="product-title text-center text-danger">Cart is Empty!</h4></div></span>
+                                    <!-- End .product -->
+                                </div><!-- End .cart-product -->
+
+                                <div class="dropdown-cart-total">
+                                    <span>Total</span>
+
+                                    <span class="cart-total-price" id="total_price">₹0.00</span>
+                                </div>
+                                <!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    <a href="https://www.orgatma.com/public/checkout-shipping.php" class="btn">View
+                                        Cart</a>
+                                    <a href="https://www.orgatma.com/public/logincheckout.php" class="btn">Checkout</a>
+                                </div>
+                                <!-- End .dropdown-cart-total -->
+                            </div>
+                            <!-- End .dropdownmenu-wrapper -->
+                        </div>
+                        <!-- End .dropdown-menu -->
+                    </div>
+                    <!-- End .dropdown -->
+                </div>
+                <!-- End .header-right -->
+            </div>
+            <!-- End .container -->
+        </div>
+        <!-- End .header-middle -->
+    </header>
+    {#    Main content of page - other layout templates may override this block#}
+    {% block content_wrapper %}
+        <div class="container-fluid page">
+            <div class="page_inner">
+                {% block breadcrumbs %}{% endblock %}
+                {% block header %}
+                    <div class="page-header action">
+                        <h1>{% block headertext %}{% endblock %}</h1>
+                    </div>
+                {% endblock %}
+                {% include "oscar/partials/alert_messages.html" %}
+                {% block subnavigation %}{% endblock %}
+                <div class="content">
+                    {% block subheader %}{% endblock subheader %}
+
+                    Render promotions
+                    <div id="promotions">
+                        {% for promotion in promotions_page %}
+                            {% render_promotion promotion %}
+                        {% endfor %}
+                    </div>
+
+                    Div exists for AJAX updates to entire content section
+                    <div id="content_inner">{% block content %}{% endblock %}</div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% include "oscar/partials/footer.html" %}
+{% endblock %}
+
 {#{% block cdn_scripts %}#}
 {#  {{ block.super }}#}
 {#  {% if use_less and debug %}#}
