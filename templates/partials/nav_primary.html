@@ -5,7 +5,7 @@
 
 {% block nav_dropdown %}
     <ul id="browse" class="nav navbar-nav">
-        <li><a href="{% url 'promotions:home' %}">{% trans "Home" %}</a></li>
+        <li class="active"><a href="{% url 'promotions:home' %}">{% trans "Home" %}</a></li>
         <li class="dropdown open">
             {#        <li> class="dropdown active {% if expand_dropdown %}open{% endif %}">#}
             <a href="#" class="dropdown-toggle" {% if not expand_dropdown %} data-toggle="dropdown"{% endif %}>
