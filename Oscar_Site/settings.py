@@ -79,6 +79,7 @@ HAYSTACK_CONNECTIONS = {
 ROOT_URLCONF = 'Oscar_Site.urls'
 
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
+
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', x)
 
 TEMPLATES = [
@@ -166,3 +167,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# OSCAR_USE_LESS = True
