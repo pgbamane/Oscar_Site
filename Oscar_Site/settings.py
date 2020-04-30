@@ -169,3 +169,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # OSCAR_USE_LESS = True
+TEMPLATE_DEBUG=True
+THUMBNAIL_DEBUG = True
