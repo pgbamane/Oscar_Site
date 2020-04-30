@@ -79,7 +79,6 @@ HAYSTACK_CONNECTIONS = {
 ROOT_URLCONF = 'Oscar_Site.urls'
 
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
-
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', x)
 
 TEMPLATES = [
@@ -87,7 +86,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             location('templates'),
-            # OSCAR_MAIN_TEMPLATE_DIR
+            OSCAR_MAIN_TEMPLATE_DIR,
         ],
         'APP_DIRS': True,
         'OPTIONS': {
