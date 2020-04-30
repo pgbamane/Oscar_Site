@@ -8,17 +8,18 @@
         <li class="{% if request.resolver_match.url_name == 'home' %} active {% endif %}">
             <a href="{% url 'promotions:home' %}">{% trans "Home" %}</a>
         </li>
-        <li class="dropdown open">
+        <li class="dropdown">
             {#        <li> class="dropdown active {% if expand_dropdown %}open{% endif %}">#}
-            <a href="#" class="dropdown-toggle" {% if not expand_dropdown %} data-toggle="dropdown"{% endif %}>
+            {#            <a href="#" class="dropdown-toggle" {% if not expand_dropdown %} data-toggle="dropdown"{% endif %}>#}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 {% trans "Categories" %}
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu" data-navigation="dropdown-menu">
                 {% category_tree depth=2 as tree_categories %}
-                <li><a tabindex="-1" href="{% url 'catalogue:index' %}">{% trans "All products" %}</a></li>
+                {#                <li><a tabindex="-1" href="{% url 'catalogue:index' %}">{% trans "All products" %}</a></li>#}
                 {% if tree_categories %}
-                    <li class="divider"></li>
+                    {#                    <li class="divider"></li>#}
                     {% for tree_category, info in tree_categories %}
                         {% if info.has_children %}
                             <li class="dropdown-submenu">
@@ -27,17 +28,19 @@
                         {% else %}
                             <li><a tabindex="-1"
                                    href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}</a></li>
+                            <li class="divider"></li>
                         {% endif %}
 
                     {% for close in info.num_to_close %}
                         </ul></li>
+                        <li class="divider"></li>
                     {% endfor %}
                     {% endfor %}
                 {% endif %}
-                <li class="divider"></li>
-                {% block nav_dropdown_extra_items %}
-                    <li><a href="{% url 'offer:list' %}">{% trans "Offers" %}</a></li>
-                {% endblock %}
+                {#                <li class="divider"></li>#}
+                {#                {% block nav_dropdown_extra_items %}#}
+                {#                    <li><a href="{% url 'offer:list' %}">{% trans "Offers" %}</a></li>#}
+                {#                {% endblock %}#}
             </ul>
         </li>
         {% block nav_extra %}
