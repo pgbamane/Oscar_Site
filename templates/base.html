@@ -1,2 +1,7 @@
 {#base.html#}
 {% extends 'oscar/base.html' %}
+{% load static %}
+
+{% block extrastyles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'oscar/css/Green.min.css' %}">
+{% endblock extrastyles %}
