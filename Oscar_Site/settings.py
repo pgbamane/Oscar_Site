@@ -64,8 +64,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '',
-            'secret': '',
+            'client_id': '314332771646-p85nrbtk6dl1ocrqpm2uaomf6omsd61j.apps.googleusercontent.com',
+            'secret': 'UGpFdUhNphd2jKSa3KSthCo3',
             'key': ''
         }
     }
@@ -222,5 +222,5 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'home'
