@@ -42,15 +42,34 @@ INSTALLED_APPS = [
                      'django.contrib.sites',
                      'django.contrib.flatpages',
 
-                     # project apps
-                     # 'catalogue',
-
                      'compressor',
                      # 3rd-party apps that oscar depends on
                      'widget_tweaks',
+
+                     'allauth',
+                     'allauth.account',
+                     'allauth.socialaccount',
+                     # ... include the providers you want to enable:
+                     'allauth.socialaccount.providers.google',
+                     # 'allauth.socialaccount.providers.facebook',
+
                  ] + get_core_apps(['catalogue'])
 
 SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '',
+            'secret': '',
+            'key': ''
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,8 +85,14 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'oscar.apps.customer.auth_backends.EmailBackend',
+    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
+
+    'oscar.apps.customer.auth_backends.EmailBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
 )
 
 HAYSTACK_CONNECTIONS = {
@@ -93,15 +118,18 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                # `allauth` needs this from django
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
+                # oscar setting
                 'oscar.apps.search.context_processors.search_form',
                 'oscar.apps.promotions.context_processors.promotions',
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.customer.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
+
             ],
         },
     },
@@ -169,5 +197,30 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # OSCAR_USE_LESS = True
-TEMPLATE_DEBUG=True
+TEMPLATE_DEBUG = True
 THUMBNAIL_DEBUG = True
+
+# allauth setting
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
+
+# ACCOUNT_SIGNUP_REDIRECT = 'users_app.utils.custom_signup_redirect'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+SOCIALACCOUNT_AUTO_SIGNUP = False
+
+ACCOUNT_FORMS = {
+    'signup': 'users_app.forms.signup_form.SignupForm',
+}
+
+ACCOUNT_ADAPTER = 'users_app.adapters.signup_adapter.SignupAdapter'
+
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
