@@ -45,6 +45,7 @@ INSTALLED_APPS = [
                      'compressor',
                      # 3rd-party apps that oscar depends on
                      'widget_tweaks',
+                     'crispy_forms',
 
                      'allauth',
                      'allauth.account',
@@ -54,11 +55,10 @@ INSTALLED_APPS = [
                      # 'allauth.socialaccount.providers.facebook',
 
                      # 'customer',
-
-                     # 'crispy_forms',
+                     'apps.user',
 
                  ] + get_core_apps(['apps.catalogue',
-                                    'apps.customer',
+                                    # 'apps.customer',
                                     ])
 
 SITE_ID = 1
@@ -67,7 +67,7 @@ SITE_ID = 1
 # CRISPY_FAIL_SILENTLY = not DEBUG
 
 # auth user model setting
-AUTH_USER_MODEL = 'customer.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -155,7 +155,7 @@ WSGI_APPLICATION = 'Oscar_Site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'eoscar_db',
+        'NAME': 'eoscar_site_db',
         'USER': 'pradnya',
         'PASSWORD': 'girish',
         # 'HOST': '',
@@ -224,11 +224,11 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
-ACCOUNT_FORMS = {
-    'signup': 'users_app.forms.signup_form.SignupForm',
-}
+# ACCOUNT_FORMS = {
+#     'signup': 'users_app.forms.signup_form.SignupForm',
+# }
 
-ACCOUNT_ADAPTER = 'users_app.adapters.signup_adapter.SignupAdapter'
+# ACCOUNT_ADAPTER = 'users_app.adapters.signup_adapter.SignupAdapter'
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
