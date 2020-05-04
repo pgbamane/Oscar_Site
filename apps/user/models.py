@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 # from oscar.apps.customer.models import *  # noqa isort:skip
-from oscar.apps.customer.abstract_models import AbstractUser
+from oscar.apps.customer.abstract_models import AbstractUser, UserManager as oscar_user_manager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -10,6 +10,18 @@ GENDER_OPTIONS = [
     ('female', 'Female'),
     ('male', 'Male')
 ]
+
+
+class UserManager(oscar_user_manager):
+    """oscar_user_manager has create_user and create_super_user, here do create_staff_user"""
+
+    # def create_staffuser(self, phone_number, email, password=None, **extra_fields):
+    def create_staffuser(self, email, password=None, **extra_fields):
+        user = self.create_user(email, password, **extra_fields)
+        user.is_active = True
+        user.is_staff = True
+        user.save(using=self._db)
+        return user
 
 
 class User(AbstractUser):
