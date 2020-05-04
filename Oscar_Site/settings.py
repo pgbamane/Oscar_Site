@@ -53,11 +53,11 @@ INSTALLED_APPS = [
                      'allauth.socialaccount.providers.google',
                      # 'allauth.socialaccount.providers.facebook',
 
-                     'customer',
+                     # 'customer',
 
                      # 'crispy_forms',
 
-                 ] + get_core_apps(['catalogue'])
+                 ] + get_core_apps(['apps.catalogue', 'apps.customer'])
 
 SITE_ID = 1
 
