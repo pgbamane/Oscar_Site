@@ -9,7 +9,7 @@
         <li class="{% if request.resolver_match.url_name == 'home' %} active {% endif %}">
             <a href="{% url 'promotions:home' %}">{% trans "Home" %}</a>
         </li>
-        <li class="dropdown">
+        <li class="dropdown {% if request.resolver_match.url_name == 'category' %} active {% endif %}">
             {#        <li> class="dropdown active {% if expand_dropdown %}open{% endif %}">#}
             {#            <a href="#" class="dropdown-toggle" {% if not expand_dropdown %} data-toggle="dropdown"{% endif %}>#}
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
