@@ -224,9 +224,9 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
-# ACCOUNT_FORMS = {
-#     'signup': 'users_app.forms.signup_form.SignupForm',
-# }
+ACCOUNT_FORMS = {
+    'signup': 'user.forms.signup_form.SignupForm',
+}
 
 # ACCOUNT_ADAPTER = 'users_app.adapters.signup_adapter.SignupAdapter'
 
