@@ -53,9 +53,19 @@ INSTALLED_APPS = [
                      'allauth.socialaccount.providers.google',
                      # 'allauth.socialaccount.providers.facebook',
 
+                     'customer',
+
+                     # 'crispy_forms',
+
                  ] + get_core_apps(['catalogue'])
 
 SITE_ID = 1
+
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# CRISPY_FAIL_SILENTLY = not DEBUG
+
+# auth user model setting
+AUTH_USER_MODEL = 'customer.User'
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
