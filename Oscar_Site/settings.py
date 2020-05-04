@@ -63,8 +63,8 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-# CRISPY_TEMPLATE_PACK = 'bootstrap4'
-# CRISPY_FAIL_SILENTLY = not DEBUG
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_FAIL_SILENTLY = not DEBUG
 
 # auth user model setting
 AUTH_USER_MODEL = 'user.User'
