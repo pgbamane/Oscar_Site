@@ -225,10 +225,10 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
 ACCOUNT_FORMS = {
-    'signup': 'user.forms.signup_form.SignupForm',
+    'signup': 'apps.user.forms.signup_form.SignupForm',
 }
 
-ACCOUNT_ADAPTER = 'user.adapters.signup_adapter.SignupAdapter'
+ACCOUNT_ADAPTER = 'apps.user.adapters.signup_adapter.SignupAdapter'
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
