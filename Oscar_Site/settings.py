@@ -228,7 +228,7 @@ ACCOUNT_FORMS = {
     'signup': 'user.forms.signup_form.SignupForm',
 }
 
-# ACCOUNT_ADAPTER = 'users_app.adapters.signup_adapter.SignupAdapter'
+ACCOUNT_ADAPTER = 'user.adapters.signup_adapter.SignupAdapter'
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
