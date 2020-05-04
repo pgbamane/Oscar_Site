@@ -17,5 +17,12 @@ urlpatterns = \
         path('', application.urls),
 
         # all-auth urls
-        # url(r'^accounts/', include('allauth.urls')),
+        # path('accounts/signup/', views.SignupView.as_view(), name="account_signup"),
+        # path('accounts/login/', LoginView.as_view(), name="account_login"),
+        # path('accounts/logout/', LogoutView.as_view(), name="account_logout"),
+        # path('accounts/inactive', AccountInactiveView.as_view(), name="account_inactive"),
+        # path('accounts/socialaccount_signup', SignupView.as_view(), name='socialaccount_signup'),
+        # # path('accounts/socialaccount_signup', SignupView.as_view(), name='socialaccount_signup'),
+        # path('accounts/', include(default_urlpatterns(GoogleProvider))),
+        path('accounts/', include('allauth.urls')),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
