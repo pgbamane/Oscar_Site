@@ -57,7 +57,7 @@ INSTALLED_APPS = [
 
                      # 'crispy_forms',
 
-                 ] + get_core_apps(['apps.catalogue', 'apps.customer'])
+                 ] + get_core_apps(['apps.catalogue', ])
 
 SITE_ID = 1
 
@@ -65,7 +65,7 @@ SITE_ID = 1
 # CRISPY_FAIL_SILENTLY = not DEBUG
 
 # auth user model setting
-AUTH_USER_MODEL = 'customer.User'
+# AUTH_USER_MODEL = 'customer.User'
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -153,7 +153,7 @@ WSGI_APPLICATION = 'Oscar_Site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'eos_db',
+        'NAME': 'eoscar_db',
         'USER': 'pradnya',
         'PASSWORD': 'girish',
         # 'HOST': '',
