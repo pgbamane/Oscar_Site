@@ -67,7 +67,7 @@ SITE_ID = 1
 # CRISPY_FAIL_SILENTLY = not DEBUG
 
 # auth user model setting
-# AUTH_USER_MODEL = 'customer.User'
+AUTH_USER_MODEL = 'customer.User'
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
