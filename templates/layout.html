@@ -76,7 +76,7 @@
                                 <li><a href="{% url 'account_signup' %}">Register</a></li>
                                 <li>
                                     {% if user.is_authenticated %}
-                                        <a href="{% url 'account_logout' %}" class="login-link">LOG OUT</a>
+                                        <a href="{% url 'auth_account_logout' %}" class="login-link">LOG OUT</a>
                                     {% else %}
                                         <a href="{% url 'auth_account_login' %}" class="logout-link">LOG IN</a>
                                         {#                                    <a href="" class="logout-link">LOG IN</a>#}
