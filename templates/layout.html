@@ -73,7 +73,7 @@
                                 <li><a href="https://www.orgatma.com/public/my-account.php">MY ACCOUNT </a></li>
                                 <!-- <li><a href="dailydeals.php">DAILY DEAL</a></li> -->
                                 <li><a href="https://www.orgatma.com/public/wishlist.php">MY WISHLIST </a></li>
-                                <li><a href='{% url "account_signup" %}'>Register</a></li>
+                                <li><a href="{% url 'account_signup' %}">Register</a></li>
                                 <li>
                                     {#                                {% if user.is_authenticated %}#}
                                     {#                                    <a href="{% url 'account_logout' %}" class="login-link">LOG OUT</a>#}
@@ -242,3 +242,14 @@ transition: all .3s;">
 {#    {{ block.super }}#}
 {#    oscar.init();#}
 {#{% endblock %}#}
+{% block styles %}
+    {{ block.super }}
+    <!-- Twitter Bootstrap -->
+    <script type="text/javascript" src="{% static "oscar/js/bootstrap3/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "oscar/js/jquery/jquery.min.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'oscar/css/Green.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'oscar/fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static "oscar/css/styles.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "oscar/css/bootstrap-social.css" %}"/>
+    {#    <link>#}
+{% endblock styles %}
