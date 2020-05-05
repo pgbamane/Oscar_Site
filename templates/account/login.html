@@ -1,8 +1,17 @@
-{% extends 'base.html' %}
+{% extends "layout.html" %}
+{% load static %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Signup' %} | {{ block.super }}
+{% endblock %}
 
 {% block content %}
-    {% load crispy_forms_tags %}
-    {% load crispy_forms_filters %}
+    {#    {% load crispy_forms_tags %}#}
+    {#    {% load crispy_forms_filters %}#}
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4" id="form-div" style="background-color: #b5c4f2;
