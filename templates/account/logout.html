@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Signup' %} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Sign Out" %}</h1>
+
+    <p>{% trans 'Are you sure you want to sign out?' %}</p>
+
+    <form method="post" action="{% url 'auth_account_logout' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <input type="submit" name="submit" value="Sign Out" class="btn-block btn btn-danger" style="width: 30px;">
+        {#            {% trans 'Sign Out' %}</input>#}
+    </form>
+{% endblock content %}
