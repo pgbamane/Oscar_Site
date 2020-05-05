@@ -15,7 +15,7 @@ class SignupView(AllAuthSignupView):
     template_name = "account/signup.html"
     form_class = SignupForm
     redirect_field_name = None
-    success_url = reverse_lazy('account_login')
+    success_url = reverse_lazy('auth_account_login')
 
     # def get_form_class(self):
     #     return get_form_class(settings.FORMS, 'signup', self.form_class)
