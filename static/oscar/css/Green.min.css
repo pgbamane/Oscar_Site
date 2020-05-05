@@ -724,3 +724,6 @@ b, strong {
 /*    line-height: 1;*/
 /*    transition: all .3s;*/
 /*}*/
+strong{
+    color: orangered;
+}
