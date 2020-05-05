@@ -167,17 +167,18 @@ class SignupForm(sign_up_form):
         helper.form_action = reverse('account_signup')
         # helper.field_class = "col-md-6"
         # helper.label_class = "col-md-6"
+        # helper.
         helper.layout = Layout(
             Row(
-                Column('first_name', css_class="form-group col-sm-5 mb-0 input-sm"),
-                Column('last_name', css_class='form-group col-sm-5 mb-0 input-sm'),
+                Column('first_name', css_class="form-group col-sm-5 mb-0"),
+                Column('last_name', css_class='form-group col-sm-5 mb-0'),
                 css_class='form-row'
             ),
-            InlineRadios('gender', css_class="form-group "),
-            Field('address', css_class="form-group col-md-10 mb-0"),
+            InlineRadios('gender', css_class="form-group"),
+            Field('address', css_class="form-group col-md-9 mb-0"),
             Row(
-                Column('locality', css_class="form-group col-sm-5 mb-0 input-sm"),
-                Column('state', css_class='form-group col-sm-5 mb-0 input-sm'),
+                Column('locality', css_class="form-group col-sm-5 mb-0"),
+                Column('state', css_class='form-group col-sm-5 mb-0'),
                 css_class='form-row'
             ),
             # Field('locality'),
@@ -194,7 +195,7 @@ class SignupForm(sign_up_form):
             Field('password2', css_class="form-group col-md-10 mb-0"),
             # Column('city'),
             Row(
-                Submit('submit', 'Sign Up', css_class="form-group btn col-md-offset-4 col-md-2 mb-0",
+                Submit('submit', 'Sign Up', css_class="form-group btn col-md-offset-2 col-md-2 mb-0",
                        css_id='sign-up-id'),
                 Reset('reset', 'Reset', css_class='form-group btn col-md-offset-2 col-md-2 mb-0 btn-danger')
             )
