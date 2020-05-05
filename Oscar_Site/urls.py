@@ -24,7 +24,7 @@ urlpatterns = \
 
         # all-auth urls
         path('accounts/signup/', views.SignupView.as_view(), name="account_signup"),
-        path('accounts/login/', LoginView.as_view(), name="account_login"),
+        path('auth_accounts/login/', LoginView.as_view(), name="auth_account_login"),
         path('accounts/logout/', LogoutView.as_view(), name="account_logout"),
         path('accounts/inactive', AccountInactiveView.as_view(), name="account_inactive"),
         path('accounts/socialaccount_signup', SignupView.as_view(), name='socialaccount_signup'),
