@@ -23,11 +23,11 @@ urlpatterns = \
         path('', application.urls),
 
         # all-auth urls
-        path('accounts/signup/', views.SignupView.as_view(), name="account_signup"),
-        path('auth_accounts/login/', LoginView.as_view(), name="auth_account_login"),
+        path('auth_accounts/signup/', views.SignupView.as_view(), name="account_signup"),
+        path('auth_accounts/login/', LoginView.as_view(), name="account_login"),
         path('auth_accounts/logout/', LogoutView.as_view(
             template_name="account/logout.html"),
-             name="auth_account_logout"),
+             name="account_logout"),
         path('accounts/inactive', AccountInactiveView.as_view(), name="account_inactive"),
         path('accounts/socialaccount_signup', SignupView.as_view(), name='socialaccount_signup'),
         # # path('accounts/socialaccount_signup', SignupView.as_view(), name='socialaccount_signup'),
