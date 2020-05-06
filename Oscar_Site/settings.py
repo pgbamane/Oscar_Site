@@ -222,6 +222,10 @@ ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
 # ACCOUNT_SIGNUP_REDIRECT = 'users_app.utils.custom_signup_redirect'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+# not working auto_signup, if the user already signed in Google account,
+# then also show Google form to take credentials, but its auto Signing same as AUto_Signup=True
+# if the True, takes username and password provided by Google, and skips Local Signup Form fillup
+# if False, Local Signup Form should be filled again
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
 ACCOUNT_FORMS = {
@@ -234,7 +238,9 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'home'
+from django.urls import reverse_lazy
+
+LOGIN_REDIRECT_URL = reverse_lazy('promotions:home')
+LOGOUT_REDIRECT_URL = reverse_lazy('promotions:home')
 
 # OSCAR_USE_LESS = True
