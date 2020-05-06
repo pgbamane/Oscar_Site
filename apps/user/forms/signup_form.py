@@ -162,6 +162,7 @@ class SignupForm(sign_up_form):
     @property
     def helper(self):
         helper = FormHelper()
+
         helper.form_id = 'id-Sign-Up-Form'
         helper.form_method = 'POST'
         helper.form_action = reverse('account_signup')
