@@ -4,7 +4,7 @@ import json
 from django.test import Client, RequestFactory
 from django.urls import reverse
 
-from users_app.forms.signup_form import SignupForm
+from ..forms.signup_form import SignupForm
 
 
 class SignupViewTestCase(test.TestCase):
