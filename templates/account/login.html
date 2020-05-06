@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-4" id="form-div" style="background-color: #b5c4f2;
             padding: 45px; border: 1px solid #286090;border-radius: 10px; padding-bottom: 10px;">
-                <form action="{% url 'auth_account_login' %}" method="POST" class="form-horizontal">
+                <form action="{% url 'account_login' %}" method="POST" class="form-horizontal">
                     {% csrf_token %}
                     {#                    {% crispy form %}#}
                     {{ form|crispy }}
