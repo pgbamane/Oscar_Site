@@ -10,12 +10,6 @@ WEIGHT_UNIT_CHOICES = (
     # ('none', None),
 )
 
-PRICING_OPTIONS = (
-    ('PREMIUM', 'Premium'),
-    ('GOLD', 'Gold'),
-    ('', 'None'),
-)
-
 
 class Product(AbstractProduct):
     # id = models.AutoField(primary_key=True, )
@@ -41,12 +35,6 @@ class Product(AbstractProduct):
 
     # is_active = models.BooleanField(default=True,
     #                                 help_text=_("Is it ready to sale or not ?."))
-    pricing_strategy = models.CharField(max_length=100,
-                                        default=PRICING_OPTIONS[2][0],
-                                        choices=PRICING_OPTIONS,
-                                        blank=True,
-                                        help_text=_(
-                                            "Specify Premium or Gold for child products. Not nessasary for Parent"))
     tag = models.CharField(max_length=100,
                            default='',
                            blank=True,
