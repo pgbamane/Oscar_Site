@@ -47,6 +47,8 @@ INSTALLED_APPS = [
                      'widget_tweaks',
                      'crispy_forms',
 
+                     'smart_load_tag',
+
                      'allauth',
                      'allauth.account',
                      'allauth.socialaccount',
@@ -55,6 +57,7 @@ INSTALLED_APPS = [
                      # 'allauth.socialaccount.providers.facebook',
 
                      # 'customer',
+                     # template tags app
                      'apps.user',
 
                  ] + get_core_apps(['apps.catalogue',
