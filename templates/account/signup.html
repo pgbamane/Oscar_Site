@@ -80,34 +80,6 @@
                         console.log("Type of responseJSon html : " + typeof (form_html_page_str));
                         console.log("Signup Form Page(Obj) : " + form_html_page_str);
 
-                        {#var support = (function () {#}
-                        {#    if (!window.DOMParser) return false;#}
-                        {#    var parser = new DOMParser();#}
-                        {#    try {#}
-                        {#        parser.parseFromString('x', 'text/html');#}
-                        {#    } catch (err) {#}
-                        {#        return false;#}
-                        {#    }#}
-                        {#    return true;#}
-                        {# })();#}
-                        {##}
-                        {#var stringToHTML = function (str) {#}
-                        {#    // If DOMParser is supported, use it#}
-                        {#    if (support) {#}
-                        {#        var parser = new DOMParser();#}
-                        {#        var doc = parser.parseFromString(str, 'text/html');#}
-                        {#        return doc.body;#}
-                        {#    }#}
-                        {#    // Otherwise, fallback to old-school method#}
-                        {#    var dom = document.createElement('div');#}
-                        {#    dom.innerHTML = str;#}
-                        {#    return dom;#}
-                        {# };#}
-                        {#var form_page_body = stringToHTML(form_html_page_str);#}
-                        {##}
-                        {#var form_element = $(form_page_body).find('form-div');#}
-                        {#console.log("Form of html Page:", form_element);#}
-
                         var $form_html_page = $(form_html_page_str);
                         var form_html = $form_html_page.find('#form-div');
                         console.log("Form HTML(Jquery Obj) : " + form_html);
