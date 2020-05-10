@@ -15,7 +15,7 @@ class StockRecord(AbstractStockRecord):
                                         choices=PRICING_OPTIONS,
                                         blank=True,
                                         help_text=_(
-                                            "Specify Premium or Gold for child products. Not nessasary for Parent"))
+                                            "Specify Premium or Gold for child products. Not neccessary for Parent"))
 
 
 from oscar.apps.partner.models import *  # noqa isort:skip

@@ -10,7 +10,9 @@
             <div class="image_container">
                 {% with image=product.primary_image %}
                     {% thumbnail image.original "x155" upscale=False as thumb %}
-                    <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="thumbnail"></a>
+                        <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}"
+                                                                      alt="{{ product.get_title }}"
+                                                                      class="thumbnail"></a>
                     {% endthumbnail %}
                 {% endwith %}
             </div>
@@ -29,7 +31,18 @@
         {% endblock %}
 
         {% block product_title %}
-            <h3><a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">{{ product.get_title|truncatewords:4 }}</a></h3>
+            <h3>
+                <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
+                    {{ product.get_title|truncatewords:4 }}</a>
+                {% include "catalogue/partials/stock_record_pricing_strategy.html" %}
+            </h3>
+            {% if product.tag %}
+                <p style="margin-top: 8px;">
+                    <i class="fa fa-certificate" aria-hidden="true" style="color: green;">
+                        <span style="font-size: initial;color: darkgreen;}"> {{ product.tag }}</span>
+                    </i>
+                </p>
+            {% endif %}
         {% endblock %}
 
         {% block product_price %}

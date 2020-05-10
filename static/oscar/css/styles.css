@@ -10030,7 +10030,8 @@ ul.row {
 }
 
 .product_pod {
-    height: 370px;
+    /*height: 370px;*/
+    height: 390px;
     overflow: hidden;
     text-align: center;
     margin: 20px 0;
@@ -10154,6 +10155,7 @@ a:hover .thumbnail {
 
 .product_pod .price_color {
     margin-top: 0;
+    padding-top: 8px;
 }
 
 .es-carousel .price_color {
