@@ -47,7 +47,7 @@ INSTALLED_APPS = [
                      'widget_tweaks',
                      'crispy_forms',
 
-                     'smart_load_tag',
+                     # 'smart_load_tag',
 
                      'allauth',
                      'allauth.account',
