@@ -247,4 +247,7 @@ from django.urls import reverse_lazy
 LOGIN_REDIRECT_URL = OSCAR_HOMEPAGE
 LOGOUT_REDIRECT_URL = OSCAR_HOMEPAGE
 
+# Oscar Setting goes here
 # OSCAR_USE_LESS = True
+OSCAR_SHOP_NAME = 'Orgatma'
+OSCAR_SHOP_TAGLINE = 'A site for shopping Organic Foods to customer'
