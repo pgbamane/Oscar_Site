@@ -251,3 +251,5 @@ LOGOUT_REDIRECT_URL = OSCAR_HOMEPAGE
 # OSCAR_USE_LESS = True
 OSCAR_SHOP_NAME = 'Orgatma'
 OSCAR_SHOP_TAGLINE = 'A site for shopping Organic Foods to customer'
+
+OSCAR_DEFAULT_CURRENCY = 'INR'
