@@ -244,7 +244,7 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 
 from django.urls import reverse_lazy
 
-LOGIN_REDIRECT_URL = reverse_lazy('promotions:home')
-LOGOUT_REDIRECT_URL = reverse_lazy('promotions:home')
+LOGIN_REDIRECT_URL = OSCAR_HOMEPAGE
+LOGOUT_REDIRECT_URL = OSCAR_HOMEPAGE
 
 # OSCAR_USE_LESS = True
