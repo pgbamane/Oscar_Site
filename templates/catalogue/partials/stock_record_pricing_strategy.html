@@ -4,10 +4,10 @@
 
 {% purchase_info_for_product request product as session %}
 
-{% if session.stockrecord.exists %}
-    {% if session.stockrecord.pricing_strategy %}
-        <span style="background-color: crimson;padding: 6.1px;color: wheat;font-size: smaller;">
-                {{ session.stockrecord.pricing_strategy }}
+{% if session.pricing_strategy %}
+    {#    {% if session.stpricing_strategy %}#}
+    <span style="background-color: crimson;padding: 3.1px;color: wheat;font-size: smaller;">
+                {{ session.pricing_strategy }}
             </span>
-    {% endif %}
+    {#    {% endif %}#}
 {% endif %}
