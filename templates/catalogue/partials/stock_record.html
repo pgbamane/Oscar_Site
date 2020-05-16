@@ -4,6 +4,15 @@
 
 {% purchase_info_for_product request product as session %}
 
+
+{#{% if session.pricing_strategy %}#}
+{#    <p>#}
+{#        <span style="background-color: crimson;padding: 3.1px;color: wheat;font-size: smaller;">#}
+{#                {{ session.pricing_strategy }}#}
+{#            </span>#}
+{#    </p>#}
+{#{% endif %}#}
+
 {% if session.price.exists %}
     {% if session.price.excl_tax == 0 %}
         <p class="price_color">{% trans "Free" %}</p>
