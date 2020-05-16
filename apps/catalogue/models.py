@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from oscar.apps.catalogue.abstract_models import AbstractProduct
+# from ..catalogue.managers import MyProductManager, MyBrowsableProductManager
 
 WEIGHT_UNIT_CHOICES = (
     ('kilogram', 'Kg'),
@@ -39,6 +40,9 @@ class Product(AbstractProduct):
                            default='',
                            blank=True,
                            help_text=_('Specify tag for child product only. Ex. Certified Organic'))
+
+    # objects = MyProductManager()
+    # browsable = MyBrowsableProductManager()
 
 
 from oscar.apps.catalogue.models import *

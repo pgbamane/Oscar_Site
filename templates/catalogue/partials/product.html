@@ -34,13 +34,13 @@
             <h3>
                 <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
                     {{ product.get_title|truncatewords:4 }}</a>
-                {% include "catalogue/partials/stock_record_pricing_strategy.html" %}
             </h3>
             {% if product.tag %}
                 <p style="margin-top: 8px;">
                     <i class="fa fa-certificate" aria-hidden="true" style="color: green;">
                         <span style="font-size: initial;color: darkgreen;}"> {{ product.tag }}</span>
                     </i>
+                    {% include "catalogue/partials/stock_record_pricing_strategy.html" %}
                 </p>
             {% endif %}
         {% endblock %}
