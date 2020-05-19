@@ -130,7 +130,8 @@
                     </div><!-- End .header-contact -->
 
                     <div class="dropdown cart-dropdown">
-                        <a href="#" class="dropdown-toggle" role="button">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="true">
                             <i class="fa fa-shopping-cart fa-4x" style="color: black;"></i>
 
                             {% if not request.basket.is_empty %}
@@ -154,35 +155,52 @@
                             {#                            glyphicon glyphicon-chevron-down#}
                             <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"
                                   style="display: inline-block;font-size: 1.4rem;position: absolute;right: 0;top: 1rem;margin: 0;width: auto;height: auto;color: #fff;border: 0;line-height: 1;
-transition: all .3s;">
-
+                            transition: all .3s;">
                             </span>
+                            {#                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">#}
+                            {#                            <span class="caret"></span>#}
+                            {#                            </button>#}
                         </a>
 
-                        <div class="dropdown-menu">
-                            <div class="dropdownmenu-wrapper">
-                                <div class="dropdown-cart-products">
-                                    <span id="prod"><div class="product-details "><h4
-                                            class="product-title text-center text-danger">Cart is Empty!</h4></div></span>
-                                    <!-- End .product -->
-                                </div><!-- End .cart-product -->
 
-                                <div class="dropdown-cart-total">
-                                    <span>Total</span>
-
-                                    <span class="cart-total-price" id="total_price">₹0.00</span>
-                                </div>
-                                <!-- End .dropdown-cart-total -->
-
-                                <div class="dropdown-cart-action">
-                                    <a href="https://www.orgatma.com/public/checkout-shipping.php" class="btn">View
-                                        Cart</a>
-                                    <a href="https://www.orgatma.com/public/logincheckout.php" class="btn">Checkout</a>
-                                </div>
-                                <!-- End .dropdown-cart-total -->
-                            </div>
-                            <!-- End .dropdownmenu-wrapper -->
-                        </div>
+                        <ul class="dropdown-menu pull-right">
+                            <li>{% include "basket/partials/basket_quick.html" %}</li>
+                        </ul>
+                        {#                        <div class="dropdown-menu dropdown-primary" data-navigation="dropdown-menu">#}
+                        {#                            <div class="dropdownmenu-wrapper">#}
+                        {#                                <div class="dropdown-cart-action">#}
+                        {#                                    <a href="#" class="dropdown-item btn btn-primary">View Cart</a>#}
+                        {#                                    <a href="#" class="dropdown-item btn btn-primary">Check Out</a>#}
+                        {#                                    <span id="prod"><div class="product-details ">#}
+                        {#                                        <h4 class="product-title text-center text-danger">Cart is Empty!</h4></div></span>#}
+                        {##}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        {#                        <div class="dropdown-menu" data-navigation="dropdown-menu">#}
+                        {#                            <div class="dropdownmenu-wrapper">#}
+                        {#                        <div class="dropdown-cart-products">#}
+                        {#                                    <span id="prod"><div class="product-details "><h4#}
+                        {#                                            class="product-title text-center text-danger">Cart is Empty!</h4></div></span>#}
+                        {#                                    <!-- End .product -->#}
+                        {#                                </div><!-- End .cart-product -->#}
+                        {##}
+                        {#                                <div class="dropdown-cart-total">#}
+                        {#                                    <span>Total</span>#}
+                        {##}
+                        {#                                    <span class="cart-total-price" id="total_price">₹0.00</span>#}
+                        {#                                </div>#}
+                        {#                                <!-- End .dropdown-cart-total -->#}
+                        {##}
+                        {#                                <div class="dropdown-cart-action">#}
+                        {#                                    <a href="https://www.orgatma.com/public/checkout-shipping.php" class="btn">View#}
+                        {#                                        Cart</a>#}
+                        {#                                    <a href="https://www.orgatma.com/public/logincheckout.php" class="btn">Checkout</a>#}
+                        {#                                </div>#}
+                        {#                                <!-- End .dropdown-cart-total -->#}
+                        {#                            </div>#}
+                        {#                            <!-- End .dropdownmenu-wrapper -->#}
+                        {#                        </div>#}
                         <!-- End .dropdown-menu -->
                     </div>
                     <!-- End .dropdown -->
