@@ -7,18 +7,17 @@ from oscar.apps.partner.views import *
 
 
 class StockRecord(TemplateView):
-    model = get_model('catalogue', 'Product')
-    queryset = model.objects.all()
     template_name = 'catalogue/partials/stock_record.html'
-
-    # context_object_name = 'product'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product_id = kwargs.get('pk', None)
+        Product = get_model('catalogue', 'Product')
+        # context['product'] = None
         if product_id:
             try:
-                context['product'] = self.queryset.get(pk=product_id)
+                context['product'] = Product.objects.get(pk=product_id)
             except ObjectDoesNotExist:
-                HttpResponse('Product does not exist')
+                # return HttpResponse('Product does not exist')
+                return context
         return context
