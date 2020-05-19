@@ -12,7 +12,7 @@ class CatalogueApplication(CoreCatalogueApplication):
     def get_urls(self):
         urlpatterns = super(CatalogueApplication, self).get_urls()
         urlpatterns += [
-            url(r'^product_info/(?P<product_id>[\d]+)/$', self.product_info_view.as_view(), name='product_info'),
+            url(r'^product_info/(?P<pk>[\d]+)/$', self.product_info_view.as_view(), name='product_info'),
         ]
         return self.post_process_urls(urlpatterns)
         # return urlpatterns
