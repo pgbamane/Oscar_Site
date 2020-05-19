@@ -4,7 +4,7 @@ from collections import namedtuple
 
 # A container for policies
 PurchaseInfo = namedtuple(
-    'PurchaseInfo', ['price', 'availability', 'stockrecord', 'pricing_strategy'])
+    'PurchaseInfo', ['weight', 'price', 'availability', 'stockrecord', 'pricing_strategy'])
 
 
 class Structured(CoreStructured):
@@ -17,12 +17,21 @@ class Structured(CoreStructured):
             availability=purchase_info.availability,
             stockrecord=purchase_info.stockrecord,
             pricing_strategy=pricing_strategy,
+            weight=None,
         )
+
+    def fetch_weight_for_parent(self, product):
+        children_stock = self.select_children_stockrecords(product)
+        # first variant weight is the parent weight
+        first_child = children_stock[0][0]
+        parent_weight_with_unit = "{} {}".format(first_child.weight, first_child.weight_unit)
+        return parent_weight_with_unit
 
     def fetch_for_parent(self, product):
         purchase_info = super(Structured, self).fetch_for_parent(product)
         # pricing_strategy = children_stock[0][1]
         return PurchaseInfo(
+            weight=self.fetch_weight_for_parent(product),
             price=purchase_info.price,
             availability=purchase_info.availability,
             stockrecord=purchase_info.stockrecord,
@@ -40,6 +49,7 @@ class Structured(CoreStructured):
 # class NoTax(CoreNoTax):
 #     def parent_pricing_policy(self, product, children_stock):
 #         FixedPrice = super(NoTax, self).parent_pricing_policy(product, children_stock)
+
 
 class Default(UseFirstStockRecord, StockRequired, NoTax, Structured):
     """
