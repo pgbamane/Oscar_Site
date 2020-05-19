@@ -10,7 +10,8 @@ class StockRecord(TemplateView):
     model = get_model('catalogue', 'Product')
     queryset = model.objects.all()
     template_name = 'catalogue/partials/stock_record.html'
-    context_object_name = 'product'
+
+    # context_object_name = 'product'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
