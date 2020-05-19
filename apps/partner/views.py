@@ -17,7 +17,7 @@ class StockRecord(TemplateView):
         if product_id:
             try:
                 context['product'] = Product.objects.get(pk=product_id)
-            except ObjectDoesNotExist:
+            except Product.DoesNotExist:
                 # return HttpResponse('Product does not exist')
                 return context
         return context
