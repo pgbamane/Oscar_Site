@@ -13,7 +13,7 @@
         {% endif %}
     </h3>
     <table class="table table-striped">
-{#        {% if product.upc %}#}
+        {#        {% if product.upc %}#}
         {#            <tr>#}
         {#                <th>{% trans "UPC" %}</th>#}
         {#                <td>{{ product.upc }}</td>#}
@@ -23,12 +23,17 @@
         {#            <th>{% trans "Product Type" %}</th>#}
         {#            <td>{{ product.get_product_class.name }}</td>#}
         {#        </tr>#}
-        <tr>
-            <th>{% trans 'Weight' %}</th>
-            <td>{{ product.weight }} {{ product.weight_unit }}</td>
-        </tr>
 
         {% purchase_info_for_product request product as session %}
+        <tr>
+            <th>{% trans 'Weight' %}</th>
+            <td>{% if product.is_parent %}
+                {{ session.weight }}
+            {% else %}
+                {{ product.weight }} {{ product.weight_unit }}
+            {% endif %}
+            </td>
+        </tr>
         {% if session.pricing_strategy %}
             <tr>
                 <th>{% trans 'Pricing Strategy' %}</th>
