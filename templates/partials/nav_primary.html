@@ -44,6 +44,9 @@
                 {#                {% endblock %}#}
             </ul>
         </li>
+        <li class="{% if request.resolver_match.url_name == "list" %} active {% endif %}">
+            <a href="{% url 'offer:list' %}">Special Offers</a>
+        </li>
         {% block nav_extra %}
         {% endblock %}
     </ul>
