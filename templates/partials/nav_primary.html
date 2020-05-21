@@ -44,8 +44,16 @@
                 {#                {% endblock %}#}
             </ul>
         </li>
-        <li class="{% if request.resolver_match.url_name == "list" %} active {% endif %}">
-            <a href="{% url 'offer:list' %}">Special Offers</a>
+        <li class="dropdown {% if request.resolver_match.url_name == "list" %} active {% endif %}">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% trans 'Offers' %}
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" data-navigation="dropdown-menu">
+                <li><a href="{% url 'offer:list' %}">{% trans "Site Offers" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url 'offer:detail' 'new-user-offer' %}">{% trans "Offer Details" %}</a></li>
+            </ul>
         </li>
         {% block nav_extra %}
         {% endblock %}
