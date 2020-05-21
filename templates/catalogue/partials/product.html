@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load display_tags %}
 {% load staticfiles %}
+{#{% load offer_tags %}#}
 
 {% block product %}
     <article class="product_pod">
@@ -44,6 +45,13 @@
                 </p>
             {% endif %}
         {% endblock %}
+
+{#        {% block product_offers %}#}
+{#            {% offers_for_product request product as product_offers %}#}
+{#            {% for product_offer in product_offers %}#}
+{#                <p>{{ product_offer }}</p>#}
+{#            {% endfor %}#}
+{#        {% endblock product_offers %}#}
 
         {% block product_price %}
             <div class="product_price">
