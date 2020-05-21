@@ -1,0 +1,15 @@
+{% load offer_tags %}
+
+{% offers_for_product request product as product_offers %}
+{% if product_offers %}
+    <div class="product_offers">
+        <p style="margin-bottom: 3px;"><strong style="color: black;">Available Offers</strong></p>
+        <ul>
+            {% for offer in product_offers %}
+                <li style="color:#531bec;margin-bottom: 6px;padding-left: 5px;">
+                    <a href="{{ offer.id }}" style="color:#531bec;"> {{ offer.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
