@@ -254,3 +254,14 @@ OSCAR_SHOP_NAME = 'Orgatma'
 OSCAR_SHOP_TAGLINE = 'A site for shopping Organic Foods to customer'
 
 OSCAR_DEFAULT_CURRENCY = 'INR'
+
+OSCAR_CURRENCY_FORMAT = {
+    'INR': {
+        'currency_digits': False,
+        'format_type': "accounting",
+        'format': u'Rs #,##0',
+    },
+    # 'EUR': {
+    #     'format': u'#,##0\xa0¤',
+    # }
+}
