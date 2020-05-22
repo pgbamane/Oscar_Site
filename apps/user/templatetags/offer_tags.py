@@ -24,4 +24,4 @@
 # def site_offers_for_product(request, product):
 #     product_offers = offers_for_product(request, product)
 #     site_offers = product_offers.filter(offer_type=ConditionalOffer.SITE)
-#     return site_offers
+#     # return site_offer
