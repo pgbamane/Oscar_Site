@@ -56,15 +56,15 @@ class Product(AbstractProduct):
         Condition = get_model('offer', 'Condition')
 
         product_ranges = RangeProduct.objects.select_related('range')
-        print(product_ranges.query)
+        # print(product_ranges.query)
         product_ranges = product_ranges.filter(product=self)
 
         product_offers = ConditionalOffer.objects.none()
         for product_range in product_ranges:
-            condition_ranges = Condition.objects.prefetch_related('offers').filter(range=product_range.range)
+            condition_ranges = Condition.objects.filter(range=product_range.range).prefetch_related('offers')
             for condition_range in condition_ranges:
-                product_offers = product_offers.union(condition_range.offers.all())
-            # product_offers =  condition_range.offers.all()
+                product_offers = product_offers | condition_range.offers.all()
+                # product_offers = product_offers.union(condition_range.offers.all())
 
         return product_offers
 
@@ -79,6 +79,30 @@ class Product(AbstractProduct):
         product_offers = self.offers
         site_offers = product_offers.filter(offer_type=ConditionalOffer.SITE)
         return site_offers
+
+    def child_products(self):
+        """
+        Returns all child products for this parent product
+        :return:
+        """
+        Product = get_model('catalogue', 'Product')
+        child_products = Product.objects.filter(parent=self, structure=Product.CHILD)
+        return child_products
+
+    @property
+    def price_currency(self):
+        """
+        Its returns currency used to for first Stock record of this product.
+        If product is parent, select first child currency.
+        :return:
+        """
+        StockRecord = get_model('partner', 'StockRecord')
+        if self.is_parent:
+            child_product = self.child_products()[0]
+            stock_record = StockRecord.objects.filter(product=child_product)[0]
+        else:
+            stock_record = StockRecord.objects.filter(product=self)[0]
+        return stock_record.price_currency
 
 
 from oscar.apps.catalogue.models import *
