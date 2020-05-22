@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load display_tags %}
 {% load staticfiles %}
+{% load currency_filters %}
 {#{% load offer_tags %}#}
 
 {% block product %}
@@ -37,7 +38,7 @@
                     {{ product.get_title|truncatewords:4 }}</a>
             </h3>
             {% if product.tag %}
-                <p style="margin-top: 4px;float: left;" class="certificate">
+                <p style="margin-top: 4px;" class="certificate">
                     <i class="fa fa-certificate" aria-hidden="true" style="color: green;">
                         <span style="font-size: initial;color: darkgreen;}"> {{ product.tag }}</span>
                     </i>
@@ -46,16 +47,20 @@
             {% endif %}
         {% endblock %}
 
-        {% block product_offers %}
-            {% if product.site_offers %}
-                {% for site_offer in product.site_offers %}
-                    <p>{{ site_offer.name }}</p>
-                {% endfor %}
-            {% endif %}
-        {% endblock product_offers %}
-
         {% block product_price %}
             <div class="product_price">
+                {% block product_offers %}
+                    {% if product.site_offers %}
+                        {% for site_offer in product.site_offers %}
+                            {% with benefit_value=site_offer.benefit.value %}
+                                <p style="float: left;color: darkcyan;width: 66px;" class="price_color">
+                                    {#                                    {{ site_offer.benefit. }}#}
+                                    {{ site_offer.benefit.value|currency:product.price_currency }}</p>
+                            {% endwith %}
+                        {% endfor %}
+                    {% endif %}
+                {% endblock product_offers %}
+
                 {% include "catalogue/partials/stock_record.html" %}
                 {% if not product.is_parent and not product.has_options %}
                     {% include "catalogue/partials/add_to_basket_form_compact.html" %}
