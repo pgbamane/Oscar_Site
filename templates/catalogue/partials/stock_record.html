@@ -4,33 +4,47 @@
 
 {% purchase_info_for_product request product as session %}
 
-<div id="stock_record">
-    {% if session.pricing_strategy %}
-        <p class=""
-           style="float: left;margin-right: 10px;background-color: crimson;padding: 3.1px;color: wheat;font-size: smaller;">
-            {{ session.pricing_strategy }}
-            {#        </span>#}
+{#<div id="stock_record">#}
+{% if session.price.exists %}
+    {#        {% with price_currency=session.price.currency %}#}
+    {% if session.price.excl_tax == 0 %}
+        <p class="price_color">{% trans "Free" %}</p>
+    {% elif session.price.is_tax_known %}
+        <p class="price_color"
+           style="width: 17px;{% if product.site_offers %} text-decoration: line-through; {% endif %}">
+            {#            {% if product.site_offers %}#}
+            {#                <del>{{ session.price.incl_tax|currency:session.price.currency }}</del>#}
+            {#            {% else %}#}
+            {{ session.price.incl_tax|currency:session.price.currency }}
+            {#            R{{ session.price.incl_tax }}#}
+            {#            {% endif %}#}
         </p>
-        {##}
-    {% endif %}
 
-    {% if session.price.exists %}
-        {% if session.price.excl_tax == 0 %}
-            <p class="price_color">{% trans "Free" %}</p>
-        {% elif session.price.is_tax_known %}
-            <p class="price_color">{{ session.price.incl_tax|currency:session.price.currency }}</p>
-        {% else %}
-            <p class="price_color">{{ session.price.excl_tax|currency:session.price.currency }}</p>
-        {% endif %}
     {% else %}
-        <p class="price_color">&nbsp;</p>
+        <p class="price_color" style="width: 17px;">{{ session.price.excl_tax|currency:session.price.currency }}</p>
     {% endif %}
-    <p class="{{ session.availability.code }} availability">
-        <i class="icon-{% if session.availability.is_available_to_buy %}ok{% else %}remove{% endif %}"></i>
-        {% if verbose %}
-            {{ session.availability.message }}
-        {% else %}
-            {{ session.availability.short_message }}
-        {% endif %}
+    {#        {% endwith %}#}
+{% else %}
+    <p class="price_color" style="width: 17px;">&nbsp;</p>
+{% endif %}
+
+
+{% if session.pricing_strategy %}
+    <p class=""
+       style="background-color: crimson;padding: 1.1px;color: wheat;font-size: smaller;width: 31%;">
+        {{ session.pricing_strategy }}
+        {#        </span>#}
     </p>
-</div>
+    {##}
+{% endif %}
+
+<p class="{{ session.availability.code }} availability">
+    <i class="icon-{% if session.availability.is_available_to_buy %}ok{% else %}remove{% endif %}"></i>
+    {% if verbose %}
+        {{ session.availability.message }}
+    {% else %}
+        {{ session.availability.short_message }}
+    {% endif %}
+</p>
+
+{#</div>#}
