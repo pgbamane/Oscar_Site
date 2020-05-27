@@ -1,3 +1,4 @@
+{% load custom_utils_tags %}
 {% load reviews_tags %}
 {% load thumbnail %}
 {% load i18n %}
@@ -52,16 +53,20 @@
                 {% block product_offers %}
                     {% if product.site_offers %}
                         {% for site_offer in product.site_offers %}
-                            {% with benefit_value=site_offer.benefit.value %}
-                                <p style="float: left;color: darkcyan;width: 66px;" class="price_color">
-                                    {#                                    {{ site_offer.benefit. }}#}
-                                    {{ site_offer.benefit.value|currency:product.price_currency }}</p>
-                            {% endwith %}
+                            {#                            {% with benefit_value=site_offer.benefit.value %}#}
+                            <p style="color: darkcyan;" class="price_color price_info">
+                                {#                                    {{ site_offer.benefit. }}#}
+                                {{ site_offer.benefit.value|currency:product.price_currency }}
+{#                                {% trans "This is the string" as benefit_value %}#}
+                            </p>
+                            {#                            {% endwith %}#}
                         {% endfor %}
                     {% endif %}
                 {% endblock product_offers %}
 
+{#                <p>{{ benefit_value }}</p>#}
                 {% include "catalogue/partials/stock_record.html" %}
+
                 {% if not product.is_parent and not product.has_options %}
                     {% include "catalogue/partials/add_to_basket_form_compact.html" %}
                 {% endif %}

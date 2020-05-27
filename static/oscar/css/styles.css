@@ -10157,7 +10157,9 @@ a:hover .thumbnail {
 }
 
 .product_main .price_color {
-    font-size: 26px;
+    font-size: 18px;
+
+    /*font-size: 18px;*/
 }
 
 .product_pod .price_color {
@@ -11049,3 +11051,11 @@ input[type="number"][id*="quantity"] {
 }
 
 /*# sourceMappingURL=styles.css.map */
+.product_price .price_info {
+    margin-top: 3%;
+    margin-left: 0%;
+    display: inline-block;
+    float: left;
+    width: 30%;
+    /*/ / could be 100 px for exampl*/
+}
