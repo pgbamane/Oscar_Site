@@ -7,7 +7,7 @@
 {% block nav_dropdown %}
     <ul id="browse" class="nav navbar-nav">
         <li class="{% if request.resolver_match.url_name == 'home' %} active {% endif %}">
-            <a href="{{ home_url }}">{% trans "Home" %}</a>
+            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
         </li>
         <li class="dropdown {% if request.resolver_match.url_name == 'category' %} active {% endif %}">
             {#        <li> class="dropdown active {% if expand_dropdown %}open{% endif %}">#}
