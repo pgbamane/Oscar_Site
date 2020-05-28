@@ -1,0 +1,19 @@
+{% load currency_filters %}
+
+{#{% block product_offers %}#}
+{#<div class="price_details">#}
+{% if product.site_offers %}
+    {% for site_offer in product.site_offers %}
+        {#                            {% with benefit_value=site_offer.benefit.value %}#}
+        <p style="color: darkcyan;margin-bottom: 1px;" class="price_color">
+            {#                                    {{ site_offer.benefit. }}#}
+            {{ site_offer.benefit.value|currency:product.price_currency }}
+            {#                                {% trans "This is the string" as benefit_value %}#}
+        </p>
+        {#                            {% endwith %}#}
+    {% endfor %}
+{% endif %}
+{#{% endblock product_offers %}#}
+
+{% include "catalogue/partials/stock_record.html" %}
+{#</div>#}
