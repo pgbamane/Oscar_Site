@@ -4,51 +4,57 @@
 
 {% purchase_info_for_product request product as session %}
 
-{#<div id="stock_record">#}
-{% if session.price.exists %}
-    {#        {% with price_currency=session.price.currency %}#}
-    {% if session.price.excl_tax == 0 %}
-        <p class="price_color price_info">{% trans "Free" %}</p>
-    {% elif session.price.is_tax_known %}
-        <p class="price_color price_info"
-           style="{% if product.site_offers %} text-decoration: line-through; {% endif %}">
-            {#            {% if product.site_offers %}#}
-            {#                <del>{{ session.price.incl_tax|currency:session.price.currency }}</del>#}
-            {#            {% else %}#}
-            {{ session.price.incl_tax|currency:session.price.currency }}
-            {#                        R{{ session.price.incl_tax }} #}
-            {#            {% endif %}#}
-        </p>
+<table>
+    <tr>
+        {#<div id="stock_record">#}
+        {% if session.price.exists %}
+            {#        {% with price_currency=session.price.currency %}#}
+            {% if session.price.excl_tax == 0 %}
+                <td class="price_color price_info">{% trans "Free" %}</td>
+            {% elif session.price.is_tax_known %}
+                <td class="price_color price_info"
+                    style="{% if product.site_offers %} text-decoration: line-through; {% endif %}">
+                    {#            {% if product.site_offers %}#}
+                    {#                <del>{{ session.price.incl_tax|currency:session.price.currency }}</del>#}
+                    {#            {% else %}#}
+                    {{ session.price.incl_tax|currency:session.price.currency }}
+                    {#                        R{{ session.price.incl_tax }} #}
+                    {#            {% endif %}#}
+                </td>
 
-    {% else %}
-        <p class="price_color price_info"
-           style="{% if product.site_offers %} text-decoration: line-through; {% endif %}">
-            {{ session.price.excl_tax|currency:session.price.currency }}
-        </p>
-    {% endif %}
-    {#        {% endwith %}#}
-{% else %}
-    <p class="price_color price_info">
-    </p>
-{% endif %}
+            {% else %}
+                <td class="price_color price_info"
+                    style="{% if product.site_offers %} text-decoration: line-through; {% endif %}">
+                    {{ session.price.excl_tax|currency:session.price.currency }}
+                </td>
+            {% endif %}
+            {#        {% endwith %}#}
+        {% else %}
+            <td class="price_color price_info">
+            </td>
+        {% endif %}
 
-{% if product.site_offers %}
-    {#    {% with site_offers=product.site_offers %}#}
-    {#        {% for site_offer in site_offers %}#}
-    <p class="price_info price_color" style="color: black;">
-        ({{ product.site_offers.0.benefit.value|floatformat:"0" }}% OFF)</p>
-    {#        {% endfor %}#}
-    {#    {% endwith %}#}
-{% endif %}
+        {% if product.site_offers %}
+            {#    {% with site_offers=product.site_offers %}#}
+            {#        {% for site_offer in site_offers %}#}
+            <td class="price_info price_color" style="color: black;width: 40%;">
+                ({{ product.site_offers.0.benefit.value|floatformat:"0" }}% OFF)
+            </td>
+            {#        {% endfor %}#}
+            {#    {% endwith %}#}
+        {% endif %}
 
-{% if session.pricing_strategy %}
-    <p class=""
-       style="background-color: crimson;padding: 3.1px;color: wheat;font-size: smaller;width: max-content;">
-        {{ session.pricing_strategy }}
-        {#        </span>#}
-    </p>
-    {##}
-{% endif %}
+        {% if session.pricing_strategy %}
+            <td class="price_info price_color"
+                style="background-color: crimson;padding: 3.1px;color: wheat;font-size: smaller;width: max-content;
+margin-left: 15px;">
+                {{ session.pricing_strategy }}
+                {#        </span>#}
+            </td>
+            {##}
+        {% endif %}
+    </tr>
+</table>
 
 <p class="{{ session.availability.code }} availability">
     <i class="icon-{% if session.availability.is_available_to_buy %}ok{% else %}remove{% endif %}"></i>

@@ -9,63 +9,52 @@
 
 {% block product %}
     <article class="product_pod">
-        {% block product_image %}
-            <div class="image_container">
-                {% with image=product.primary_image %}
-                    {% thumbnail image.original "x155" upscale=False as thumb %}
-                        <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}"
-                                                                      alt="{{ product.get_title }}"
-                                                                      class="thumbnail"></a>
-                    {% endthumbnail %}
-                {% endwith %}
-            </div>
-        {% endblock %}
+        <div class="product_info">
+            {% block product_image %}
+                <div class="image_container">
+                    {% with image=product.primary_image %}
+                        {% thumbnail image.original "x155" upscale=False as thumb %}
+                            <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}"
+                                                                          alt="{{ product.get_title }}"
+                                                                          class="thumbnail"></a>
+                        {% endthumbnail %}
+                    {% endwith %}
+                </div>
+            {% endblock %}
 
-        {% block product_review %}
-            {% iffeature "reviews" %}
-                <p class="star-rating {{ product.rating|as_stars }}">
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                    <i class="icon-star"></i>
-                </p>
-            {% endiffeature %}
-        {% endblock %}
+            {% block product_review %}
+                {% iffeature "reviews" %}
+                    <p class="star-rating {{ product.rating|as_stars }}">
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                    </p>
+                {% endiffeature %}
+            {% endblock %}
 
-        {% block product_title %}
-            <h3>
-                <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
-                    {{ product.get_title|truncatewords:4 }}</a>
-            </h3>
-            {% if product.tag %}
-                <p style="margin-top: 4px;" class="certificate">
-                    <i class="fa fa-certificate" aria-hidden="true" style="color: green;">
-                        <span style="font-size: initial;color: darkgreen;}"> {{ product.tag }}</span>
-                    </i>
-                    {#                    {% include "catalogue/partials/stock_record_pricing_strategy.html" %}#}
-                </p>
-            {% endif %}
-        {% endblock %}
+            {% block product_title %}
+                <h3>
+                    <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
+                        {{ product.get_title|truncatewords:4 }}</a>
+                </h3>
+                {% if product.tag %}
+                    <p style="margin-top: 4px;" class="certificate">
+                        <i class="fa fa-certificate" aria-hidden="true" style="color: green;">
+                            <span style="font-size: initial;color: darkgreen;}"> {{ product.tag }}</span>
+                        </i>
+                        {#                    {% include "catalogue/partials/stock_record_pricing_strategy.html" %}#}
+                    </p>
+                {% endif %}
+            {% endblock %}
+        </div>
 
         {% block product_price %}
             <div class="product_price">
-                {% block product_offers %}
-                    {% if product.site_offers %}
-                        {% for site_offer in product.site_offers %}
-                            {#                            {% with benefit_value=site_offer.benefit.value %}#}
-                            <p style="color: darkcyan;" class="price_color price_info">
-                                {#                                    {{ site_offer.benefit. }}#}
-                                {{ site_offer.benefit.value|currency:product.price_currency }}
-{#                                {% trans "This is the string" as benefit_value %}#}
-                            </p>
-                            {#                            {% endwith %}#}
-                        {% endfor %}
-                    {% endif %}
-                {% endblock product_offers %}
-
-{#                <p>{{ benefit_value }}</p>#}
-                {% include "catalogue/partials/stock_record.html" %}
+                {#                <p>{{ benefit_value }}</p>#}
+                {% include "catalogue/partials/price_details.html" %}
+                {#                {% include "catalogue/partials/stock_record.html" %}#}
 
                 {% if not product.is_parent and not product.has_options %}
                     {% include "catalogue/partials/add_to_basket_form_compact.html" %}
