@@ -57,7 +57,11 @@ class Product(AbstractProduct):
 
         product_ranges = RangeProduct.objects.select_related('range')
         # print(product_ranges.query)
-        product_ranges = product_ranges.filter(product=self)
+
+        if self.is_child:
+            product_ranges = product_ranges.filter(product=self.parent_id)
+        else:
+            product_ranges = product_ranges.filter(product=self)
 
         product_offers = ConditionalOffer.objects.none()
         for product_range in product_ranges:
