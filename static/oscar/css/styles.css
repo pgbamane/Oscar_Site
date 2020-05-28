@@ -11051,11 +11051,17 @@ input[type="number"][id*="quantity"] {
 }
 
 /*# sourceMappingURL=styles.css.map */
-.product_price .price_info {
+.product_price .price_info, #product_price_details .price_info {
     margin-top: 3%;
     margin-left: 0%;
     display: inline-block;
     float: left;
-    width: 30%;
+    width: 31%;
     /*/ / could be 100 px for exampl*/
+    padding: 3px;
+}
+
+.product_main #product_price_details > table {
+    width: 45%;
+    margin-bottom: 4px;
 }

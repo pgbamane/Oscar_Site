@@ -24,9 +24,9 @@
 
         $(id_product_info).html('').load(product_info_url);
 
-        var parent_stock_url = "{% url 'catalogue:stock_record' 123 %}".replace('123', child_id);
-        var id_stock_record = "#stock_record";
-        $(id_stock_record).html('').load(parent_stock_url);
+        var parent_price_details = "{% url 'catalogue:price_details' 123 %}".replace('123', child_id);
+        var id_product_price_details = "#product_price_details";
+        $(id_product_price_details).html('').load(parent_price_details);
     }
 </script>
 
