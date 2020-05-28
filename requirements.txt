@@ -8,5 +8,5 @@ pycountry==18.12.8
 django-allauth==0.38.0
 django-crispy-forms==1.7.2
 # latest
-django-smart-load-tag==0.3.2
+django-smart-load-tag==0.3.1
 pysolr==3.8.1

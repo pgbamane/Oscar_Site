@@ -1,17 +1,23 @@
+{#{% load smart_load %}#}
+{% load purchase_info_tags %}
 {% load currency_filters %}
+{% load product_info_tags %}
 
 {#{% block product_offers %}#}
 {#<div class="price_details">#}
+
+
 {% if product.site_offers %}
-    {% for site_offer in product.site_offers %}
-        {#                            {% with benefit_value=site_offer.benefit.value %}#}
+    {#    {% for site_offer in product.site_offers %}#}
+    {#    {% trans %}#}
+    {% with benefit_value=product.site_offers.0.benefit.value %}
         <p style="color: darkcyan;margin-bottom: 1px;" class="price_color">
-            {#                                    {{ site_offer.benefit. }}#}
-            {{ site_offer.benefit.value|currency:product.price_currency }}
+            {% sale_price_for_product request product benefit_value as sale_price %}
+            {{ sale_price|currency:product.price_currency }}
             {#                                {% trans "This is the string" as benefit_value %}#}
         </p>
-        {#                            {% endwith %}#}
-    {% endfor %}
+    {% endwith %}
+    {#    {% endfor %}#}
 {% endif %}
 {#{% endblock product_offers %}#}
 
