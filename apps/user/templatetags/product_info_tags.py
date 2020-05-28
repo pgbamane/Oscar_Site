@@ -16,3 +16,11 @@ def sale_price_for_product(request, product, benefit_value):
     discount = product_price * (benefit_value / 100)
     sale_price = product_price - discount
     return sale_price
+
+
+@register.simple_tag
+def products_in_sale(sale_name):
+    ConditionalOffer = get_model('offer', 'ConditionalOffer')
+    sale_offer = ConditionalOffer.active.get(name=sale_name, offer_type=ConditionalOffer.FLASH_SALE)
+    sale_products = sale_offer.products()
+    return sale_products
