@@ -47,13 +47,13 @@
                 <tbody>
                     {% for user in users %}
                         <tr>
-                            <td><a href="{% url 'dashboard:partner-user-update' partner_pk=partner.pk user_pk=user.id %}">{{ user.email }}</a></td>
+                            <td><a href="{% url 'dashboard:partner-customer_final-update' partner_pk=partner.pk user_pk=user.id %}">{{ user.email }}</a></td>
                             <td>{{ user.first_name|default:"-" }}</td>
                             <td>{{ user.last_name|default:"-" }}</td>
                             <td>
-                                <form action="{% url 'dashboard:partner-user-unlink' partner_pk=partner.id user_pk=user.id %}" method="post">
+                                <form action="{% url 'dashboard:partner-customer_final-unlink' partner_pk=partner.id user_pk=user.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger" data-loading-text="{% trans 'Unlinking...' %}">{% trans 'Unlink user' %}</button>
+                                    <button type="submit" class="btn btn-danger" data-loading-text="{% trans 'Unlinking...' %}">{% trans 'Unlink customer_final' %}</button>
                                 </form>
                             </td>
                         </tr>
@@ -64,8 +64,8 @@
             <p>{% trans "No users linked." %}</p>
         {% endif %}
         <div class="form-group">
-            <a class="btn btn-info" href="{% url 'dashboard:partner-user-create' partner_pk=partner.pk %}" >{% trans "Link a new user" %}</a>
-            <a class="btn btn-info" href="{% url 'dashboard:partner-user-select' partner_pk=partner.pk %}" >{% trans "Link an existing user" %}</a>
+            <a class="btn btn-info" href="{% url 'dashboard:partner-customer_final-create' partner_pk=partner.pk %}" >{% trans "Link a new customer_final" %}</a>
+            <a class="btn btn-info" href="{% url 'dashboard:partner-customer_final-select' partner_pk=partner.pk %}" >{% trans "Link an existing customer_final" %}</a>
         </div>
     </div>
 {% endblock dashboard_content %}

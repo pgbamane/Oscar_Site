@@ -30,7 +30,7 @@
             {% include "dashboard/partials/form_fields_inline.html" with form=form %}
             <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Searching...' %}">{% trans "Search" %}</button>
             {% trans "or" %}
-            <a href="{% url 'dashboard:user-alert-list' %}" class="btn btn-default">{% trans "reset" %}</a>
+            <a href="{% url 'dashboard:customer_final-alert-list' %}" class="btn btn-default">{% trans "reset" %}</a>
         </form>
     </div>
 
@@ -55,7 +55,7 @@
                     </td>
                     <td>
                         {% if alert.user %}
-                            <a href="{% url 'dashboard:user-detail' pk=alert.user.id %}">{{ alert.user.email }}</a>
+                            <a href="{% url 'dashboard:customer_final-detail' pk=alert.user.id %}">{{ alert.user.email }}</a>
                         {% else %}
                             {{ alert.email }} {% trans "(Anonymous)" %}
                         {% endif %}
@@ -73,8 +73,8 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu pull-right">
-                                    <li><a href="{% url 'dashboard:user-alert-update' pk=alert.id %}">{% trans "Edit" %}</a></li>
-                                    <li><a href="{% url 'dashboard:user-alert-delete' pk=alert.id %}">{% trans "Delete" %}</a></li>
+                                    <li><a href="{% url 'dashboard:customer_final-alert-update' pk=alert.id %}">{% trans "Edit" %}</a></li>
+                                    <li><a href="{% url 'dashboard:customer_final-alert-delete' pk=alert.id %}">{% trans "Delete" %}</a></li>
                                 </ul>
                             </div>
                         </div>

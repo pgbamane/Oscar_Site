@@ -13,7 +13,7 @@
             <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
         </li>
         <li>
-            <a href="{% url 'dashboard:user-alert-list' %}">{% trans "Product alerts" %}</a>
+            <a href="{% url 'dashboard:customer_final-alert-list' %}">{% trans "Product alerts" %}</a>
         </li>
         <li class="active">{% blocktrans with id=alert.id %}Alert #{{ id }}{% endblocktrans %}</li>
     </ul>
@@ -31,7 +31,7 @@
                 {% csrf_token %}
                 {% include 'dashboard/partials/form_fields_inline.html' %}
                 <button type='submit' class="btn btn-primary" data-loading-text="{% trans 'Saving...' %}">{% trans "Save" %}</button>
-                <a href="{% url 'dashboard:user-alert-list' %}" class="btn btn-default">{% trans "cancel" %}</a>
+                <a href="{% url 'dashboard:customer_final-alert-list' %}" class="btn btn-default">{% trans "cancel" %}</a>
             </form>
         </div>
     </div>

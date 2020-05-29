@@ -4,7 +4,7 @@
 # from django.urls import reverse
 # from django.utils.translation import ugettext_lazy as _
 #
-# from customer.managers.user_managers import UserManager
+# from customer_12.managers.user_managers import UserManager
 #
 # GENDER_OPTIONS = [
 #     ('female', 'Female'),
@@ -15,9 +15,9 @@
 # class MyUser():
 #     first_name = "Pra"
 #
-#     def user_save(self, user):
-#         user.first_name = self.first_name
-#         user.save()
+#     def user_save(self, customer_final):
+#         customer_final.first_name = self.first_name
+#         customer_final.save()
 #
 #
 # class User(PermissionsMixin, AbstractBaseUser):
@@ -35,7 +35,7 @@
 #     phone_number = models.CharField(max_length=13, unique=True, null=True, blank=True
 #                                     )  # unique treats null=True different values, but empty string will not be unique
 #
-#     # primary key of user
+#     # primary key of customer_final
 #     email = models.EmailField(max_length=40, unique=True, primary_key=True)
 #
 #     password = models.CharField(max_length=200, default="")
@@ -53,7 +53,7 @@
 #         db_column="Is Active",
 #         default=True,
 #         help_text=_(
-#             "Designates whether this user should be considered active or not."
+#             "Designates whether this customer_final should be considered active or not."
 #         ),
 #     )
 #
@@ -63,7 +63,7 @@
 #         db_column='Is Staff',
 #         default=False,
 #         help_text=_(
-#             'Designates whether this user is a member of staff to access the admin page or not'
+#             'Designates whether this customer_final is a member of staff to access the admin page or not'
 #         )
 #     )
 #     is_superuser = models.BooleanField(
@@ -71,11 +71,11 @@
 #         db_column='Is Superuser',
 #         default=False,
 #         help_text=_(
-#             'Designates whether this user has all permissions in the admin page or not'
+#             'Designates whether this customer_final has all permissions in the admin page or not'
 #         )
 #     )
 #
-#     # custom user model defining username field other than username should define Custom Model Manager
+#     # custom customer_final model defining username field other than username should define Custom Model Manager
 #     objects = UserManager()
 #
 #     class Meta:
@@ -83,11 +83,11 @@
 #         swappable = 'AUTH_USER_MODEL'
 #
 #     def __str__(self):
-#         "return email_id of user"
+#         "return email_id of customer_final"
 #         return self.get_username()
 #
 #     def get_username(self):
-#         "Return the identifying username i.e. phone number for this user"
+#         "Return the identifying username i.e. phone number for this customer_final"
 #         return getattr(self, self.USERNAME_FIELD)
 #
 #     def get_full_name(self):
@@ -98,22 +98,22 @@
 #
 #     @property
 #     def is_active_user(self):
-#         "Is the user active?"
+#         "Is the customer_final active?"
 #         return self.is_active
 #
 #     @property
 #     def is_staff_user(self):
-#         "Is user is member of staff?"
+#         "Is customer_final is member of staff?"
 #         return self.is_staff
 #
 #     @property
 #     def is_super_user(self):
-#         "Is the user a superuser?"
+#         "Is the customer_final a superuser?"
 #         return self.is_superuser
 #
-#     # access of the user to admin content: permissions
+#     # access of the customer_final to admin content: permissions
 #     def has_module_perms(self, app_label):
-#         "Does the user have permissions to view the app `app_label`?"
+#         "Does the customer_final have permissions to view the app `app_label`?"
 #         # Simplest possible answer: Yes, always
 #         if self.is_staff or self.is_superuser:
 #             return True
@@ -121,6 +121,6 @@
 #             return False
 #
 #     def has_perm(self, perm, obj=None):
-#         "Does the user have a specific permission?"
+#         "Does the customer_final have a specific permission?"
 #         # Simplest possible answer: Yes, always
 #         return True

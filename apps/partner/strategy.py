@@ -62,18 +62,18 @@ class Default(UseFirstStockRecord, StockRequired, NoTax, Structured):
 class Selector(object):
     """
     Responsible for returning the appropriate strategy class for a given
-    user/session.
+    customer_final/session.
 
     This can be called in three ways:
 
-    #) Passing a request and user.  This is for determining
-       prices/availability for a normal user browsing the site.
+    #) Passing a request and customer_final.  This is for determining
+       prices/availability for a normal customer_final browsing the site.
 
-    #) Passing just the user.  This is for offline processes that don't
-       have a request instance but do know which user to determine prices for.
+    #) Passing just the customer_final.  This is for offline processes that don't
+       have a request instance but do know which customer_final to determine prices for.
 
     #) Passing nothing.  This is for offline processes that don't
-       correspond to a specific user.  Eg, determining a price to store in
+       correspond to a specific customer_final.  Eg, determining a price to store in
        a search index.
 
     """

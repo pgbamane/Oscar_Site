@@ -32,47 +32,47 @@ ALLOWED_HOSTS = []
 from oscar import get_core_apps
 
 INSTALLED_APPS = [
-                     'django.contrib.admin',
-                     'django.contrib.auth',
-                     'django.contrib.contenttypes',
-                     'django.contrib.sessions',
-                     'django.contrib.messages',
-                     'django.contrib.staticfiles',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 
-                     'django.contrib.sites',
-                     'django.contrib.flatpages',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 
-                     'compressor',
-                     # 3rd-party apps that oscar depends on
-                     'widget_tweaks',
-                     'crispy_forms',
+    'compressor',
+    # 3rd-party apps that oscar depends on
+    'widget_tweaks',
+    'crispy_forms',
 
-                     # 'smart_load_tag',
+    # 'smart_load_tag',
 
-                     'allauth',
-                     'allauth.account',
-                     'allauth.socialaccount',
-                     # ... include the providers you want to enable:
-                     'allauth.socialaccount.providers.google',
-                     # 'allauth.socialaccount.providers.facebook',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.facebook',
 
-                     # 'customer',
-                     # template tags app
-                     'apps.user',
+    # regular user app
+    'apps.users',
+]
 
-                 ] + get_core_apps(['apps.catalogue',
-                                    'apps.partner',
-                                    'apps.offer',
-                                    # 'apps.customer',
-                                    ])
+INSTALLED_APPS = INSTALLED_APPS + get_core_apps(['apps.catalogue',
+                                                 'apps.partner',
+                                                 'apps.offer',
+                                                 # 'apps.customer',
+                                                 ])
 
 SITE_ID = 1
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 CRISPY_FAIL_SILENTLY = not DEBUG
 
-# auth user model setting
-AUTH_USER_MODEL = 'user.User'
+# auth customer_final model setting
+AUTH_USER_MODEL = 'users.User'
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -227,17 +227,17 @@ ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
 # ACCOUNT_SIGNUP_REDIRECT = 'users_app.utils.custom_signup_redirect'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
-# not working auto_signup, if the user already signed in Google account,
+# not working auto_signup, if the customer_final already signed in Google account,
 # then also show Google form to take credentials, but its auto Signing same as AUto_Signup=True
 # if the True, takes username and password provided by Google, and skips Local Signup Form fillup
 # if False, Local Signup Form should be filled again
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
 ACCOUNT_FORMS = {
-    'signup': 'apps.user.forms.signup_form.SignupForm',
+    'signup': 'apps.customer_final.forms.signup_form.SignupForm',
 }
 
-ACCOUNT_ADAPTER = 'apps.user.adapters.signup_adapter.SignupAdapter'
+ACCOUNT_ADAPTER = 'apps.customer_final.adapters.signup_adapter.SignupAdapter'
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
@@ -251,7 +251,7 @@ LOGOUT_REDIRECT_URL = OSCAR_HOMEPAGE
 # Oscar Setting goes here
 # OSCAR_USE_LESS = True
 OSCAR_SHOP_NAME = 'Orgatma'
-OSCAR_SHOP_TAGLINE = 'A site for shopping Organic Foods to customer'
+OSCAR_SHOP_TAGLINE = 'A site for shopping Organic Foods to customer_12'
 
 OSCAR_DEFAULT_CURRENCY = 'INR'
 

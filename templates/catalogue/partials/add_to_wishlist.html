@@ -13,7 +13,7 @@
                     {% for wishlist in wishlists %}
                         {% if wishlist not in product_wishlists %}
                             <li>
-                                    <a href="{% url 'customer:wishlists-add-product' key=wishlist.key product_pk=product.pk %}">
+                                    <a href="{% url 'customer_12:wishlists-add-product' key=wishlist.key product_pk=product.pk %}">
                                         {% blocktrans with name=wishlist.name %}
                                             Add to '{{ name }}' wish list
                                         {% endblocktrans %}
@@ -21,19 +21,19 @@
                             </li>
                         {% endif %}
                     {% endfor %}
-                    <li><a href="{% url 'customer:wishlists-create-with-product' product_pk=product.pk %}">{% trans 'Create a new wishlist' %}</a></li>
+                    <li><a href="{% url 'customer_12:wishlists-create-with-product' product_pk=product.pk %}">{% trans 'Create a new wishlist' %}</a></li>
                 </ul>
             </div>
         {% else %}
             {# 1 or no existing wishlists - show a simple button #}
-            <form id="add_to_wishlist_form" action="{% url 'customer:wishlists-add-product' product_pk=product.pk %}" method="post" class="btn-wishlist">
+            <form id="add_to_wishlist_form" action="{% url 'customer_12:wishlists-add-product' product_pk=product.pk %}" method="post" class="btn-wishlist">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-lg" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to wish list" %}</button>
             </form>
         {% endif %}
 
         {% for wishlist in product_wishlists %}
-            <form action="{% url 'customer:wishlists-remove-product' key=wishlist.key product_pk=product.id %}" method="post">
+            <form action="{% url 'customer_12:wishlists-remove-product' key=wishlist.key product_pk=product.id %}" method="post">
                 {% csrf_token %}
                 {% blocktrans with name=wishlist.name url=wishlist.get_absolute_url %}
                     <span class="pull-left">Product is in <a href="{{ url }}">'{{ name }}'</a> wishlist.</span>

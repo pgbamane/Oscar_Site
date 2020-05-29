@@ -10,8 +10,8 @@ class ConditionalOffer(AbstractConditionalOffer):
         (SITE, _("Site offer - available to all users")),
         (FLASH_SALE, _("Flash Sale offer - short-term discount for the specific product")),
         (VOUCHER, _("Voucher offer - only available after entering the appropriate voucher code")),
-        (USER, _("User offer - available to certain types of user")),
-        (SESSION, _("Session offer - temporary offer, available for a user for the duration of their session")),
+        (USER, _("User offer - available to certain types of customer_final")),
+        (SESSION, _("Session offer - temporary offer, available for a customer_final for the duration of their session")),
     )
     offer_type = models.CharField(_("Type"), choices=TYPE_CHOICES, default=SITE, max_length=128)
 

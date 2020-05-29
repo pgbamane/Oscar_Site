@@ -258,7 +258,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='product_options',
-            field=models.ManyToManyField(verbose_name='Product options', help_text="Options are values that can be associated with a item when it is added to a customer's basket.  This could be something like a personalised message to be printed on a T-shirt.", to='catalogue.Option', blank=True),
+            field=models.ManyToManyField(verbose_name='Product options', help_text="Options are values that can be associated with a item when it is added to a customer_12's basket.  This could be something like a personalised message to be printed on a T-shirt.", to='catalogue.Option', blank=True),
             preserve_default=True,
         ),
         migrations.AddField(

@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans "Link an existing user" %} | {{ partner.name }} | {% trans "Partners" %} | {{ block.super }}
+    {% trans "Link an existing customer_final" %} | {{ partner.name }} | {% trans "Partners" %} | {{ block.super }}
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -17,12 +17,12 @@
         <li>
             <a href="{% url 'dashboard:partner-manage' pk=partner.id %}">{{ partner.name }}</a>
         </li>
-        <li class="active">{% trans "Link an existing user" %}</li>
+        <li class="active">{% trans "Link an existing customer_final" %}</li>
     </ul>
 {% endblock %}
 
 {% block headertext %}
-    {% trans "Link an existing user" %}
+    {% trans "Link an existing customer_final" %}
 {% endblock %}
 
 {% block dashboard_content %}
@@ -32,7 +32,7 @@
                 {% include 'dashboard/partials/form_fields_inline.html' with form=form %}
                 <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Searching...' %}">{% trans "Search" %}</button>
                 {% if form.is_bound %}
-                    <a class="btn btn-default" href="{% url 'dashboard:partner-user-select' partner_pk=partner.id %}" >{% trans "Reset" %}</a>
+                    <a class="btn btn-default" href="{% url 'dashboard:partner-customer_final-select' partner_pk=partner.id %}" >{% trans "Reset" %}</a>
                 {% endif %}
                 <div style="margin-top:5px">{% trans "A partial email address can be entered (eg '@example.com') to match multiple addresses." %}</div>
             </form>
@@ -66,9 +66,9 @@
                                                 User is already linked to {{ name }}.
                                             {% endblocktrans %}
                                         {% else %}
-                                            <form action="{% url 'dashboard:partner-user-link' partner_pk=partner.id user_pk=user.id %}" method="post">
+                                            <form action="{% url 'dashboard:partner-customer_final-link' partner_pk=partner.id user_pk=user.id %}" method="post">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Linking...' %}">{% trans 'Link user' %}</button>
+                                                <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Linking...' %}">{% trans 'Link customer_final' %}</button>
                                             </form>
                                         {% endif %}
                                     </td>
