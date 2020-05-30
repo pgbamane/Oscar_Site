@@ -72,15 +72,15 @@
                         <a href="index.php"><i class="icon-user"></i></a>
                         <div class="header-menu text-uppercase">
                             <ul>
-                                <li><a href="{% url 'customer_12:profile-view' %}">MY ACCOUNT </a></li>
+                                <li><a href="{% url 'customer:profile-view' %}">MY ACCOUNT </a></li>
                                 <!-- <li><a href="dailydeals.php">DAILY DEAL</a></li> -->
                                 <li><a href="https://www.orgatma.com/public/wishlist.php">MY WISHLIST </a></li>
                                 <li><a href="{% url 'account_signup' %}">Register</a></li>
                                 <li>
                                     {% if user.is_authenticated %}
-                                        <a href="{% url 'account_logout' %}" class="login-link">LOGOUT</a>
+                                        <a href="#" class="login-link">LOGOUT</a>
                                     {% else %}
-                                        <a href="{% url 'account_login' %}" class="logout-link">LOGIN</a>
+                                        <a href="#" class="logout-link">LOGIN</a>
                                         {#                                    <a href="" class="logout-link">LOG IN</a>#}
                                     {% endif %}
                                 </li>

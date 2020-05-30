@@ -1,9 +1,48 @@
-# from oscar.apps.customer_12.views import *
+# from oscar.apps.customer.views import AccountRegistrationView as CoreAccountRegistrationView
+# from oscar.apps.customer.views import *
+from allauth.account.views import SignupView as CoreSignupView
+
 # from oscar.apps.customer_12.views import ProfileUpdateView as CoreProfileUpdateView
 # from apps.customer_final.forms import SignupForm
 # from django.utils.translation import ugettext_lazy as _
-#
-#
+# from django.shortcuts import render
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
+from django.views.generic import FormView
+from allauth.utils import get_form_class
+from .forms import SignupForm
+from Oscar_Site import settings
+
+
+class SignupView(CoreSignupView):
+    template_name = "account/signup.html"
+    form_class = SignupForm
+    # redirect_field_name = None
+    # success_url = reverse_lazy('account_login')
+    success_url = reverse_lazy('promotions:home')
+
+    # def get_form_class(self):
+    #     return get_form_class(settings.FORMS, 'signup', self.form_class)
+
+    # def get_success_url(self):
+    #     ret = self.success_url
+    #     return ret
+
+    def get_context_data(self, **kwargs):
+        context_data = super(SignupView, self).get_context_data(**kwargs)
+        context_data['form_title'] = "Signup here"
+        return context_data
+
+    def form_valid(self, form):
+        return super(SignupView, self).form_valid(form)
+        # self.customer_final = form.save(self.request)
+        # return HttpResponseRedirect(redirect_to=self.get_success_url())
+
+    def post(self, request, *args, **kwargs):
+        return super(SignupView, self).post(request, *args, **kwargs)
+
 # # ProfileForm = SignupForm
 #
 #

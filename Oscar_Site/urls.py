@@ -5,6 +5,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from allauth.account.views import LoginView, AccountInactiveView, LogoutView
+
 from apps.customer_final import views
 # from allauth.socialaccount.views import S
 from allauth.socialaccount.providers.oauth2.urls import default_urlpatterns
@@ -21,6 +22,9 @@ urlpatterns = \
 
         # oscar urls
         path('', application.urls),
+
+        # users app urls
+        path('', include('apps.users.urls')),
 
         # all-auth urls
         # path('auth_accounts/signup/', views.SignupView.as_view(), name="account_signup"),

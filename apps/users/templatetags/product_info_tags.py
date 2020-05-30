@@ -21,6 +21,12 @@ def sale_price_for_product(request, product, benefit_value):
 @register.simple_tag
 def products_in_sale(sale_name):
     ConditionalOffer = get_model('offer', 'ConditionalOffer')
-    sale_offer = ConditionalOffer.active.get(name=sale_name, offer_type=ConditionalOffer.FLASH_SALE)
-    sale_products = sale_offer.products()
-    return sale_products
+    try:
+        sale_offer = ConditionalOffer.active.get(name=sale_name, offer_type=ConditionalOffer.FLASH_SALE)
+    except ConditionalOffer.DoesNotExist:
+        sale_offer = None
+
+    if sale_offer:
+        sale_products = sale_offer.products()
+        return sale_products
+    return None

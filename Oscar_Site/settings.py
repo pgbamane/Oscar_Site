@@ -63,7 +63,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS = INSTALLED_APPS + get_core_apps(['apps.catalogue',
                                                  'apps.partner',
                                                  'apps.offer',
-                                                 # 'apps.customer',
+                                                 'apps.customer',
                                                  ])
 
 SITE_ID = 1
@@ -233,11 +233,13 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 # if False, Local Signup Form should be filled again
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
+# ACCOUNT_SIGNUP_FORM_CLASS = 'apps.customer.forms.EmailUserCreationForm'
+
 ACCOUNT_FORMS = {
-    'signup': 'apps.customer_final.forms.signup_form.SignupForm',
+    'signup': 'apps.customer.forms.SignupForm',
 }
 
-ACCOUNT_ADAPTER = 'apps.customer_final.adapters.signup_adapter.SignupAdapter'
+ACCOUNT_ADAPTER = 'apps.customer.adapters.signup_adapter.SignupAdapter'
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 

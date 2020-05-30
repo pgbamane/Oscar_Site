@@ -33,7 +33,7 @@
                 console.log("Form Serialized: ", sign_up_form_id.serialize());
 
                 $.ajax({
-                    url: "{% url 'account_signup' %}",
+                    url: "#",
                     type: "POST",
                     data: sign_up_form_id.serialize(), //data to send to the view*
                     {#data: {'first_name': 'Pradnya'},#}
