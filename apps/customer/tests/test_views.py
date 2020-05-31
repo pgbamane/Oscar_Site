@@ -77,7 +77,7 @@ class SignupViewTestCase(test.TestCase):
         self.assertTrue(response.json())
 
         print("\n Response Json Location:", response.json()['location'])
-        self.assertEqual(response.json()['location'], reverse('promotions:home'))
+        self.assertEqual(response.json()['location'], reverse('account_login'))
 
         print("\n Response Json Form:", response.json()['form'])
         self.assertTrue(response.json()['form'])
