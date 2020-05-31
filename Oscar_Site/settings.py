@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
     'crispy_forms',
-
+    'bootstrap_datepicker_plus',
+    # this is django-bootstrap library for built in bootstrap functionalaties for django
+    'bootstrap3',
     # 'smart_load_tag',
 
     'allauth',
@@ -73,6 +75,11 @@ CRISPY_FAIL_SILENTLY = not DEBUG
 
 # auth customer_final model setting
 AUTH_USER_MODEL = 'users.User'
+
+# bootstrap for django-bootstrap library
+BOOTSTRAP3 = {
+    'include_jquery': True,
+}
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
