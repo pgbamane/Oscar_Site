@@ -20,11 +20,11 @@ urlpatterns = \
 
         path('i18n/', include('django.conf.urls.i18n')),
 
-        # oscar urls
-        path('', application.urls),
-
         # users app urls
         path('', include('apps.users.urls')),
+
+        # oscar urls
+        path('', application.urls),
 
         # all-auth urls
         # path('auth_accounts/signup/', views.SignupView.as_view(), name="account_signup"),
