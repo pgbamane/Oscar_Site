@@ -24,12 +24,13 @@ class UserManager(CoreUserManager):
 
 class User(AbstractUser):
     gender = models.CharField(max_length=20, choices=GENDER_OPTIONS, blank=True, default="")
-    address = models.CharField(max_length=255, help_text="Flat No, Building, Street, Area", default="")
-    locality = models.CharField(max_length=50, help_text='Locality/Town', default="")
-    state = models.CharField(max_length=50, default="")
-    district = models.CharField(max_length=50, default="")
-    city = models.CharField(max_length=50, help_text="City or Taluka", default="")
-    pincode = models.CharField(max_length=10, help_text="Pincode stored as Chars", default="")
+    # address = models.CharField(max_length=255, help_text="Flat No, Building, Street, Area", default="")
+    # locality = models.CharField(max_length=50, help_text='Locality/Town', default="")
+    # state = models.CharField(max_length=50, default="")
+    # district = models.CharField(max_length=50, default="")
+    # city = models.CharField(max_length=50, help_text="City or Taluka", default="")
+    # pincode = models.CharField(max_length=10, help_text="Pincode stored as Chars", default="")
+    # birthday = models.D
 
     phone_number = models.CharField(max_length=13, unique=True, null=True, blank=True)
     # unique treats null=True different values, but empty string will not be unique
