@@ -12,32 +12,9 @@ from oscar.core.compat import (
 from oscar.core.loading import get_profile_class
 from allauth.account.forms import SignupForm as CoreSignUpForm, PasswordField
 from django.utils.translation import ugettext_lazy as _
-
-# from oscar.core.compat import get_user_model, existing_user_fields
-#
-# class ProfileForm(UserForm):
-#     class Meta:
-#         model = User
-#         fields = existing_user_fields(['gender', 'address', 'locality', 'phone_number'])
+from bootstrap_datepicker_plus import DatePickerInput
 
 User = get_user_model()
-
-# class EmailUserCreationForm(CoreEmailUserCreationForm):
-#     # field_order = ['first_name', 'last_name', 'gender', 'address', 'locality', 'state', 'district', 'city', ]
-#
-#     def __init__(self, host=None, *args, **kwargs):
-#         super(EmailUserCreationForm, self).__init__(host, *args, **kwargs)
-#
-#     class Meta:
-#         model = User
-#         fields = ('email', 'gender', 'address', 'locality', 'phone_number')
-#
-#     def signup(self, request, user):
-#         """
-#         Invoked at signup time to complete the signup of the user.
-#         """
-#         pass
-#
 
 GENDER_OPTIONS = [
     ('female', 'Female'),
@@ -73,68 +50,80 @@ class SignupForm(CoreSignUpForm):
                                    # },
                                    # choices=GENDER_OPTIONS
                                ))
+    birthday = forms.DateField(label='Birthday',
+                               widget=DatePickerInput(
+                                   options={
+                                       'format': "DD/MM/YYYY",
+                                       'minDate': '01/01/1960',
+                                   },
+                                   attrs={
+                                       'class': 'form-control',
+                                       'placeholder': 'Select Date of Birth'
+                                   }
+                               ))
+
     # phone_number = forms.CharField(max_length=13, label="Phone No.")
 
-    address = forms.CharField(max_length=255,
-                              # help_text="Flat No, Building, Street, Area",
-                              label="Address (Flat No, Building, Street, Area)",
-                              widget=forms.TextInput(
-                                  attrs={
-                                      'class': 'form-control',
-                                      'placeholder': 'Address',
-                                      'autofocus': 'autofocus',
-                                  }
-                              ))
-    locality = forms.CharField(max_length=50,
-                               # help_text='Locality/Town',
-                               label="Locality/Town",
-                               widget=forms.TextInput(
-                                   attrs={
-                                       'class': 'form-control',
-                                       'placeholder': 'Locality',
-                                       'autofocus': 'autofocus',
-                                   }
-                               )
-                               )
-    state = forms.CharField(max_length=50,
-                            label="State",
-                            widget=forms.TextInput(
-                                attrs={
-                                    'class': 'form-control',
-                                    'placeholder': 'State',
-                                    'autofocus': 'autofocus',
-                                }
-                            ))
-    district = forms.CharField(max_length=50,
-                               label="District",
-                               widget=forms.TextInput(
-                                   attrs={
-                                       'class': 'form-control',
-                                       'placeholder': 'District',
-                                       'autofocus': 'autofocus',
-                                   }
-                               )
-                               )
-    city = forms.CharField(max_length=50,
-                           # help_text="City or Taluka",
-                           label="City/Taluka",
-                           widget=forms.TextInput(
-                               attrs={
-                                   'class': 'form-control',
-                                   'placeholder': 'City',
-                                   'autofocus': 'autofocus',
-                               }
-                           ))
-    pincode = forms.CharField(max_length=10,
-                              # help_text="Pincode stored as Chars",
-                              label="Pincode",
-                              widget=forms.TextInput(
-                                  attrs={
-                                      'class': 'form-control',
-                                      'placeholder': 'Pincode',
-                                      'autofocus': 'autofocus',
-                                  }
-                              ))
+    # address = forms.CharField(max_length=255,
+    #                           # help_text="Flat No, Building, Street, Area",
+    #                           label="Address (Flat No, Building, Street, Area)",
+    #                           widget=forms.TextInput(
+    #                               attrs={
+    #                                   'class': 'form-control',
+    #                                   'placeholder': 'Address',
+    #                                   'autofocus': 'autofocus',
+    #                               }
+    #                           ))
+    # locality = forms.CharField(max_length=50,
+    #                            # help_text='Locality/Town',
+    #                            label="Locality/Town",
+    #                            widget=forms.TextInput(
+    #                                attrs={
+    #                                    'class': 'form-control',
+    #                                    'placeholder': 'Locality',
+    #                                    'autofocus': 'autofocus',
+    #                                }
+    #                            )
+    #                            )
+    # state = forms.CharField(max_length=50,
+    #                         label="State",
+    #                         widget=forms.TextInput(
+    #                             attrs={
+    #                                 'class': 'form-control',
+    #                                 'placeholder': 'State',
+    #                                 'autofocus': 'autofocus',
+    #                             }
+    #                         ))
+    # district = forms.CharField(max_length=50,
+    #                            label="District",
+    #                            widget=forms.TextInput(
+    #                                attrs={
+    #                                    'class': 'form-control',
+    #                                    'placeholder': 'District',
+    #                                    'autofocus': 'autofocus',
+    #                                }
+    #                            )
+    #                            )
+    # city = forms.CharField(max_length=50,
+    #                        # help_text="City or Taluka",
+    #                        label="City/Taluka",
+    #                        widget=forms.TextInput(
+    #                            attrs={
+    #                                'class': 'form-control',
+    #                                'placeholder': 'City',
+    #                                'autofocus': 'autofocus',
+    #                            }
+    #                        ))
+    # pincode = forms.CharField(max_length=10,
+    #                           # help_text="Pincode stored as Chars",
+    #                           label="Pincode",
+    #                           widget=forms.TextInput(
+    #                               attrs={
+    #                                   'class': 'form-control',
+    #                                   'placeholder': 'Pincode',
+    #                                   'autofocus': 'autofocus',
+    #                               }
+    #                           ))
 
     phone_number = forms.CharField(max_length=13,
                                    label="Phone No.",
@@ -146,19 +135,9 @@ class SignupForm(CoreSignUpForm):
                                        }
                                    ))
 
-    # primary key of customer_final
-    # email_id = forms.EmailField(max_length=40,
-    #                             label="Email ID",
-    #                             widget=forms.EmailInput(
-    #                                 attrs={
-    #                                     'class': 'form-control',
-    #                                     'placeholder': 'Email ID'
-    #                                 }
-    #                             )
-    #                             )
-
-    field_order = ['first_name', 'last_name', 'gender', 'address', 'locality', 'state', 'district', 'city',
-                   'pincode', 'phone_number', 'email', 'password1', 'password2']
+    field_order = ['first_name', 'last_name', 'gender', 'birthday',
+                   # 'address', 'locality', 'state', 'district', 'city','pincode',
+                   'phone_number', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
@@ -188,34 +167,34 @@ class SignupForm(CoreSignUpForm):
         # helper.
         helper.layout = Layout(
             Row(
-                Column('first_name', css_class="form-group col-sm-5 mb-0"),
-                Column('last_name', css_class='form-group col-sm-5 mb-0'),
+                Column('first_name', css_class="form-group col-md-5 mb-0"),
+                Column('last_name', css_class='form-group col-md-5 mb-0'),
                 css_class='form-row'
             ),
             InlineRadios('gender', css_class="form-group"),
-            Field('address', css_class="form-group col-md-9 mb-0"),
-            Row(
-                Column('locality', css_class="form-group col-sm-5 mb-0"),
-                Column('state', css_class='form-group col-sm-5 mb-0'),
-                css_class='form-row'
-            ),
-            # Field('locality'),
-            # 'state',
-            Row(
-                Column('district', css_class="form-group col-md-4 mb-0"),
-                Column('city', css_class="form-group col-md-3 mb-0"),
-                Column('pincode', css_class="form-group col-md-3 mb-0"),
-                css_class="form-row"
-            ),
+            Field('birthday', css_class="form-group col-md-10 mb-0"),
+            # Row(
+            #     Column('locality', css_class="form-group col-sm-5 mb-0"),
+            #     Column('state', css_class='form-group col-sm-5 mb-0'),
+            #     css_class='form-row'
+            # ),
+            # # Field('locality'),
+            # # 'state',
+            # Row(
+            #     Column('district', css_class="form-group col-md-4 mb-0"),
+            #     Column('city', css_class="form-group col-md-3 mb-0"),
+            #     Column('pincode', css_class="form-group col-md-3 mb-0"),
+            #     css_class="form-row"
+            # ),
             Field('phone_number', css_class="form-group col-md-10 mb-0"),
             Field('email', css_class="form-group col-md-10 mb-0"),
             Field('password1', css_class="form-group col-md-10 mb-0"),
             Field('password2', css_class="form-group col-md-10 mb-0"),
             # Column('city'),
             Row(
-                Submit('submit', 'Sign Up', css_class="form-group btn col-md-offset-2 col-md-2 mb-0",
+                Submit('submit', 'Sign Up', css_class="form-group btn col-md-offset-1 col-md-2 mb-0",
                        css_id='sign-up-id'),
-                Reset('reset', 'Reset', css_class='form-group btn col-md-offset-2 col-md-2 mb-0 btn-danger')
+                Reset('reset', 'Reset', css_class='form-group btn col-md-offset-1 col-md-2 mb-0 btn-danger')
             )
         )
         # helper.attrs('novalidate')
@@ -251,75 +230,17 @@ class ProfileForm(UserForm):
                                    # },
                                    # choices=GENDER_OPTIONS
                                ))
-    # phone_number = forms.CharField(max_length=13, label="Phone No.")
-
-    address = forms.CharField(max_length=255,
-                              required=False,
-                              # help_text="Flat No, Building, Street, Area",
-                              label="Address (Flat No, Building, Street, Area)",
-                              widget=forms.TextInput(
-                                  attrs={
-                                      'class': 'form-control',
-                                      'placeholder': 'Address',
-                                      'autofocus': 'autofocus',
-                                  }
-                              ))
-    locality = forms.CharField(max_length=50,
-                               required=False,
-                               # help_text='Locality/Town',
-                               label="Locality/Town",
-                               widget=forms.TextInput(
+    birthday = forms.DateField(label='Birthday',
+                               widget=DatePickerInput(
+                                   options={
+                                       'format': "DD/MM/YYYY",
+                                       'minDate': '01/01/1960',
+                                   },
                                    attrs={
-                                       'class': 'form-control',
-                                       'placeholder': 'Locality',
-                                       'autofocus': 'autofocus',
+                                       # 'class': 'form-control',
+                                       'placeholder': 'Select Date of Birth'
                                    }
-                               )
-                               )
-    state = forms.CharField(max_length=50,
-                            required=False,
-                            label="State",
-                            widget=forms.TextInput(
-                                attrs={
-                                    'class': 'form-control',
-                                    'placeholder': 'State',
-                                    'autofocus': 'autofocus',
-                                }
-                            ))
-    district = forms.CharField(max_length=50,
-                               required=False,
-                               label="District",
-                               widget=forms.TextInput(
-                                   attrs={
-                                       'class': 'form-control',
-                                       'placeholder': 'District',
-                                       'autofocus': 'autofocus',
-                                   }
-                               )
-                               )
-    city = forms.CharField(max_length=50,
-                           required=False,
-                           # help_text="City or Taluka",
-                           label="City/Taluka",
-                           widget=forms.TextInput(
-                               attrs={
-                                   'class': 'form-control',
-                                   'placeholder': 'City',
-                                   'autofocus': 'autofocus',
-                               }
-                           ))
-    pincode = forms.CharField(max_length=10,
-                              required=False,
-                              # help_text="Pincode stored as Chars",
-                              label="Pincode",
-                              widget=forms.TextInput(
-                                  attrs={
-                                      'class': 'form-control',
-                                      'placeholder': 'Pincode',
-                                      'autofocus': 'autofocus',
-                                  }
-                              ))
-
+                               ))
     phone_number = forms.CharField(max_length=13,
                                    required=False,
                                    label="Phone No.",
@@ -340,9 +261,8 @@ class ProfileForm(UserForm):
 
     class Meta:
         model = User
-        fields = existing_user_fields(['first_name', 'last_name', 'gender', 'address', 'locality',
-                                       'city', 'state', 'district', 'email',
-                                       'pincode', 'phone_number'])
+        fields = existing_user_fields(['first_name', 'last_name', 'gender', 'birthday', 'email',
+                                       'phone_number'])
 
     @property
     def helper(self):
@@ -360,35 +280,13 @@ class ProfileForm(UserForm):
                 css_class='form-row'
             ),
             InlineRadios('gender', css_class="form-group"),
-            Field('address', css_class="form-group col-md-9 mb-0"),
-            Row(
-                Column('locality', css_class="form-group col-sm-5 mb-0"),
-                Column('state', css_class='form-group col-sm-5 mb-0'),
-                css_class='form-row'
-            ),
-            # Field('locality'),
-            # 'state',
-            Row(
-                Column('district', css_class="form-group col-md-4 mb-0"),
-                Column('city', css_class="form-group col-md-3 mb-0"),
-                Column('pincode', css_class="form-group col-md-3 mb-0"),
-                css_class="form-row"
-            ),
+            Field('birthday', css_class="form-group col-md-9 mb-0"),
             Field('phone_number', css_class="form-group col-md-10 mb-0"),
             Field('email', css_class="form-group col-md-10 mb-0"),
-            # Field('password1', css_class="form-group col-md-10 mb-0"),
-            # Field('password2', css_class="form-group col-md-10 mb-0"),
-            # # Column('city'),
             Row(
                 Submit('submit', 'Save', css_class="form-group btn col-md-offset-2 col-md-2 mb-0",
                        css_id='sign-up-id'),
                 Reset('reset', 'Reset', css_class='form-group btn col-md-offset-2 col-md-2 mb-0 btn-danger')
             )
         )
-        # helper.attrs('novalidate')
         return helper
-
-# # UserForm = SignupForm
-# Profile = get_profile_class()
-# if not Profile:
-#     ProfileForm = UserForm
