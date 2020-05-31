@@ -1,0 +1,29 @@
+{#{% extends 'oscar/customer/profile/profile_form.html' %}#}
+{% extends "customer/baseaccountpage.html" %}
+{#{% extends "layout.html" %}#}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Profile Form' %} | {{ block.super }}
+{% endblock %}
+
+{% block tabcontent %}
+    <div class="container" style="">
+        {#    margin: 49px;#}
+        <div class="row">
+            <div class="" id="form-div" style="background-color: #7b858a1a;
+            padding: 30px 30px; border: 1px solid #286090;border-radius: 3px;">
+                <div class="text-center text-dark">
+                </div>
+                {% crispy form %}
+                {#                {{ form|crispy }}#}
+                <hr>
+
+            </div>
+        </div>
+    </div>
+{% endblock tabcontent %}
