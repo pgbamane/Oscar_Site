@@ -1,6 +1,7 @@
 from oscar.apps.customer.abstract_models import AbstractUser, UserManager as CoreUserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+import birthday
 
 GENDER_OPTIONS = [
     ('female', 'Female'),
@@ -30,8 +31,8 @@ class User(AbstractUser):
     # district = models.CharField(max_length=50, default="")
     # city = models.CharField(max_length=50, help_text="City or Taluka", default="")
     # pincode = models.CharField(max_length=10, help_text="Pincode stored as Chars", default="")
-    # birthday = models.D
 
+    birthday = models.DateField(auto_now=False, null=True, blank=True)
     phone_number = models.CharField(max_length=13, unique=True, null=True, blank=True)
     # unique treats null=True different values, but empty string will not be unique
 
