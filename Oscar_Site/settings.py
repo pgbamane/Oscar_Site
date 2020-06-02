@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from oscar.defaults import *
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,13 +43,17 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
 
+    'test_without_migrations',
+
     'compressor',
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
     'crispy_forms',
     'bootstrap_datepicker_plus',
     # this is django-bootstrap library for built in bootstrap functionalaties for django
-    'bootstrap3',
+    # 'bootstrap3',
+    'jsonview',
+    'django_nose',
     # 'smart_load_tag',
 
     'allauth',
@@ -62,11 +67,33 @@ INSTALLED_APPS = [
     'apps.users',
 ]
 
+# TESTING = 'test' in sys.argv[1:]
+# if TESTING:
+#     print('=========================')
+#     print('In TEST Mode - Disableling Migrations')
+#     print('=========================')
+#
+#
+#     class DisableMigrations(object):
+#
+#         def __contains__(self, item):
+#             return True
+#
+#         def __getitem__(self, item):
+#             return "notmigrations"
+#
+#
+#     MIGRATION_MODULES = DisableMigrations()
+
 INSTALLED_APPS = INSTALLED_APPS + get_core_apps(['apps.catalogue',
                                                  'apps.partner',
                                                  'apps.offer',
                                                  'apps.customer',
                                                  ])
+
+TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
+
+SOUTH_TESTS_MIGRATE = False
 
 SITE_ID = 1
 
@@ -77,7 +104,7 @@ CRISPY_FAIL_SILENTLY = not DEBUG
 AUTH_USER_MODEL = 'users.User'
 
 # bootstrap for django-bootstrap library
-BOOTSTRAP3 = {
+BOOTSTRAP4 = {
     'include_jquery': True,
 }
 
