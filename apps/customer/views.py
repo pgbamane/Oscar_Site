@@ -1,6 +1,8 @@
 # from oscar.apps.customer.views import AccountRegistrationView as CoreAccountRegistrationView
 from allauth.account.views import SignupView as CoreSignupView
-
+from crispy_forms.utils import render_crispy_form
+from django.template.context_processors import csrf
+from jsonview.decorators import json_view
 from oscar.apps.customer.views import ProfileUpdateView as CoreProfileUpdateView, ProfileView as CoreProfileView
 from apps.customer.forms import SignupForm
 # from oscar.apps.customer.views import *
@@ -60,8 +62,7 @@ class ProfileView(CoreProfileView):
 
         # sort the fields in custom order
         additional_fields = list(User._meta.additional_fields)
-        SORT_ORDER = {'gender': 0, 'phone_number': 1, 'address': 2, 'locality': 3,
-                      'city': 4, 'district': 5, 'state': 6, 'pincode': 7}
+        SORT_ORDER = {'gender': 0, 'phone_number': 1, 'birthday': 2}
 
         additional_fields.sort(key=lambda val: SORT_ORDER[val])
 
@@ -90,57 +91,18 @@ class ProfileView(CoreProfileView):
 
 class ProfileUpdateView(CoreProfileUpdateView):
     form_class = ProfileForm
-    # template_name = 'account/signup.html'
     template_name = 'customer/profile/profile_form.html'
     communication_type_code = 'EMAIL_CHANGED'
     page_title = _('Edit Profile')
     active_tab = 'profile'
     success_url = reverse_lazy('customer:profile-view')
 
-    # def get(self, request, *args, **kwargs):
-    #     return super().get(self, request, *args, **kwargs)
-    # # def __init__(self):
-    #     super().__init__(self)
-# def get_profile_fields(self, customer_final):
-#     field_data = []
-# #
-# #     # Check for custom customer_final model
-# #     for field_name in User._meta.additional_fields:
-# #         field_data.append(
-# #             self.get_model_field_data(customer_final, field_name))
-# #
-# #     # Check for profile class
-# #     profile_class = get_profile_class()
-# #     if profile_class:
-# #         try:
-# #             profile = profile_class.objects.get(customer_final=customer_final)
-# #         except ObjectDoesNotExist:
-# #             profile = profile_class(customer_final=customer_final)
-# #
-# #         field_names = [f.name for f in profile._meta.local_fields]
-# #         for field_name in field_names:
-# #             if field_name in ('customer_final', 'id'):
-# #                 continue
-# #             field_data.append(
-# #                 self.get_model_field_data(profile, field_name))
-# #
-# #     return field_data
-# #
-# # def get_model_field_data(self, model_class, field_name):
-# #     """
-# #     Extract the verbose name and value for a model's field value
-# #     """
-# #     field = model_class._meta.get_field(field_name)
-# #     if field.choices:
-# #         value = getattr(model_class, 'get_%s_display' % field_name)()
-# #     else:
-# #         value = getattr(model_class, field_name)
-# #     return {
-# #         'name': getattr(field, 'verbose_name'),
-# #         'value': value,
-# #     }
-# #
-# # def get_context_data(self, **kwargs):
-# #     ctx = super(ProfileUpdateView, self).get_context_data(**kwargs)
-# #     ctx['profile_fields'] = self.get_profile_fields(self.request.customer_final)
-# #     return ctx
+    @json_view
+    def form_invalid(self, form):
+        # resp = {}
+        # RequestContext ensures CSRF token is placed in newly rendered form_html
+        csrf_context = {}
+        csrf_context.update(csrf(self.request))
+        profile_form_html = render_crispy_form(form, context=csrf_context)
+        # resp['form'] = profile_form_html
+        return {'form': profile_form_html}
