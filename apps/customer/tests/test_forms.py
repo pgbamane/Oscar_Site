@@ -96,6 +96,7 @@ class SignupFormTests(TestCase):
     def test_form_gender_default_female(self):
         form = SignupForm()
         print("Form valid: ", form.is_valid())
+        self.assertFalse(form.is_bound)
         print('Gender Initial Value: ', form.initial['gender'])
         self.assertEqual(form.initial['gender'], FEMALE)
 
