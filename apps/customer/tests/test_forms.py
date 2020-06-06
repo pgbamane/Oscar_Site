@@ -2,7 +2,8 @@ from allauth.account.models import EmailAddress
 from django.test import TestCase
 from django.urls import reverse
 from oscar.core.compat import get_user_model
-from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, EMAIL_REQUIRED_ERROR
+from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, EMAIL_REQUIRED_ERROR, LAST_NAME_REQUIRED_ERROR, \
+    BIRTHDAY_PLACEHOLDER
 from apps.users.models import FEMALE, MALE
 import datetime
 from django.test.client import RequestFactory
@@ -81,6 +82,27 @@ class SignupFormTests(TestCase):
         print("First Name empty: {x}".format(x="empty" if not form.data['first_name'] else 'Not empty'))
         print("First name required error: ", form.errors['first_name'])
         self.assertEqual(form.errors['first_name'], FIRST_NAME_REQUIRED_ERROR)
+
+    def test_form_last_name_required_error(self):
+        form = SignupForm({
+            'last_name': '',
+        })
+        print("Form Valid: ", form.is_valid())
+        self.assertFalse(form.is_valid())
+        print("Last Name empty: {x}".format(x="empty" if not form.data['last_name'] else 'Not empty'))
+        print("Last Name required error: ", form.errors['last_name'])
+        self.assertEqual(form.errors['last_name'], LAST_NAME_REQUIRED_ERROR)
+
+    def test_form_gender_default_female(self):
+        form = SignupForm()
+        print("Form valid: ", form.is_valid())
+        print('Gender Initial Value: ', form.initial['gender'])
+        self.assertEqual(form.initial['gender'], FEMALE)
+
+    def test_form_birthday_placeholder(self):
+        form = SignupForm()
+        print("Form Birthday placeholder: ", form.fields['birthday'].placeholder)
+        self.assertEqual(form.fields['birthday'].placeholder, BIRTHDAY_PLACEHOLDER)
 
 
 class ProfileFormMetaTests(TestCase):
