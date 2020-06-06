@@ -27,7 +27,10 @@ class SignupForm(CoreSignUpForm):
                                          'class': 'form-control',
                                          'placeholder': 'Enter First Name',
                                          'autofocus': 'autofocus',
-                                     }))
+                                     }),
+                                 error_messages={
+                                     'required': FIRST_NAME_REQUIRED_ERROR
+                                 })
     last_name = forms.CharField(max_length=30,
                                 label="Last Name",
                                 widget=forms.TextInput(
@@ -54,70 +57,6 @@ class SignupForm(CoreSignUpForm):
                                        'placeholder': 'Select Date of Birth'
                                    }
                                ))
-
-    # phone_number = forms.CharField(max_length=13, label="Phone No.")
-
-    # address = forms.CharField(max_length=255,
-    #                           # help_text="Flat No, Building, Street, Area",
-    #                           label="Address (Flat No, Building, Street, Area)",
-    #                           widget=forms.TextInput(
-    #                               attrs={
-    #                                   'class': 'form-control',
-    #                                   'placeholder': 'Address',
-    #                                   'autofocus': 'autofocus',
-    #                               }
-    #                           ))
-    # locality = forms.CharField(max_length=50,
-    #                            # help_text='Locality/Town',
-    #                            label="Locality/Town",
-    #                            widget=forms.TextInput(
-    #                                attrs={
-    #                                    'class': 'form-control',
-    #                                    'placeholder': 'Locality',
-    #                                    'autofocus': 'autofocus',
-    #                                }
-    #                            )
-    #                            )
-    # state = forms.CharField(max_length=50,
-    #                         label="State",
-    #                         widget=forms.TextInput(
-    #                             attrs={
-    #                                 'class': 'form-control',
-    #                                 'placeholder': 'State',
-    #                                 'autofocus': 'autofocus',
-    #                             }
-    #                         ))
-    # district = forms.CharField(max_length=50,
-    #                            label="District",
-    #                            widget=forms.TextInput(
-    #                                attrs={
-    #                                    'class': 'form-control',
-    #                                    'placeholder': 'District',
-    #                                    'autofocus': 'autofocus',
-    #                                }
-    #                            )
-    #                            )
-    # city = forms.CharField(max_length=50,
-    #                        # help_text="City or Taluka",
-    #                        label="City/Taluka",
-    #                        widget=forms.TextInput(
-    #                            attrs={
-    #                                'class': 'form-control',
-    #                                'placeholder': 'City',
-    #                                'autofocus': 'autofocus',
-    #                            }
-    #                        ))
-    # pincode = forms.CharField(max_length=10,
-    #                           # help_text="Pincode stored as Chars",
-    #                           label="Pincode",
-    #                           widget=forms.TextInput(
-    #                               attrs={
-    #                                   'class': 'form-control',
-    #                                   'placeholder': 'Pincode',
-    #                                   'autofocus': 'autofocus',
-    #                               }
-    #                           ))
-
     phone_number = forms.CharField(max_length=13,
                                    label="Phone No.",
                                    widget=forms.TextInput(
@@ -129,7 +68,6 @@ class SignupForm(CoreSignUpForm):
                                    ))
 
     field_order = ['first_name', 'last_name', 'gender', 'birthday',
-                   # 'address', 'locality', 'state', 'district', 'city','pincode',
                    'phone_number', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
@@ -167,7 +105,6 @@ class SignupForm(CoreSignUpForm):
             Field('email', css_class="form-group col-md-10 mb-0"),
             Field('password1', css_class="form-group col-md-10 mb-0"),
             Field('password2', css_class="form-group col-md-10 mb-0"),
-            # Column('city'),
             Row(
                 Submit('submit', 'Sign Up', css_class="form-group btn col-md-offset-1 col-md-2 mb-0",
                        css_id='sign-up-id'),
