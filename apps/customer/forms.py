@@ -1,11 +1,9 @@
 from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Field, Submit, Reset
-# from django.forms import EmailField
 from oscar.apps.customer.forms import UserForm
 from django import forms
 from django.urls import reverse
-# from oscar.apps.customer.forms import ProfileForm as UserForm, EmailUserCreationForm as CoreEmailUserCreationForm
 from oscar.core.compat import (
     existing_user_fields, get_user_model
 )
@@ -20,6 +18,8 @@ GENDER_OPTIONS = [
     ('female', 'Female'),
     ('male', 'Male')
 ]
+
+FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
 
 
 class SignupForm(CoreSignUpForm):
@@ -162,9 +162,6 @@ class SignupForm(CoreSignUpForm):
         helper.form_id = 'id-Sign-Up-Form'
         helper.form_method = 'POST'
         helper.form_action = reverse('account_signup')
-        # helper.field_class = "col-md-6"
-        # helper.label_class = "col-md-6"
-        # helper.
         helper.layout = Layout(
             Row(
                 Column('first_name', css_class="form-group col-md-5 mb-0"),
@@ -173,19 +170,6 @@ class SignupForm(CoreSignUpForm):
             ),
             InlineRadios('gender', css_class="form-group"),
             Field('birthday', css_class="form-group col-md-10 mb-0"),
-            # Row(
-            #     Column('locality', css_class="form-group col-sm-5 mb-0"),
-            #     Column('state', css_class='form-group col-sm-5 mb-0'),
-            #     css_class='form-row'
-            # ),
-            # # Field('locality'),
-            # # 'state',
-            # Row(
-            #     Column('district', css_class="form-group col-md-4 mb-0"),
-            #     Column('city', css_class="form-group col-md-3 mb-0"),
-            #     Column('pincode', css_class="form-group col-md-3 mb-0"),
-            #     css_class="form-row"
-            # ),
             Field('phone_number', css_class="form-group col-md-10 mb-0"),
             Field('email', css_class="form-group col-md-10 mb-0"),
             Field('password1', css_class="form-group col-md-10 mb-0"),
@@ -203,7 +187,7 @@ class SignupForm(CoreSignUpForm):
 
 class ProfileForm(UserForm):
     first_name = forms.CharField(max_length=30,
-                                 required=False,
+                                 required=True,
                                  label="First Name",
                                  widget=forms.TextInput(
                                      attrs={
@@ -231,6 +215,7 @@ class ProfileForm(UserForm):
                                    # choices=GENDER_OPTIONS
                                ))
     birthday = forms.DateField(label='Birthday',
+                               required=False,
                                widget=DatePickerInput(
                                    options={
                                        'format': "DD/MM/YYYY",
@@ -261,18 +246,24 @@ class ProfileForm(UserForm):
 
     class Meta:
         model = User
-        fields = existing_user_fields(['first_name', 'last_name', 'gender', 'birthday', 'email',
-                                       'phone_number'])
+        fields = existing_user_fields(['first_name', 'last_name', 'gender', 'birthday',
+                                       'phone_number', 'email'])
+
+        error_messages = {
+            'first_name': {
+                'required': FIRST_NAME_REQUIRED_ERROR,
+            },
+            'email': {
+                'required': 'Email is required.'
+            }
+        }
 
     @property
     def helper(self):
         helper = FormHelper()
         helper.form_id = 'id-Profile-Update-Form'
         helper.form_method = 'POST'
-        helper.form_action = reverse('customer:profile-update')
-        # helper.field_class = "col-md-6"
-        # helper.label_class = "col-md-6"
-        # helper.
+        # helper.form_action = reverse('customer:profile-update')
         helper.layout = Layout(
             Row(
                 Column('first_name', css_class="form-group col-sm-5 mb-0"),
@@ -285,7 +276,7 @@ class ProfileForm(UserForm):
             Field('email', css_class="form-group col-md-10 mb-0"),
             Row(
                 Submit('submit', 'Save', css_class="form-group btn col-md-offset-2 col-md-2 mb-0",
-                       css_id='sign-up-id'),
+                       css_id='id-Profile-Save'),
                 Reset('reset', 'Reset', css_class='form-group btn col-md-offset-2 col-md-2 mb-0 btn-danger')
             )
         )
