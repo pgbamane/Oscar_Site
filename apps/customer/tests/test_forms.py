@@ -3,8 +3,37 @@ from oscar.core.compat import get_user_model
 from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, EMAIL_REQUIRED_ERROR
 
 
-class SignupFormTestCase(TestCase):
-    def test_signup_form_field_errors(self):
+class SignupFormTests(TestCase):
+    def test_form_fields(self):
+        expected_fields = {'first_name',
+                           'last_name',
+                           'gender',
+                           'birthday',
+                           'phone_number',
+                           'email',
+                           'password1',
+                           'password2'}
+        form = SignupForm()
+        # self.fail(form.fields.keys())
+        form_fields = set(form.fields.keys())
+        self.assertEqual(form_fields, expected_fields)
+
+    def test_form_fields_order(self):
+        expected_fields_order = ['first_name',
+                                 'last_name',
+                                 'gender',
+                                 'birthday',
+                                 'phone_number',
+                                 'email',
+                                 'password1',
+                                 'password2']
+
+        form = SignupForm()
+        fields_order = list(form.fields.keys())
+        print("Form Field Order : ", fields_order)
+        self.assertEqual(fields_order, expected_fields_order)
+
+    def test_form_valid_data(self):
         signup_form_data = {
             'first_name': 'Akshay',
             'last_name': 'Satpute',
@@ -29,14 +58,6 @@ class SignupFormTestCase(TestCase):
         self.assertEqual(form.errors, {})
 
         print("\n first_name:", form.cleaned_data['first_name'])
-
-    def test_form_field_order(self):
-        signup_form = SignupForm()
-
-        print("Form Field Order : ", signup_form.field_order)
-        self.assertEqual(signup_form.field_order,
-                         ['first_name', 'last_name', 'gender', 'address', 'locality', 'state', 'district', 'city',
-                          'pincode', 'phone_number', 'email', 'password1', 'password2'])
 
 
 class ProfileFormMetaTests(TestCase):
