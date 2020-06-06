@@ -11,13 +11,9 @@ from oscar.core.loading import get_profile_class
 from allauth.account.forms import SignupForm as CoreSignUpForm, PasswordField
 from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput
+from apps.users.models import FEMALE, GENDER_OPTIONS
 
 User = get_user_model()
-
-GENDER_OPTIONS = [
-    ('female', 'Female'),
-    ('male', 'Male')
-]
 
 FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
 EMAIL_REQUIRED_ERROR = 'Email is required.'
@@ -44,13 +40,9 @@ class SignupForm(CoreSignUpForm):
 
     gender = forms.ChoiceField(label="Gender",
                                choices=GENDER_OPTIONS,
-                               initial=GENDER_OPTIONS[0][0],
-                               widget=forms.RadioSelect(
-                                   # attrs={
-                                   #     'class': 'form-control',
-                                   # },
-                                   # choices=GENDER_OPTIONS
-                               ))
+                               initial=FEMALE,
+                               widget=forms.RadioSelect()
+                               )
     birthday = forms.DateField(label='Birthday',
                                widget=DatePickerInput(
                                    options={
