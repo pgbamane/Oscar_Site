@@ -1,9 +1,19 @@
+from allauth.account.models import EmailAddress
 from django.test import TestCase
+from django.urls import reverse
 from oscar.core.compat import get_user_model
 from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, EMAIL_REQUIRED_ERROR
+from apps.users.models import FEMALE, MALE
+import datetime
+from django.test.client import RequestFactory
+
+User = get_user_model()
 
 
 class SignupFormTests(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
     def test_form_fields(self):
         expected_fields = {'first_name',
                            'last_name',
@@ -34,30 +44,34 @@ class SignupFormTests(TestCase):
         self.assertEqual(fields_order, expected_fields_order)
 
     def test_form_valid_data(self):
-        signup_form_data = {
+        form_data = {
             'first_name': 'Akshay',
             'last_name': 'Satpute',
-            'gender': 'male',
-            'address': 'satpute male',
-            'locality': 'waddi',
-            'state': 'Maharashtra',
-            'district': 'Sangli',
-            'city': 'Miraj',
-            'pincode': '416410',
+            'gender': MALE,
+            'birthday': datetime.date(year=2000, month=1, day=1),
             'phone_number': '7878457845',
             'email': 'akshay@gmail.com',
             'password1': 'satputeps',
             'password2': 'satputeps'
         }
-        form = SignupForm(signup_form_data)
+        form = SignupForm(form_data)
 
-        print("\n\nForm Valid:", form.is_valid())
+        print("\nForm Valid: ", form.is_valid())
         self.assertTrue(form.is_valid())
 
-        print("\n\nForm errors:", form.errors)
+        print("\nForm errors: {x}".format(x=form.errors if form.errors else "No errors."))
         self.assertEqual(form.errors, {})
 
-        print("\n first_name:", form.cleaned_data['first_name'])
+        # request = self.factory.post(reverse('account_signup'))
+        # form.save(request)
+        # user = User.object.get(first_name=form.cleaned_data['first_name'])
+        # self.email_address = EmailAddress.objects.create(
+        #     user=user,
+        #     email=user.email,
+        #     verified=True,
+        #     primary=True)
+        #
+        # print("\nFirst Name:", user.first_name)
 
 
 class ProfileFormMetaTests(TestCase):
@@ -116,7 +130,6 @@ class ProfileFormDataTests(TestCase):
     def setUpTestData(cls):
         print("Creating User and Profile form...")
         super(ProfileFormDataTests, cls).setUpTestData()
-        User = get_user_model()
         cls.user = User.objects.create_user(first_name="Pradnya",
                                             last_name="Bamane",
                                             email='pradnya23@gmail.com')
