@@ -3,9 +3,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 import birthday
 
+FEMALE, MALE = 'Female', 'Male'
 GENDER_OPTIONS = [
-    ('female', 'Female'),
-    ('male', 'Male')
+    (FEMALE, 'Female'),
+    (MALE, 'Male')
 ]
 
 
