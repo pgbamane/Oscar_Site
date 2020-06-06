@@ -19,6 +19,8 @@ FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
 LAST_NAME_REQUIRED_ERROR = ['Last Name is required.']
 EMAIL_REQUIRED_ERROR = 'Email is required.'
 
+BIRTHDAY_PLACEHOLDER = 'Select Date of Birth'
+
 
 class SignupForm(CoreSignUpForm):
     first_name = forms.CharField(max_length=30,
@@ -57,7 +59,7 @@ class SignupForm(CoreSignUpForm):
                                    },
                                    attrs={
                                        'class': 'form-control',
-                                       'placeholder': 'Select Date of Birth'
+                                       'placeholder': BIRTHDAY_PLACEHOLDER
                                    }
                                ))
     phone_number = forms.CharField(max_length=13,
