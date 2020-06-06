@@ -16,6 +16,7 @@ from apps.users.models import FEMALE, GENDER_OPTIONS
 User = get_user_model()
 
 FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
+LAST_NAME_REQUIRED_ERROR = ['Last Name is required.']
 EMAIL_REQUIRED_ERROR = 'Email is required.'
 
 
@@ -38,8 +39,10 @@ class SignupForm(CoreSignUpForm):
                                         'class': 'form-control',
                                         'placeholder': 'Enter Last Name',
                                         'autofocus': 'autofocus',
-                                    }
-                                ))
+                                    }),
+                                error_messages={
+                                    'required': LAST_NAME_REQUIRED_ERROR
+                                })
 
     gender = forms.ChoiceField(label="Gender",
                                choices=GENDER_OPTIONS,
