@@ -20,6 +20,7 @@ GENDER_OPTIONS = [
 ]
 
 FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
+EMAIL_REQUIRED_ERROR = 'Email is required.'
 
 
 class SignupForm(CoreSignUpForm):
@@ -254,8 +255,8 @@ class ProfileForm(UserForm):
                 'required': FIRST_NAME_REQUIRED_ERROR,
             },
             'email': {
-                'required': 'Email is required.'
-            }
+                'required': EMAIL_REQUIRED_ERROR,
+            },
         }
 
     @property
