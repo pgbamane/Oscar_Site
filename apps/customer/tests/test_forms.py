@@ -102,8 +102,8 @@ class SignupFormTests(TestCase):
 
     def test_form_birthday_placeholder(self):
         form = SignupForm()
-        print("Form Birthday placeholder: ", form.fields['birthday'].placeholder)
-        self.assertEqual(form.fields['birthday'].placeholder, BIRTHDAY_PLACEHOLDER)
+        print("Form Birthday placeholder: ", form.fields['birthday'].widget.attrs['placeholder'])
+        self.assertEqual(form.fields['birthday'].widget.attrs['placeholder'], BIRTHDAY_PLACEHOLDER)
 
 
 class ProfileFormMetaTests(TestCase):
