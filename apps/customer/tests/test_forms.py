@@ -73,6 +73,15 @@ class SignupFormTests(TestCase):
         #
         # print("\nFirst Name:", user.first_name)
 
+    def test_form_first_name_required_error(self):
+        form = SignupForm({
+            'first_name': '',
+        })
+        print("\nForm Valid: ", form.is_valid())
+        print("First Name empty: {x}".format(x="empty" if not form.data['first_name'] else 'Not empty'))
+        print("First name required error: ", form.errors['first_name'])
+        self.assertEqual(form.errors['first_name'], FIRST_NAME_REQUIRED_ERROR)
+
 
 class ProfileFormMetaTests(TestCase):
     @classmethod
