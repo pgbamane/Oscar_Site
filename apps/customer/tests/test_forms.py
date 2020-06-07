@@ -105,6 +105,19 @@ class SignupFormTests(TestCase):
         print("Form Birthday placeholder: ", form.fields['birthday'].widget.attrs['placeholder'])
         self.assertEqual(form.fields['birthday'].widget.attrs['placeholder'], BIRTHDAY_PLACEHOLDER)
 
+    def test_form_birthday_date_fields(self):
+        year = 1995
+        month = 7
+        day = 23
+        form = SignupForm({
+            'birthday': datetime.date(year=year, month=month, day=day)
+        })
+        print("Form Bound: ", form.is_bound)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.cleaned_data['birthday'].year, year)
+        self.assertEqual(form.cleaned_data['birthday'].month, month)
+        self.assertEqual(form.cleaned_data['birthday'].day, day)
+
 
 class ProfileFormMetaTests(TestCase):
     @classmethod
