@@ -4,7 +4,7 @@ import json
 from django.test import Client, RequestFactory
 from django.urls import reverse
 
-from ..forms import SignupForm
+from ..forms import SignupForm, ProfileForm
 from ..views import SIGNUP_PAGE_MESSAGE
 
 
@@ -31,6 +31,13 @@ class SignupTests(test.TestCase):
         self.assertTrue(isinstance(response.context['form'], SignupForm))
         self.assertFormError(response, 'form', None, [])
         # self.ass
+
+    def test_get_request_signup_form(self):
+        response = self.client.get(reverse('account_signup'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/signup.html')
+        self.assertIn('form', response.context, msg="form is not in Template Context")
+        self.assertIsInstance(response.context['form'], SignupForm, msg="Form is not instance of SignupForm")
 
     def test_post_request_form_valid_data(self):
         signup_form_data = {
