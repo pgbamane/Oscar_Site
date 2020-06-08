@@ -1,6 +1,8 @@
+import datetime
 from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Field, Submit, Reset
+from django.core.exceptions import ValidationError
 from oscar.apps.customer.forms import UserForm
 from django import forms
 from django.urls import reverse
@@ -12,6 +14,7 @@ from allauth.account.forms import SignupForm as CoreSignUpForm, PasswordField
 from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput
 from apps.users.models import FEMALE, GENDER_OPTIONS
+from .validators import BIRTHDAY_INVALID_ERROR
 
 User = get_user_model()
 
@@ -20,6 +23,7 @@ LAST_NAME_REQUIRED_ERROR = ['Last Name is required.']
 EMAIL_REQUIRED_ERROR = 'Email is required.'
 
 BIRTHDAY_PLACEHOLDER = 'Select Date of Birth'
+BIRTHDAY_FORMAT = "%d/%m/%Y"
 
 
 class SignupForm(CoreSignUpForm):
@@ -48,14 +52,16 @@ class SignupForm(CoreSignUpForm):
 
     gender = forms.ChoiceField(label="Gender",
                                choices=GENDER_OPTIONS,
-                               initial=FEMALE,
                                widget=forms.RadioSelect()
                                )
     birthday = forms.DateField(label='Birthday',
+                               input_formats=(BIRTHDAY_FORMAT,),
                                widget=DatePickerInput(
                                    options={
-                                       'format': "DD/MM/YYYY",
-                                       'minDate': '01/01/1960',
+                                       # display format
+                                       'format': BIRTHDAY_FORMAT,
+                                       'minDate': datetime.date(year=1960, month=1, day=1).strftime(BIRTHDAY_FORMAT),
+                                       'maxDate': datetime.date.today().strftime(BIRTHDAY_FORMAT)
                                    },
                                    attrs={
                                        'class': 'form-control',
@@ -76,6 +82,12 @@ class SignupForm(CoreSignUpForm):
                    'phone_number', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
+        # get initial arguments if any
+        initial_arguments = kwargs.get('initial', None)
+        updated_initial = {}
+        updated_initial['gender'] = FEMALE
+        # Finally update the kwargs initial reference
+        kwargs.update(initial=updated_initial)
         super(SignupForm, self).__init__(*args, **kwargs)
         self.fields['password2'] = PasswordField(label=_("Confirm Password"))
         self.fields['email'] = forms.EmailField(label=_('Email ID'),
@@ -85,6 +97,14 @@ class SignupForm(CoreSignUpForm):
                                                         'placeholder': 'Email ID'
                                                     }
                                                 ))
+
+    def clean_birthday(self):
+        birthday = self.cleaned_data['birthday']
+        min = datetime.date(year=1960, month=1, day=1)
+        max = datetime.date.today()
+        if birthday > max or birthday < min:
+            raise forms.ValidationError(BIRTHDAY_INVALID_ERROR)
+        return birthday
 
     def save(self, request):
         print("\nSign Up Form Save Method Called: ")
