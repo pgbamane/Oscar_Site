@@ -7,19 +7,18 @@ from django.urls import reverse
 from ..forms import SignupForm
 
 
-class SignupViewTestCase(test.TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.client = Client()
+class SignupTests(test.TestCase):
 
     def setUp(self):
+        self.client = Client()
         self.factory = RequestFactory()
 
-    def test_get_request(self):
+    def test_get_request_using_url_name(self):
         response = self.client.get(reverse('account_signup'))
         # print("Path:", response.path)
-        self.assertTrue(response.status_code == 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/signup.html')
+        self.assertTrue(isinstance(response.context['form'], SignupForm))
         self.assertFormError(response, 'form', None, [])
         # self.ass
 
