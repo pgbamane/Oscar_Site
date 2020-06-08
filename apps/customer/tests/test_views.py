@@ -5,6 +5,7 @@ from django.test import Client, RequestFactory
 from django.urls import reverse
 
 from ..forms import SignupForm
+from ..views import SIGNUP_PAGE_MESSAGE
 
 
 class SignupTests(test.TestCase):
@@ -12,6 +13,15 @@ class SignupTests(test.TestCase):
     def setUp(self):
         self.client = Client()
         self.factory = RequestFactory()
+
+    def test_get_request_using_url(self):
+        response = self.client.get('/accounts/signup/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/signup.html')
+        # self.assertIn('form', response.context, msg="form is not in SignupView Context")
+        # self.assertIsInstance(response.context['form'], SignupForm)
+        # self.assertIn('form_title', response.context)
+        # self.assertEqual(response.context['form_title'], SIGNUP_PAGE_MESSAGE)
 
     def test_get_request_using_url_name(self):
         response = self.client.get(reverse('account_signup'))
