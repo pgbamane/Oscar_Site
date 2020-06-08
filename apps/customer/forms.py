@@ -24,6 +24,7 @@ EMAIL_REQUIRED_ERROR = 'Email is required.'
 
 BIRTHDAY_PLACEHOLDER = 'Select Date of Birth'
 BIRTHDAY_FORMAT = "%d/%m/%Y"
+MINIMUM_BIRTHDAY = datetime.date(year=1960, month=1, day=1)
 
 
 class SignupForm(CoreSignUpForm):
@@ -100,9 +101,8 @@ class SignupForm(CoreSignUpForm):
 
     def clean_birthday(self):
         birthday = self.cleaned_data['birthday']
-        min = datetime.date(year=1960, month=1, day=1)
         max = datetime.date.today()
-        if birthday > max or birthday < min:
+        if birthday > max or birthday < MINIMUM_BIRTHDAY:
             raise forms.ValidationError(BIRTHDAY_INVALID_ERROR)
         return birthday
 
