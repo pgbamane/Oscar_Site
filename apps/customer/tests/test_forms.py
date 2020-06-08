@@ -82,7 +82,7 @@ class SignupFormTests(TestCase):
         print("\nForm Valid: ", form.is_valid())
         print("First Name empty: {x}".format(x="empty" if not form.data['first_name'] else 'Not empty'))
         print("First name required error: ", form.errors['first_name'])
-        self.assertEqual(form.errors['first_name'], FIRST_NAME_REQUIRED_ERROR)
+        self.assertEqual(form.errors['first_name'], [FIRST_NAME_REQUIRED_ERROR])
 
     def test_form_last_name_required_error(self):
         form = SignupForm({
@@ -149,6 +149,27 @@ class SignupFormTests(TestCase):
         self.assertFalse(form.is_valid())
         print("Form email errors: ", form.errors['email'])
         self.assertEqual(form.errors['email'], [validators.EMAIL_INVALID_DOMAIN_ERROR])
+
+    def test_form_email_already_taken(self):
+        User.objects.create_user(first_name="Pradnya",
+                                 last_name="Bamane",
+                                 email="pradnya@gmail.com",
+                                 password="satputeps")
+        pradnya_user = User.objects.get(first_name='Pradnya')
+        self.assertTrue(pradnya_user != None)
+        self.assertEqual(pradnya_user.first_name, "Pradnya")
+        self.assertEqual(pradnya_user.last_name, "Bamane")
+        self.assertEqual(pradnya_user.email, "pradnya@gmail.com")
+        form_data = {
+            'first_name': 'Pradnya',
+            'email': 'pradnya@gmail.com',
+            'password1': 'satputeps',
+            'password2': 'satputeps'
+        }
+        form = SignupForm(form_data)
+        self.assertFalse(form.is_valid())
+        print("Form email already taken error: ", form.errors['email'])
+        self.assertEqual(form.errors['email'], [validators.EMAIL_ALREADY_TAKEN_ERROR])
 
 
 class ProfileFormMetaTests(TestCase):
