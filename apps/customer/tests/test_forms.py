@@ -7,7 +7,7 @@ from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, EMAIL_RE
 from apps.users.models import FEMALE, MALE
 import datetime
 from django.test.client import RequestFactory
-from apps.customer.validators import EMAIL_INVALID_DOMAIN_ERROR
+from apps.customer.validators import EMAIL_INVALID_DOMAIN_ERROR, BIRTHDAY_INVALID_ERROR
 
 User = get_user_model()
 
@@ -120,12 +120,13 @@ class SignupFormTests(TestCase):
         self.assertEqual(form.cleaned_data['birthday'].month, month)
         self.assertEqual(form.cleaned_data['birthday'].day, day)
 
-    def test_form_birthday_greater_than_max_invalid(self):
+    def test_form_birthday_greater_than_today_invalid(self):
         form = SignupForm({
-            'birthday': datetime.date(year=2020, month=6, day=10)
+            'birthday': datetime.date.today() + datetime.timedelta(days=1)
         })
         self.assertFalse(form.is_valid())
-        print("Form Birthday: ", form.cleaned_data['birthday'])
+        print("Form Birthday Errors : ", form.errors['birthday'])
+        self.assertEqual(form.errors['birthday'], [BIRTHDAY_INVALID_ERROR])
 
     def test_form_email_valid_domain(self):
         form = SignupForm({
