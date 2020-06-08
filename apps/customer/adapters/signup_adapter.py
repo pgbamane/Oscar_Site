@@ -1,8 +1,8 @@
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.account.utils import user_field
 from django.forms import ValidationError
-import datetime
-from ..validators import EMAIL_INVALID_DOMAIN_ERROR
+
+from apps.customer import validators
 
 
 class SignupAdapter(DefaultAccountAdapter):
@@ -16,15 +16,8 @@ class SignupAdapter(DefaultAccountAdapter):
         domain = email.split('@')[1]
         domain_list = ["gmail.com", "yahoo.com", ]
         if domain not in domain_list:
-            raise ValidationError(EMAIL_INVALID_DOMAIN_ERROR)
+            raise ValidationError(validators.EMAIL_INVALID_DOMAIN_ERROR)
         return email
-
-    def clean_birthday(self, birthday):
-        min = datetime.date(year=1960, month=1, day=1)
-        max = datetime.date.today()
-        if birthday > max or birthday < min:
-            raise ValidationError('Birthday is invalid')
-        return birthday
 
     # def is_ajax(self, request):
     #     return super(SignupAdapter, self).is_ajax(request)
