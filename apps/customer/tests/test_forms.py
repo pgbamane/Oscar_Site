@@ -171,6 +171,15 @@ class SignupFormTests(TestCase):
         print("Form email already taken error: ", form.errors['email'])
         self.assertEqual(form.errors['email'], [validators.EMAIL_ALREADY_TAKEN_ERROR])
 
+    def test_form_both_passwords_not_equal_error(self):
+        form = SignupForm({
+            'password1': 'satputeps',
+            'password2': 'satkjkvf'
+        })
+        self.assertFalse(form.is_valid())
+        print("Both passwords: %s , %s" % (form.data['password1'], form.data['password2']))
+        self.assertEqual(form.errors['password2'], [validators.PASSWORD_NOT_SAME_ERROR])
+
 
 class ProfileFormMetaTests(TestCase):
     @classmethod
