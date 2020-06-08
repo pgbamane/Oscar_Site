@@ -20,7 +20,7 @@ User = get_user_model()
 
 FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
 LAST_NAME_REQUIRED_ERROR = ['Last Name is required.']
-EMAIL_REQUIRED_ERROR = 'Email is required.'
+
 
 BIRTHDAY_PLACEHOLDER = 'Select Date of Birth'
 BIRTHDAY_FORMAT = "%d/%m/%Y"
