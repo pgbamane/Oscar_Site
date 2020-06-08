@@ -96,7 +96,10 @@ class SignupForm(CoreSignUpForm):
                                                         'class': 'form-control',
                                                         'placeholder': 'Email ID'
                                                     }
-                                                ))
+                                                ),
+                                                error_messages={
+                                                    'required': validators.EMAIL_REQUIRED_ERROR
+                                                })
 
     def clean_birthday(self):
         birthday = self.cleaned_data['birthday']
