@@ -18,10 +18,6 @@ class SignupTests(test.TestCase):
         response = self.client.get('/accounts/signup/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/signup.html')
-        # self.assertIn('form', response.context, msg="form is not in SignupView Context")
-        # self.assertIsInstance(response.context['form'], SignupForm)
-        # self.assertIn('form_title', response.context)
-        # self.assertEqual(response.context['form_title'], SIGNUP_PAGE_MESSAGE)
 
     def test_get_request_using_url_name(self):
         response = self.client.get(reverse('account_signup'))
@@ -38,6 +34,13 @@ class SignupTests(test.TestCase):
         self.assertTemplateUsed(response, 'account/signup.html')
         self.assertIn('form', response.context, msg="form is not in Template Context")
         self.assertIsInstance(response.context['form'], SignupForm, msg="Form is not instance of SignupForm")
+
+    def test_get_request_form_title(self):
+        response = self.client.get(reverse('account_signup'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/signup.html')
+        self.assertIn('form_title', response.context)
+        self.assertEqual(response.context['form_title'], SIGNUP_PAGE_MESSAGE)
 
     def test_post_request_form_valid_data(self):
         signup_form_data = {
