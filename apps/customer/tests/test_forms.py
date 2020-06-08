@@ -115,7 +115,7 @@ class SignupFormTests(TestCase):
         })
         print("Form Bound: ", form.is_bound)
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.cleaned_data['birthday'], BIRTHDAY_FORMAT)
+        self.assertEqual(form.fields['birthday'].input_formats[0], BIRTHDAY_FORMAT)
         self.assertEqual(form.cleaned_data['birthday'].year, year)
         self.assertEqual(form.cleaned_data['birthday'].month, month)
         self.assertEqual(form.cleaned_data['birthday'].day, day)
