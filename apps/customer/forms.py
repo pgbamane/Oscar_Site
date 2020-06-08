@@ -14,13 +14,12 @@ from allauth.account.forms import SignupForm as CoreSignUpForm, PasswordField
 from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput
 from apps.users.models import FEMALE, GENDER_OPTIONS
-from .validators import BIRTHDAY_INVALID_ERROR
+from . import validators
 
 User = get_user_model()
 
 FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
 LAST_NAME_REQUIRED_ERROR = ['Last Name is required.']
-
 
 BIRTHDAY_PLACEHOLDER = 'Select Date of Birth'
 BIRTHDAY_FORMAT = "%d/%m/%Y"
@@ -103,7 +102,7 @@ class SignupForm(CoreSignUpForm):
         birthday = self.cleaned_data['birthday']
         max = datetime.date.today()
         if birthday > max or birthday < MINIMUM_BIRTHDAY:
-            raise forms.ValidationError(BIRTHDAY_INVALID_ERROR)
+            raise forms.ValidationError(validators.BIRTHDAY_INVALID_ERROR)
         return birthday
 
     def save(self, request):
@@ -209,7 +208,7 @@ class ProfileForm(UserForm):
                 'required': FIRST_NAME_REQUIRED_ERROR,
             },
             'email': {
-                'required': EMAIL_REQUIRED_ERROR,
+                'required': validators.EMAIL_REQUIRED_ERROR,
             },
         }
 
