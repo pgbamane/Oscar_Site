@@ -148,7 +148,7 @@ class SignupFormTests(TestCase):
         })
         self.assertFalse(form.is_valid())
         print("Form email errors: ", form.errors['email'])
-        self.assertEqual(form.errors['email'], EMAIL_INVALID_DOMAIN_ERROR)
+        self.assertEqual(form.errors['email'], [validators.EMAIL_INVALID_DOMAIN_ERROR])
 
 
 class ProfileFormMetaTests(TestCase):
