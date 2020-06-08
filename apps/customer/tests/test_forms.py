@@ -2,12 +2,12 @@ from allauth.account.models import EmailAddress
 from django.test import TestCase
 from django.urls import reverse
 from oscar.core.compat import get_user_model
-from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, EMAIL_REQUIRED_ERROR, LAST_NAME_REQUIRED_ERROR, \
+from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, LAST_NAME_REQUIRED_ERROR, \
     BIRTHDAY_PLACEHOLDER, BIRTHDAY_FORMAT, MINIMUM_BIRTHDAY
 from apps.users.models import FEMALE, MALE
 import datetime
 from django.test.client import RequestFactory
-from apps.customer.validators import EMAIL_INVALID_DOMAIN_ERROR, BIRTHDAY_INVALID_ERROR
+from apps.customer import validators
 
 User = get_user_model()
 
@@ -126,7 +126,7 @@ class SignupFormTests(TestCase):
         })
         self.assertFalse(form.is_valid())
         print("Form Birthday Errors : ", form.errors['birthday'])
-        self.assertEqual(form.errors['birthday'], [BIRTHDAY_INVALID_ERROR])
+        self.assertEqual(form.errors['birthday'], [validators.BIRTHDAY_INVALID_ERROR])
 
     def test_form_birthday_less_than_minimum(self):
         form = SignupForm({
@@ -134,7 +134,13 @@ class SignupFormTests(TestCase):
         })
         self.assertFalse(form.is_valid())
         print("Form Birthday Errors : ", form.errors['birthday'])
-        self.assertEqual(form.errors['birthday'], [BIRTHDAY_INVALID_ERROR])
+        self.assertEqual(form.errors['birthday'], [validators.BIRTHDAY_INVALID_ERROR])
+
+    def test_form_email_required_error(self):
+        form = SignupForm({})
+        self.assertFalse(form.is_valid())
+        print("Form Email Required error: ", form.errors['email'])
+        self.assertEqual(form.errors['email'], [validators.EMAIL_REQUIRED_ERROR])
 
     def test_form_email_valid_domain(self):
         form = SignupForm({
