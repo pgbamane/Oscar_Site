@@ -3,10 +3,11 @@ from django.test import TestCase
 from django.urls import reverse
 from oscar.core.compat import get_user_model
 from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, EMAIL_REQUIRED_ERROR, LAST_NAME_REQUIRED_ERROR, \
-    BIRTHDAY_PLACEHOLDER
+    BIRTHDAY_PLACEHOLDER, BIRTHDAY_FORMAT
 from apps.users.models import FEMALE, MALE
 import datetime
 from django.test.client import RequestFactory
+from apps.customer.validators import EMAIL_INVALID_DOMAIN_ERROR
 
 User = get_user_model()
 
@@ -114,9 +115,25 @@ class SignupFormTests(TestCase):
         })
         print("Form Bound: ", form.is_bound)
         self.assertFalse(form.is_valid())
+        self.assertEqual(form.cleaned_data['birthday'], BIRTHDAY_FORMAT)
         self.assertEqual(form.cleaned_data['birthday'].year, year)
         self.assertEqual(form.cleaned_data['birthday'].month, month)
         self.assertEqual(form.cleaned_data['birthday'].day, day)
+
+    def test_form_birthday_greater_than_max_invalid(self):
+        form = SignupForm({
+            'birthday': datetime.date(year=2020, month=6, day=10)
+        })
+        self.assertFalse(form.is_valid())
+        print("Form Birthday: ", form.cleaned_data['birthday'])
+
+    def test_form_email_valid_domain(self):
+        form = SignupForm({
+            'email': 'pradnya@facebook.com'
+        })
+        self.assertFalse(form.is_valid())
+        print("Form email errors: ", form.errors['email'])
+        self.assertEqual(form.errors['email'], EMAIL_INVALID_DOMAIN_ERROR)
 
 
 class ProfileFormMetaTests(TestCase):
