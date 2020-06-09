@@ -27,7 +27,7 @@ class SignupTests(test.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/signup.html')
 
-    def test_get_request_signup_form(self):
+    def test_view_signup_form_instance(self):
         response = self.client.get(reverse('account_signup'))
         self.assertEqual(response.status_code, 200)
         self.assertIn('form', response.context, msg="form is not in Template Context")
