@@ -23,6 +23,8 @@ from oscar.core.compat import (
 
 User = get_user_model()
 
+SIGNUP_PAGE_MESSAGE = "Signup here"
+
 
 class SignupView(CoreSignupView):
     template_name = "account/signup.html"
@@ -41,7 +43,7 @@ class SignupView(CoreSignupView):
 
     def get_context_data(self, **kwargs):
         context_data = super(SignupView, self).get_context_data(**kwargs)
-        context_data['form_title'] = "Signup here"
+        context_data['form_title'] = SIGNUP_PAGE_MESSAGE
         return context_data
 
     def form_valid(self, form):
