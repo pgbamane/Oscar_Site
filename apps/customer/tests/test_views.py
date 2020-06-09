@@ -17,28 +17,25 @@ class SignupTests(test.TestCase):
     def test_get_request_using_url(self):
         response = self.client.get('/accounts/signup/')
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'account/signup.html')
 
     def test_get_request_using_url_name(self):
         response = self.client.get(reverse('account_signup'))
-        # print("Path:", response.path)
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_template_used(self):
+        response = self.client.get(reverse('account_signup'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/signup.html')
-        self.assertTrue(isinstance(response.context['form'], SignupForm))
-        self.assertFormError(response, 'form', None, [])
-        # self.ass
 
     def test_get_request_signup_form(self):
         response = self.client.get(reverse('account_signup'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'account/signup.html')
         self.assertIn('form', response.context, msg="form is not in Template Context")
         self.assertIsInstance(response.context['form'], SignupForm, msg="Form is not instance of SignupForm")
 
     def test_get_request_form_title(self):
         response = self.client.get(reverse('account_signup'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'account/signup.html')
         self.assertIn('form_title', response.context)
         self.assertEqual(response.context['form_title'], SIGNUP_PAGE_MESSAGE)
 
