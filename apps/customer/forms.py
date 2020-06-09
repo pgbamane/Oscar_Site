@@ -106,6 +106,11 @@ class SignupForm(CoreSignUpForm):
         max = datetime.date.today()
         if birthday > max or birthday < MINIMUM_BIRTHDAY:
             raise forms.ValidationError(validators.BIRTHDAY_INVALID_ERROR)
+        try:
+            datetime.datetime.strptime(str(birthday), BIRTHDAY_FORMAT)
+        except ValueError:
+            raise forms.ValidationError(validators.DATE_INCORRECT_FORMAT_ERROR)
+
         return birthday
 
     def save(self, request):
