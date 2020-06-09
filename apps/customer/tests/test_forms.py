@@ -1,6 +1,5 @@
 from allauth.account.models import EmailAddress
 from django.test import TestCase
-from django.urls import reverse
 from oscar.core.compat import get_user_model
 from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, LAST_NAME_REQUIRED_ERROR, \
     BIRTHDAY_PLACEHOLDER, BIRTHDAY_FORMAT, MINIMUM_BIRTHDAY
@@ -106,6 +105,13 @@ class SignupFormTests(TestCase):
         print("Form Birthday placeholder: ", form.fields['birthday'].widget.attrs['placeholder'])
         self.assertEqual(form.fields['birthday'].widget.attrs['placeholder'], BIRTHDAY_PLACEHOLDER)
 
+    def test_form_birthday_format(self):
+        form = SignupForm({
+            'birthday': datetime.date(1995, 7, 23)
+        })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['birthday'], [validators.DATE_INCORRECT_FORMAT_ERROR])
+
     def test_form_birthday_date_fields(self):
         year = 1995
         month = 7
@@ -115,7 +121,7 @@ class SignupFormTests(TestCase):
         })
         print("Form Bound: ", form.is_bound)
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.fields['birthday'].input_formats[0], BIRTHDAY_FORMAT)
+        # self.assertEqual(form.fields['birthday'].input_formats[0], BIRTHDAY_FORMAT)
         self.assertEqual(form.cleaned_data['birthday'].year, year)
         self.assertEqual(form.cleaned_data['birthday'].month, month)
         self.assertEqual(form.cleaned_data['birthday'].day, day)
