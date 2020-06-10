@@ -1,6 +1,6 @@
 from django.urls import path, include
 from apps.customer import views
-
+from apps.customer.forms.socialaccount_forms import SignupForm
 # # from allauth.socialaccount.views import S
 from allauth.account.views import LoginView, AccountInactiveView, LogoutView
 from allauth.socialaccount.providers.oauth2.urls import default_urlpatterns
@@ -16,7 +16,9 @@ urlpatterns = \
             template_name="account/logout.html"),
              name="account_logout"),
         path('accounts/inactive/', AccountInactiveView.as_view(), name="account_inactive"),
-        path('accounts/socialaccount_signup/', SignupView.as_view(), name='socialaccount_signup'),
+        path('accounts/socialaccount_signup/',
+             SignupView.as_view(form_class=SignupForm),
+             name='socialaccount_signup'),
         path('accounts/', include(default_urlpatterns(GoogleProvider))),
         path('accounts/', include('allauth.urls')),
     ]
