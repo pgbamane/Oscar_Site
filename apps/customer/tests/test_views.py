@@ -86,6 +86,35 @@ class SignupTests(test.TestCase):
         #     check whether this user can login
         self.client.login(email=user.email, password=user.password)
 
+    def test_ajax_post_fields_empty(self):
+        form = SignupForm({})
+        self.assertFalse(form.is_valid())
+        response = self.client.post(reverse('account_signup'),
+                                    data={},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 400)
+        data = response.json()
+        self.assertIn('form', data)
+        context_form = 'form'
+
+        required_fields = [field_name for field_name, field in form.fields.items() if field.required]
+        for field_name in required_fields:
+            variable_name = '%s_REQUIRED_ERROR' % field_name.upper()
+            if hasattr(validators, variable_name):
+                self.assertFormError(response, context_form, field_name, [getattr(validators, variable_name)])
+
+        [self.assertFormError(response, context_form, field, [])
+         for field in form.fields.keys() if field not in required_fields]
+        # for field_name in not_required_fields:
+
+        # self.assertFormError(response, context_form, 'first_name', [validators.FIRST_NAME_REQUIRED_ERROR])
+        # self.assertFormError(response, context_form, 'last_name', [validators.LAST_NAME_REQUIRED_ERROR])
+        # self.assertFormError(response, context_form, 'gender', [])
+        # self.assertFormError(response, context_form, 'birthday', [])
+        # self.assertFormError(response, context_form, 'email', [validators.EMAIL_REQUIRED_ERROR])
+        # self.assertFormError(response, context_form, 'password1', [validators.PASSWORD1_REQUIRED_ERROR])
+        # self.assertFormError(response, context_form, 'password2', [validators.PASSWORD2_REQUIRED_ERROR])
+
     def test_ajax_post_invalid_email(self):
         signup_form_data = {
             'first_name': 'Akshay',
