@@ -1,11 +1,17 @@
 import datetime
+import warnings
+
+from allauth.socialaccount import providers
+from allauth.socialaccount.providers.google.provider import GoogleProvider
+from allauth.socialaccount.tests import OAuth2TestsMixin
+from allauth.tests import MockedResponse
 from django import test
 from oscar.core.compat import get_user_model
 from django.test import Client, RequestFactory
 from django.urls import reverse
-
 from .. import validators
 from apps.customer.forms.account_forms import SignupForm, BIRTHDAY_FORMAT
+from apps.customer.forms.socialaccount_forms import SignupForm as SocialAccountSignupForm
 from ..views import SIGNUP_PAGE_MESSAGE
 from apps.users.models import FEMALE, MALE
 import json
@@ -178,3 +184,43 @@ class SignupTests(test.TestCase):
         form = SignupForm(signup_form_data)
         print("Form errors : ", form.errors)
         self.assertFormError(response, 'form', 'password2', [validators.PASSWORD_NOT_SAME_ERROR])
+
+
+class SocialAccountSignupViewTests(OAuth2TestsMixin, test.TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.provider_id = GoogleProvider.id
+        self.provider = providers.registry.by_id(self.provider_id)
+
+    def get_mocked_response(self,
+                            family_name='Penners',
+                            given_name='Raymond',
+                            name='Raymond Penners',
+                            email="raymond.penners@example.com",
+                            verified_email=True):
+        return MockedResponse(200, """
+                 {"family_name": "%s", "name": "%s",
+                  "picture": "https://lh5.googleusercontent.com/photo.jpg",
+                  "locale": "nl", "gender": "male",
+                  "email": "%s",
+                  "link": "https://plus.google.com/108204268033311374519",
+                  "given_name": "%s", "id": "108204268033311374519",
+                  "verified_email": %s }
+           """ % (family_name,
+                  name,
+                  email,
+                  given_name,
+                  (repr(verified_email).lower())))
+
+    # -------------------------------TO DO---------------------------------------------------------------------
+    # def test_get_view_form(self):
+    #     resp_mocks = self.get_mocked_response()
+    #     if resp_mocks is None:
+    #         warnings.warn("Cannot test google provider %s, no oauth mock"
+    #                       % self.provider.id)
+    #         return
+    # resp = self.login(resp_mocks)
+    # response = self.client.get(reverse('socialaccount_signup'))
+    # response_form = response.context['form']
+    # self.assertTrue(isinstance(response_form, SocialAccountSignupForm))
+    # sociallogin = response.context['form']
