@@ -98,14 +98,14 @@ class SignupTests(test.TestCase):
         context_form = 'form'
 
         required_fields = [field_name for field_name, field in form.fields.items() if field.required]
+        # required_fields = [field_name for field_name, field in form.fields.items() if getattr(field, 'required', False)]
         for field_name in required_fields:
             variable_name = '%s_REQUIRED_ERROR' % field_name.upper()
             if hasattr(validators, variable_name):
                 self.assertFormError(response, context_form, field_name, [getattr(validators, variable_name)])
 
-        [self.assertFormError(response, context_form, field, [])
-         for field in form.fields.keys() if field not in required_fields]
-        # for field_name in not_required_fields:
+        [self.assertFormError(response, context_form, field, []) for field in form.fields.keys() if
+         field not in required_fields]
 
         # self.assertFormError(response, context_form, 'first_name', [validators.FIRST_NAME_REQUIRED_ERROR])
         # self.assertFormError(response, context_form, 'last_name', [validators.LAST_NAME_REQUIRED_ERROR])
@@ -139,17 +139,10 @@ class SignupTests(test.TestCase):
         print("Form Errors:", form.errors)
         self.assertFormError(response, 'form', 'email', [validators.EMAIL_INVALID_ERROR])
 
-    def test_post_request_form_invalid_email_domain(self):
+    def test_ajax_post_invalid_email_domain(self):
         signup_form_data = {
             'first_name': 'Akshay',
             'last_name': 'Satpute',
-            'gender': 'male',
-            'address': 'satpute mala',
-            'locality': 'waddi',
-            'state': 'Maharashtra',
-            'district': 'Sangli',
-            'city': 'Miraj',
-            'pincode': '416410',
             'phone_number': '7878457845',
             'email': 'akshay@codebread.com',
             'password1': 'satputeps',
@@ -158,17 +151,13 @@ class SignupTests(test.TestCase):
         response = self.client.post(reverse('account_signup'),
                                     data=signup_form_data,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-
         self.assertTemplateUsed(response, "account/signup.html")
-
-        self.assertTrue(response.json()['form'])
-
-        self.assertTrue(response.json()['html'])
-
+        data = response.json()
+        self.assertIn('form', data)
+        self.assertIn('html', data)
         form = SignupForm(signup_form_data)
         print("Form Errors:", form.errors)
-        self.assertFormError(response, 'form', 'email',
-                             ['Enter an email address with a valid domain(Gmail, Yahoo, Only)'])
+        self.assertFormError(response, 'form', 'email', [validators.EMAIL_INVALID_DOMAIN_ERROR])
 
     def test_post_request_form_passwords_must_match(self):
         signup_form_data = {
