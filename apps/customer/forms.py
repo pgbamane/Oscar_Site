@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput
 from apps.users.models import FEMALE, GENDER_OPTIONS
 from . import validators
+from .validators import validate_date_format
 
 User = get_user_model()
 
@@ -22,7 +23,7 @@ FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
 LAST_NAME_REQUIRED_ERROR = ['Last Name is required.']
 
 BIRTHDAY_PLACEHOLDER = 'Select Date of Birth'
-BIRTHDAY_FORMAT = "%d/%m/%Y"
+BIRTHDAY_FORMAT = "%d-%m-%Y"
 MINIMUM_BIRTHDAY = datetime.date(year=1960, month=1, day=1)
 
 
@@ -55,7 +56,7 @@ class SignupForm(CoreSignUpForm):
                                widget=forms.RadioSelect()
                                )
     birthday = forms.DateField(label='Birthday',
-                               input_formats=(BIRTHDAY_FORMAT,),
+                               input_formats=[BIRTHDAY_FORMAT, ],
                                widget=DatePickerInput(
                                    options={
                                        # display format
@@ -70,7 +71,7 @@ class SignupForm(CoreSignUpForm):
                                ))
     phone_number = forms.CharField(max_length=13,
                                    label="Phone No.",
-                                   widget=forms.TextInput(
+                                       widget=forms.TextInput(
                                        attrs={
                                            'class': 'form-control',
                                            'placeholder': 'Phone Number',
@@ -89,6 +90,7 @@ class SignupForm(CoreSignUpForm):
         # Finally update the kwargs initial reference
         kwargs.update(initial=updated_initial)
         super(SignupForm, self).__init__(*args, **kwargs)
+        # self.fields['birthday'].validators.append(validate_date_format)
         self.fields['password2'] = PasswordField(label=_("Confirm Password"))
         self.fields['email'] = forms.EmailField(label=_('Email ID'),
                                                 widget=forms.EmailInput(
@@ -103,13 +105,13 @@ class SignupForm(CoreSignUpForm):
 
     def clean_birthday(self):
         birthday = self.cleaned_data['birthday']
-        max = datetime.date.today()
-        if birthday > max or birthday < MINIMUM_BIRTHDAY:
+        # try:
+        #     datetime.datetime.strptime(str(birthday), BIRTHDAY_FORMAT)
+        # except ValueError:
+        #     raise forms.ValidationError(validators.DATE_INCORRECT_FORMAT_ERROR)
+        MAXIMUM_DATE = datetime.date.today()
+        if birthday > MAXIMUM_DATE or birthday < MINIMUM_BIRTHDAY:
             raise forms.ValidationError(validators.BIRTHDAY_INVALID_ERROR)
-        try:
-            datetime.datetime.strptime(str(birthday), BIRTHDAY_FORMAT)
-        except ValueError:
-            raise forms.ValidationError(validators.DATE_INCORRECT_FORMAT_ERROR)
 
         return birthday
 
