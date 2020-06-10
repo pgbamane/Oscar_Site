@@ -37,59 +37,14 @@ class SignupAdapter(DefaultAccountAdapter):
         user = super(SignupAdapter, self).save_user(request, user, form, commit)
         form_data = form.cleaned_data
         gender = form_data.get('gender')
-        address = form_data.get('address')
-        locality = form_data.get('locality')
-        state = form_data.get('state')
-        district = form_data.get('district')
-        city = form_data.get('city')
-        pincode = form_data.get('pincode')
+        birthday = form_data.get('birthday')
         phone_number = form_data.get('phone_number')
-        # if gender:
-        # user_field(customer_final, 'gender', gender)
-        # # if address:
-        # user_field(customer_final, "address", address)
-        # # if locality:
-        # user_field(customer_final, "locality", locality)
-        # # if state:
-        # user_field(customer_final, 'state', state)
-        # # if district:
-        # user_field(customer_final, 'district', district)
-        # # if city:
-        # user_field(customer_final, 'city', city)
-        # # if pincode:
-        # user_field(customer_final, 'pincode', pincode)
-        # # if phone_number:
-        # user_field(customer_final, 'phone_number', phone_number)
-
         if gender:
-            user.gender = gender
-        if address:
-            user.address = address
-        if locality:
-            user.locality = locality
-        if state:
-            user.state = state
-        if district:
-            user.district = district
-        if city:
-            user.city = city
-        if pincode:
-            user.pincode = pincode
+            user_field(user, 'gender', gender)
+        if birthday:
+            user_field(user, 'birthday', birthday)
         if phone_number:
-            user.phone_number = phone_number
-
+            user_field(user, 'phone_number', phone_number)
         # finally save User with all fields
         user.save()
         return user
-
-# def clean(self):
-#     cleaned_data = super(SignUpForm, self).clean()
-#     password = cleaned_data.get('password')
-#     confirm_password = cleaned_data.get('confirm_password')
-#
-#     if password and confirm_password and password != confirm_password:
-#         self.add_error('password', 'The Password does not match')
-
-
-# adp = SignupAdapter()
-# adp.ajax_response()
