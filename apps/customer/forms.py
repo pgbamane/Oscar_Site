@@ -19,9 +19,6 @@ from .validators import validate_date_format
 
 User = get_user_model()
 
-FIRST_NAME_REQUIRED_ERROR = 'First Name is required.'
-LAST_NAME_REQUIRED_ERROR = ['Last Name is required.']
-
 BIRTHDAY_PLACEHOLDER = 'Select Date of Birth'
 BIRTHDAY_FORMAT = "%d-%m-%Y"
 MINIMUM_BIRTHDAY = datetime.date(year=1960, month=1, day=1)
@@ -36,9 +33,7 @@ class SignupForm(CoreSignUpForm):
                                          'placeholder': 'Enter First Name',
                                          'autofocus': 'autofocus',
                                      }),
-                                 error_messages={
-                                     'required': FIRST_NAME_REQUIRED_ERROR
-                                 })
+                                 )
     last_name = forms.CharField(max_length=30,
                                 label="Last Name",
                                 widget=forms.TextInput(
@@ -47,9 +42,7 @@ class SignupForm(CoreSignUpForm):
                                         'placeholder': 'Enter Last Name',
                                         'autofocus': 'autofocus',
                                     }),
-                                error_messages={
-                                    'required': LAST_NAME_REQUIRED_ERROR
-                                })
+                                )
 
     gender = forms.ChoiceField(label="Gender",
                                choices=GENDER_OPTIONS,
@@ -71,7 +64,7 @@ class SignupForm(CoreSignUpForm):
                                ))
     phone_number = forms.CharField(max_length=13,
                                    label="Phone No.",
-                                       widget=forms.TextInput(
+                                   widget=forms.TextInput(
                                        attrs={
                                            'class': 'form-control',
                                            'placeholder': 'Phone Number',
@@ -90,7 +83,7 @@ class SignupForm(CoreSignUpForm):
         # Finally update the kwargs initial reference
         kwargs.update(initial=updated_initial)
         super(SignupForm, self).__init__(*args, **kwargs)
-        # self.fields['birthday'].validators.append(validate_date_format)
+        # self.fields['birthday'].validators.append(validate_date_format
         self.fields['password2'] = PasswordField(label=_("Confirm Password"))
         self.fields['email'] = forms.EmailField(label=_('Email ID'),
                                                 widget=forms.EmailInput(
@@ -98,10 +91,19 @@ class SignupForm(CoreSignUpForm):
                                                         'class': 'form-control',
                                                         'placeholder': 'Email ID'
                                                     }
-                                                ),
-                                                error_messages={
-                                                    'required': validators.EMAIL_REQUIRED_ERROR
-                                                })
+                                                ), )
+        self.fields['gender'].required = False
+        self.fields['birthday'].required = False
+        self.fields['phone_number'].required = False
+        # self.fields['first_name'].error_messages['required'] = validators.FIRST_NAME_REQUIRED_ERROR
+        # non_required_fields = ['gender', 'birthday', 'phone_number']
+
+        required_fields = [field_name for field_name, field in self.fields.items() if field.required]
+        for field in self.fields.keys():
+            if field in required_fields:
+                variable_name = '%s_REQUIRED_ERROR' % field.upper()
+                if hasattr(validators, variable_name):
+                    self.fields[field].error_messages['required'] = getattr(validators, variable_name)
 
     def clean_birthday(self):
         birthday = self.cleaned_data['birthday']
@@ -110,8 +112,9 @@ class SignupForm(CoreSignUpForm):
         # except ValueError:
         #     raise forms.ValidationError(validators.DATE_INCORRECT_FORMAT_ERROR)
         MAXIMUM_DATE = datetime.date.today()
-        if birthday > MAXIMUM_DATE or birthday < MINIMUM_BIRTHDAY:
-            raise forms.ValidationError(validators.BIRTHDAY_INVALID_ERROR)
+        if birthday:
+            if birthday > MAXIMUM_DATE or birthday < MINIMUM_BIRTHDAY:
+                raise forms.ValidationError(validators.BIRTHDAY_INVALID_ERROR)
 
         return birthday
 
@@ -215,7 +218,7 @@ class ProfileForm(UserForm):
 
         error_messages = {
             'first_name': {
-                'required': FIRST_NAME_REQUIRED_ERROR,
+                'required': validators.FIRST_NAME_REQUIRED_ERROR,
             },
             'email': {
                 'required': validators.EMAIL_REQUIRED_ERROR,
