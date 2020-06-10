@@ -270,7 +270,10 @@ SOCIALACCOUNT_AUTO_SIGNUP = False
 # ACCOUNT_SIGNUP_FORM_CLASS = 'apps.customer.forms.EmailUserCreationForm'
 
 ACCOUNT_FORMS = {
-    'signup': 'apps.customer.forms.SignupForm',
+    'signup': 'apps.customer.forms.account_forms.SignupForm',
+}
+SOCIALACCOUNT_FORMS = {
+    'signup': 'apps.customer.forms.socialaccount_forms.SignupForm'
 }
 
 ACCOUNT_ADAPTER = 'apps.customer.adapters.signup_adapter.SignupAdapter'
