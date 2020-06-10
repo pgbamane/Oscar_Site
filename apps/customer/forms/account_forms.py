@@ -14,8 +14,8 @@ from allauth.account.forms import SignupForm as CoreSignUpForm, PasswordField
 from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput
 from apps.users.models import FEMALE, GENDER_OPTIONS
-from . import validators
-from .validators import validate_date_format
+from apps.customer import validators
+from apps.customer.validators import validate_date_format
 
 User = get_user_model()
 
