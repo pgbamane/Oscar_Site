@@ -1,25 +1,12 @@
-# from oscar.apps.customer.views import AccountRegistrationView as CoreAccountRegistrationView
 from allauth.account.views import SignupView as CoreSignupView
 from crispy_forms.utils import render_crispy_form
 from django.template.context_processors import csrf
 from jsonview.decorators import json_view
 from oscar.apps.customer.views import ProfileUpdateView as CoreProfileUpdateView, ProfileView as CoreProfileView
-from apps.customer.forms import SignupForm
-# from oscar.apps.customer.views import *
-
 from django.utils.translation import ugettext_lazy as _
-# from django.shortcuts import render
-
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
-from django.views.generic import FormView
-from allauth.utils import get_form_class
-from .forms import SignupForm, UserForm, ProfileForm
-from Oscar_Site import settings
-from oscar.core.compat import (
-    existing_user_fields, get_user_model
-)
+from django.urls import reverse_lazy
+from apps.customer.forms.account_forms import SignupForm, ProfileForm
+from oscar.core.compat import (get_user_model)
 
 User = get_user_model()
 
