@@ -243,11 +243,61 @@ class ProfileFormMetaTests(TestCase):
 
 # test_profile_form_fields = ProfileFormTestCase('test_profile_form_fields')
 
-class ProfileFormDataTests(TestCase):
+
+class SocialAccountSignupFormTests(TestCase):
+    def setUp(self):
+        super(SocialAccountSignupFormTests, self).setUp()
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.sociallogin = SocialLogin(
+            user=User(email="verified@gmail.com"),
+            account=SocialAccount(
+                provider='google'
+            ),
+            email_addresses=[
+                EmailAddress(
+                    email="verified@gmail.com",
+                    verified=True,
+                    primary=True
+                )
+            ]
+        )
+        cls.form = SocialAccount_SignupForm(sociallogin=cls.sociallogin, data={'email': "verified@gmail.com"})
+
+    def test_form_fields(self):
+        # form = SocialAccount_SignupForm()
+        self.assertIn('email', self.form.fields)
+
+    def test_form_field_values(self):
+        self.assertEqual(self.form['email'].value(), "verified@gmail.com")
+        # self.assertTrue(form.fields)
+
+    def test_social_user_account_token_emailaddress_created(self):
+        """
+        3. test user, socialaccount for user, socialtoken if any, email address for the user created
+        :return:
+        """
+        factory = RequestFactory()
+        request = factory.post('/accounts/social/signup/')
+        request.user = AnonymousUser()
+        SessionMiddleware().process_request(request)
+        MessageMiddleware().process_request(request)
+
+        self.assertTrue(self.form.is_valid())
+        self.form.save(request)
+        # sociallogin = SocialLogin.(email=self.form['email'].value())
+        user = get_user_model().objects.get(id=self.form.sociallogin.user.id)
+        socialaccount = SocialAccount.objects.get(user=self.form.sociallogin.user)
+        self.assertFalse(SocialToken.objects.filter(account=socialaccount, token=self.form.sociallogin.token))
+        self.assertTrue(EmailAddress.objects.get_for_user(user=user, email=user.email))
+
+
+class ProfileFormTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         print("Creating User and Profile form...")
-        super(ProfileFormDataTests, cls).setUpTestData()
+        super(ProfileFormTests, cls).setUpTestData()
         cls.user = User.objects.create_user(first_name="Pradnya",
                                             last_name="Bamane",
                                             email='pradnya23@gmail.com')
@@ -343,52 +393,3 @@ class ProfileFormDataTests(TestCase):
         print("Email: ", form.data['email'])
         self.assertEqual(form.errors['email'],
                          ['Enter a valid email address.'])
-
-
-class SocialAccountSignupFormTests(TestCase):
-    def setUp(self):
-        super(SocialAccountSignupFormTests, self).setUp()
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.sociallogin = SocialLogin(
-            user=User(email="verified@gmail.com"),
-            account=SocialAccount(
-                provider='google'
-            ),
-            email_addresses=[
-                EmailAddress(
-                    email="verified@gmail.com",
-                    verified=True,
-                    primary=True
-                )
-            ]
-        )
-        cls.form = SocialAccount_SignupForm(sociallogin=cls.sociallogin, data={'email': "verified@gmail.com"})
-
-    def test_form_fields(self):
-        # form = SocialAccount_SignupForm()
-        self.assertIn('email', self.form.fields)
-
-    def test_form_field_values(self):
-        self.assertEqual(self.form['email'].value(), "verified@gmail.com")
-        # self.assertTrue(form.fields)
-
-    def test_social_user_account_token_emailaddress_created(self):
-        """
-        3. test user, socialaccount for user, socialtoken if any, email address for the user created
-        :return:
-        """
-        factory = RequestFactory()
-        request = factory.post('/accounts/social/signup/')
-        request.user = AnonymousUser()
-        SessionMiddleware().process_request(request)
-        MessageMiddleware().process_request(request)
-
-        self.assertTrue(self.form.is_valid())
-        self.form.save(request)
-        # sociallogin = SocialLogin.(email=self.form['email'].value())
-        user = get_user_model().objects.get(id=self.form.sociallogin.user.id)
-        socialaccount = SocialAccount.objects.get(user=self.form.sociallogin.user)
-        self.assertFalse(SocialToken.objects.filter(account=socialaccount, token=self.form.sociallogin.token))
-        self.assertTrue(EmailAddress.objects.get_for_user(user=user, email=user.email))
