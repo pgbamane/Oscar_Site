@@ -1,8 +1,7 @@
-from allauth.account.models import EmailAddress
 from django.test import TestCase
 from oscar.core.compat import get_user_model
-from ..forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, LAST_NAME_REQUIRED_ERROR, \
-    BIRTHDAY_PLACEHOLDER, BIRTHDAY_FORMAT, MINIMUM_BIRTHDAY
+from apps.customer.forms.account_forms import SignupForm, ProfileForm, FIRST_NAME_REQUIRED_ERROR, LAST_NAME_REQUIRED_ERROR, \
+    BIRTHDAY_PLACEHOLDER, MINIMUM_BIRTHDAY
 from apps.users.models import FEMALE, MALE
 import datetime
 from django.test.client import RequestFactory

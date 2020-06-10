@@ -5,7 +5,7 @@ from django.test import Client, RequestFactory
 from django.urls import reverse
 
 from .. import validators
-from ..forms import SignupForm, ProfileForm, BIRTHDAY_FORMAT
+from apps.customer.forms.account_forms import SignupForm, BIRTHDAY_FORMAT
 from ..views import SIGNUP_PAGE_MESSAGE
 from apps.users.models import FEMALE, MALE
 import json
