@@ -24,7 +24,7 @@
             $("#form-div").on("click", "input#sign-up-id", function (event) {
                 event.preventDefault(); //prevents the default browser behavior  for a form submission#page refresh
                 {#event.stopPropagation();#}
-                alert('Signup Form submitted');
+                {#alert('Signup Form submitted');#}
                 console.log('Signup Form submitted')
                 {#var signup_form_id = $(this).closest("#id-Sign-Up-Form");#}
                 var sign_up_form_id = $("#id-Sign-Up-Form");
@@ -100,7 +100,7 @@
     <div class="container" style="margin: 49px;margin-left: 303px;">
         <div class="row">
             <div class="col-lg-12" id="form-div" style="background-color: #11ec4736;
-            padding: 30px 75px; border: 1px solid #286090;border-radius: 10px;">
+            padding: 30px 65px; border: 1px solid #286090;border-radius: 10px;">
                 <div class="text-center text-dark">
                     <h3>
                         {% if form_title %}

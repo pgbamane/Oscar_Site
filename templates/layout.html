@@ -75,7 +75,13 @@
                                 <li><a href="{% url 'customer:profile-view' %}">MY ACCOUNT </a></li>
                                 <!-- <li><a href="dailydeals.php">DAILY DEAL</a></li> -->
                                 <li><a href="https://www.orgatma.com/public/wishlist.php">MY WISHLIST </a></li>
-                                <li><a href="{% url 'account_signup' %}">Register</a></li>
+
+                                {% if not user.is_authenticated %}
+                                    <li>
+                                        <a href="{% url 'account_signup' %}">Register</a>
+                                    </li>
+                                {% endif %}
+
                                 <li>
                                     {% if user.is_authenticated %}
                                         <a href="{% url 'account_logout' %}" class="logout-link">LOGOUT</a>
