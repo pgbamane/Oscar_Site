@@ -132,8 +132,8 @@ class SignupForm(CoreSignUpForm):
         helper.form_action = reverse('account_signup')
         helper.layout = Layout(
             Row(
-                Column('first_name', css_class="form-group col-md-5 mb-0"),
-                Column('last_name', css_class='form-group col-md-5 mb-0'),
+                Column('first_name', css_class="form-group col-md-6 mb-0"),
+                Column('last_name', css_class='form-group col-md-6 mb-0'),
                 css_class='form-row'
             ),
             InlineRadios('gender', css_class="form-group"),
