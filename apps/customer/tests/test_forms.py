@@ -1,17 +1,23 @@
+from allauth.account.models import EmailAddress
 from django.test import TestCase
 from oscar.core.compat import get_user_model
 from apps.customer.forms.account_forms import SignupForm, ProfileForm, BIRTHDAY_PLACEHOLDER, MINIMUM_BIRTHDAY
 from apps.customer.forms.socialaccount_forms import SignupForm as SocialAccount_SignupForm
+from allauth.socialaccount.models import SocialLogin, SocialAccount, SocialToken
 from apps.users.models import FEMALE, MALE
 import datetime
 from django.test.client import RequestFactory
 from apps.customer import validators
+from django.contrib.messages.middleware import MessageMiddleware
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.contrib.auth.models import AnonymousUser
 
 User = get_user_model()
 
 
 class SignupFormTests(TestCase):
     def setUp(self):
+        super(SignupFormTests, self).setUp()
         self.factory = RequestFactory()
 
     def test_form_fields(self):
@@ -161,7 +167,7 @@ class SignupFormTests(TestCase):
                                  email="pradnya@gmail.com",
                                  password="satputeps")
         pradnya_user = User.objects.get(first_name='Pradnya')
-        self.assertTrue(pradnya_user != None)
+        self.assertTrue(pradnya_user)
         self.assertEqual(pradnya_user.first_name, "Pradnya")
         self.assertEqual(pradnya_user.last_name, "Bamane")
         self.assertEqual(pradnya_user.email, "pradnya@gmail.com")
@@ -280,7 +286,7 @@ class ProfileFormDataTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(form.data['first_name'], '')
         print('First Name required error: ', form.errors['first_name'])
-        self.assertEqual(form.errors['first_name'], FIRST_NAME_REQUIRED_ERROR)
+        self.assertEqual(form.errors['first_name'], [validators.FIRST_NAME_REQUIRED_ERROR])
 
     def test_form_last_name_not_required(self):
         last_name_required = self.profile_form.fields['last_name'].required
@@ -329,7 +335,7 @@ class ProfileFormDataTests(TestCase):
         is_empty = not (form.data['email'] and not form.data['email'].isspace())
         print("Email empty:", is_empty)
         print("Email Required Error:", form.errors['email'])
-        self.assertEqual(form.errors['email'], EMAIL_REQUIRED_ERROR)
+        self.assertEqual(form.errors['email'], [validators.EMAIL_REQUIRED_ERROR])
 
     def test_form_email_invalid_error(self):
         form = ProfileForm(user=self.user, data={'email': 'prad@.com'})
@@ -338,15 +344,47 @@ class ProfileFormDataTests(TestCase):
         self.assertEqual(form.errors['email'],
                          ['Enter a valid email address.'])
 
-# class SampleTestCase(TestCase):
-#     @classmethod
-#     def setUpTestData(cls):
-#         print("setUpTestData() called :")
-#         cls.name = 'Pradnya'
-#
-#     def test_first_name(self):
-#         self.assertEqual(self.name, 'Pradnya')
-#
-#     def test_change_name(self):
-#         self.name = 'Meenu'
-#         self.assertEqual(self.name, 'Meenu')
+
+class SocialAccountSignupFormTests(TestCase):
+    def setUp(self):
+        super(SocialAccountSignupFormTests, self).setUp()
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.sociallogin = SocialLogin(
+            user=User(email="verified@gmail.com"),
+            account=SocialAccount(
+                provider='google'
+            ),
+            email_addresses=[
+                EmailAddress(
+                    email="verified@gmail.com",
+                    verified=True,
+                    primary=True
+                )
+            ]
+        )
+        cls.form = SocialAccount_SignupForm(sociallogin=cls.sociallogin, data={'email': "verified@gmail.com"})
+
+    def test_form_fields(self):
+        # form = SocialAccount_SignupForm()
+        self.assertIn('email', self.form.fields)
+
+    def test_form_field_values(self):
+        self.assertEqual(self.form['email'].value(), "verified@gmail.com")
+        # self.assertTrue(form.fields)
+
+    def test_social_user_account_token_emailaddress_created(self):
+        factory = RequestFactory()
+        request = factory.post('/accounts/social/signup/')
+        request.user = AnonymousUser()
+        SessionMiddleware().process_request(request)
+        MessageMiddleware().process_request(request)
+
+        self.assertTrue(self.form.is_valid())
+        self.form.save(request)
+        # sociallogin = SocialLogin.(email=self.form['email'].value())
+        user = get_user_model().objects.get(id=self.form.sociallogin.user.id)
+        socialaccount = SocialAccount.objects.get(user=self.form.sociallogin.user)
+        self.assertFalse(SocialToken.objects.filter(account=socialaccount, token=self.form.sociallogin.token))
+        self.assertTrue(EmailAddress.objects.get_for_user(user=user, email=user.email))
