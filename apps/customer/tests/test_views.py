@@ -3,6 +3,8 @@ from django import test
 from oscar.core.compat import get_user_model
 from django.test import Client, RequestFactory
 from django.urls import reverse
+
+from .. import validators
 from ..forms import SignupForm, ProfileForm, BIRTHDAY_FORMAT
 from ..views import SIGNUP_PAGE_MESSAGE
 from apps.users.models import FEMALE, MALE
@@ -84,38 +86,29 @@ class SignupTests(test.TestCase):
         #     check whether this user can login
         self.client.login(email=user.email, password=user.password)
 
-    def test_post_request_form_invalid_email(self):
+    def test_ajax_post_invalid_email(self):
         signup_form_data = {
             'first_name': 'Akshay',
             'last_name': 'Satpute',
-            'gender': 'male',
-            'address': 'satpute mala',
-            'locality': 'waddi',
-            'state': 'Maharashtra',
-            'district': 'Sangli',
-            'city': 'Miraj',
-            'pincode': '416410',
+            'gender': MALE,
+            'birthday': datetime.date(2000, 1, 30).strftime(BIRTHDAY_FORMAT),
             'phone_number': '7878457845',
             'email': 'akshay@.com',
             'password1': 'satputeps',
             'password2': 'satputeps'
         }
-
         response = self.client.post(reverse('account_signup'),
                                     data=signup_form_data,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-
         print("Status code:", response.status_code)
         self.assertEqual(response.status_code, 400)
-
-        print("Response Json Form:", response.json()['form'])
-        self.assertTrue(response.json()['form'])
-
+        self.assertTemplateUsed(response, 'account/signup.html')
+        # data = json.loads(response.content.decode('utf8'))
+        data = response.json()
+        self.assertTrue(data['form'])
         form = SignupForm(signup_form_data)
         print("Form Errors:", form.errors)
-        self.assertFormError(response, 'form', 'email', ['Enter a valid email address.', ])
-
-        self.assertTemplateUsed(response, 'account/signup.html')
+        self.assertFormError(response, 'form', 'email', [validators.EMAIL_INVALID_ERROR])
 
     def test_post_request_form_invalid_email_domain(self):
         signup_form_data = {
@@ -133,7 +126,6 @@ class SignupTests(test.TestCase):
             'password1': 'satputeps',
             'password2': 'satputeps'
         }
-
         response = self.client.post(reverse('account_signup'),
                                     data=signup_form_data,
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
