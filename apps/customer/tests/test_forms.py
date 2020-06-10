@@ -375,6 +375,10 @@ class SocialAccountSignupFormTests(TestCase):
         # self.assertTrue(form.fields)
 
     def test_social_user_account_token_emailaddress_created(self):
+        """
+        3. test user, socialaccount for user, socialtoken if any, email address for the user created
+        :return:
+        """
         factory = RequestFactory()
         request = factory.post('/accounts/social/signup/')
         request.user = AnonymousUser()
