@@ -1,6 +1,7 @@
 from django.test import TestCase
 from oscar.core.compat import get_user_model
 from apps.customer.forms.account_forms import SignupForm, ProfileForm, BIRTHDAY_PLACEHOLDER, MINIMUM_BIRTHDAY
+from apps.customer.forms.socialaccount_forms import SignupForm as SocialAccount_SignupForm
 from apps.users.models import FEMALE, MALE
 import datetime
 from django.test.client import RequestFactory
@@ -79,7 +80,7 @@ class SignupFormTests(TestCase):
         print("\nForm Valid: ", form.is_valid())
         print("First Name empty: {x}".format(x="empty" if not form.data['first_name'] else 'Not empty'))
         print("First name required error: ", form.errors['first_name'])
-        self.assertEqual(form.errors['first_name'], [FIRST_NAME_REQUIRED_ERROR])
+        self.assertEqual(form.errors['first_name'], [validators.FIRST_NAME_REQUIRED_ERROR])
 
     def test_form_last_name_required_error(self):
         form = SignupForm({
@@ -89,7 +90,7 @@ class SignupFormTests(TestCase):
         self.assertFalse(form.is_valid())
         print("Last Name empty: {x}".format(x="empty" if not form.data['last_name'] else 'Not empty'))
         print("Last Name required error: ", form.errors['last_name'])
-        self.assertEqual(form.errors['last_name'], LAST_NAME_REQUIRED_ERROR)
+        self.assertEqual(form.errors['last_name'], [validators.LAST_NAME_REQUIRED_ERROR])
 
     def test_form_gender_default_female(self):
         form = SignupForm()
