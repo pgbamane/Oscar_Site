@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% load i18n %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
 
 {% block title %}
     {% trans "Signup" %}
@@ -12,13 +15,15 @@
         {{ provider_name }} account to login to
         {{ site_name }}. As a final step, please complete the following form:{% endblocktrans %}</p>
 
-    <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-        {% endif %}
-        <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-    </form>
-
+{#    <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+     <div style="margin-left: 50px;">
+        {%  crispy form %}
+{#        {% if redirect_field_value %}#}
+{#            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>#}
+{#        {% endif %}#}
+{#        <button type="submit">{% trans "Sign Up" %} &raquo;</button>#}
+{#    </form>#}
+</div>
 {% endblock %}
