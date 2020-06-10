@@ -42,7 +42,8 @@ class SignupAdapter(DefaultAccountAdapter):
         if gender:
             user_field(user, 'gender', gender)
         if birthday:
-            user_field(user, 'birthday', birthday)
+            # user_field(user, 'birthday', birthday)
+            user.birthday = birthday
         if phone_number:
             user_field(user, 'phone_number', phone_number)
         # finally save User with all fields
