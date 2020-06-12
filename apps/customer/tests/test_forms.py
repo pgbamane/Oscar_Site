@@ -305,8 +305,10 @@ class ProfileFormTests(TestCase):
         # cls.client = Client()
 
     def setUp(self):
+        print("User object Refreshing from db:")
         self.user.refresh_from_db()
         self.profile_form = ProfileForm(user=self.user)
+        print("User object Refreshed from db:")
 
     # def test_form_takes_user_model_fields(self):
     #     self.assertTrue(self.profile_form.is_valid())
@@ -392,3 +394,9 @@ class ProfileFormTests(TestCase):
         self.assertFalse(form.is_valid())
         print("Email: ", form.data['email'])
         self.assertEqual(form.errors['email'], [validators.EMAIL_INVALID_ERROR])
+
+    def test_form_email_invalid_domain(self):
+        form = ProfileForm(user=self.user, data={'email': 'pradnya@facebook.com'})
+        self.assertFalse(form.is_valid())
+        print("Form email errors: ", form.errors['email'])
+        self.assertEqual(form.errors['email'], [validators.EMAIL_INVALID_DOMAIN_ERROR])
