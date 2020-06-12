@@ -391,5 +391,4 @@ class ProfileFormTests(TestCase):
         form = ProfileForm(user=self.user, data={'email': 'prad@.com'})
         self.assertFalse(form.is_valid())
         print("Email: ", form.data['email'])
-        self.assertEqual(form.errors['email'],
-                         ['Enter a valid email address.'])
+        self.assertEqual(form.errors['email'], [validators.EMAIL_INVALID_ERROR])
