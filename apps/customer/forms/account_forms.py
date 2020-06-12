@@ -154,7 +154,6 @@ class SignupForm(CoreSignUpForm):
 
 class ProfileForm(UserForm):
     first_name = forms.CharField(max_length=30,
-                                 required=True,
                                  label="First Name",
                                  widget=forms.TextInput(
                                      attrs={
@@ -163,7 +162,6 @@ class ProfileForm(UserForm):
                                          'autofocus': 'autofocus',
                                      }))
     last_name = forms.CharField(max_length=30,
-                                required=False,
                                 label="Last Name",
                                 widget=forms.TextInput(
                                     attrs={
@@ -182,7 +180,6 @@ class ProfileForm(UserForm):
                                    # choices=GENDER_OPTIONS
                                ))
     birthday = forms.DateField(label='Birthday',
-                               required=False,
                                widget=DatePickerInput(
                                    options={
                                        'format': "DD/MM/YYYY",
@@ -194,7 +191,6 @@ class ProfileForm(UserForm):
                                    }
                                ))
     phone_number = forms.CharField(max_length=13,
-                                   required=False,
                                    label="Phone No.",
                                    widget=forms.TextInput(
                                        attrs={
@@ -204,12 +200,21 @@ class ProfileForm(UserForm):
                                        }
                                    ))
 
-    # def __init__(self, user, *args, **kwargs):
-    #     self.user = user
-    #     # kwargs['instance'] = user
-    #     # signup_kwargs = kwargs
-    #     # signup_kwargs.pop('instance')
-    #     super(UserForm, self).__init__(*args, **kwargs)
+    def __init__(self, user, *args, **kwargs):
+        # self.user = user
+        # kwargs['instance'] = user
+        # signup_kwargs = kwargs
+        # signup_kwargs.pop('instance')
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].required = False
+        self.fields['birthday'].required = False
+        self.fields['phone_number'].required = False
+        required_fields = [field_name for field_name, field in self.fields.items() if field.required]
+        for field in self.fields.keys():
+            if field in required_fields:
+                variable_name = '%s_REQUIRED_ERROR' % field.upper()
+                if hasattr(validators, variable_name):
+                    self.fields[field].error_messages['required'] = getattr(validators, variable_name)
 
     class Meta:
         model = User
