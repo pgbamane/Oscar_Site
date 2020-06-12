@@ -253,3 +253,11 @@ class ProfileForm(UserForm):
             )
         )
         return helper
+
+    def clean_email(self):
+        cleaned_email = super(ProfileForm, self).clean_email()
+        domain = cleaned_email.split('@')[1]
+        domain_list = ["gmail.com", "yahoo.com", ]
+        if domain not in domain_list:
+            raise ValidationError(validators.EMAIL_INVALID_DOMAIN_ERROR)
+        return cleaned_email
