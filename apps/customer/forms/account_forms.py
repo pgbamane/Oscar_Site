@@ -201,11 +201,7 @@ class ProfileForm(UserForm):
                                    ))
 
     def __init__(self, user, *args, **kwargs):
-        self.user = user
-        # kwargs['instance'] = user
-        # signup_kwargs = kwargs
-        # signup_kwargs.pop('instance')
-        super(UserForm, self).__init__(*args, **kwargs)
+        super(ProfileForm, self).__init__(user, *args, **kwargs)
         self.fields['gender'].required = False
         self.fields['birthday'].required = False
         self.fields['phone_number'].required = False
