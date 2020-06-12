@@ -201,7 +201,7 @@ class ProfileForm(UserForm):
                                    ))
 
     def __init__(self, user, *args, **kwargs):
-        # self.user = user
+        self.user = user
         # kwargs['instance'] = user
         # signup_kwargs = kwargs
         # signup_kwargs.pop('instance')
