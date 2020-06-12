@@ -341,7 +341,7 @@ class ProfileFormTests(TestCase):
     def test_form_last_name_not_required(self):
         last_name_required = self.profile_form.fields['last_name'].required
         print("\n Last name required:", last_name_required)
-        self.assertFalse(last_name_required)
+        self.assertTrue(last_name_required)
 
     def test_form_gender_initial_female(self):
         gender_initial = self.profile_form.fields['gender'].initial
