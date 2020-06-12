@@ -346,7 +346,7 @@ class ProfileFormTests(TestCase):
     def test_form_gender_initial_female(self):
         gender_initial = self.profile_form.fields['gender'].initial
         print("Gender Initial:", gender_initial)
-        self.assertEqual(gender_initial, 'female')
+        self.assertEqual(gender_initial, 'Female')
 
     def test_form_birthday_placeholder(self):
         birthday_placeholder = self.profile_form.fields['birthday'].widget.attrs['placeholder']
