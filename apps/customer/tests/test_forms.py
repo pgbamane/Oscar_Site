@@ -400,3 +400,11 @@ class ProfileFormTests(TestCase):
         self.assertFalse(form.is_valid())
         print("Form email errors: ", form.errors['email'])
         self.assertEqual(form.errors['email'], [validators.EMAIL_INVALID_DOMAIN_ERROR])
+
+    def test_form_email_already_taken(self):
+        User.objects.create_user(first_name='Pooja',
+                                 email="pradnyabamane@gmail.com")
+        form = ProfileForm(user=self.user, data={'email': "pradnyabamane@gmail.com"})
+        self.assertFalse(form.is_valid())
+        print("Form email errors: ", form.errors['email'])
+        self.assertEqual(form.errors['email'], [validators.USERFORM_EMAIL_EXISTS_ERROR])
