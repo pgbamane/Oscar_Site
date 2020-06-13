@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse_lazy
 from apps.customer.forms.account_forms import SignupForm, ProfileForm
 from oscar.core.compat import (get_user_model)
+from Oscar_Site.utils import ajax_response_form
 
 User = get_user_model()
 
@@ -88,10 +89,12 @@ class ProfileUpdateView(CoreProfileUpdateView):
 
     @json_view
     def form_invalid(self, form):
-        # resp = {}
+        resp = {}
         # RequestContext ensures CSRF token is placed in newly rendered form_html
         csrf_context = {}
         csrf_context.update(csrf(self.request))
         profile_form_html = render_crispy_form(form, context=csrf_context)
-        # resp['form'] = profile_form_html
-        return {'form': profile_form_html}
+        resp['form'] = ajax_response_form(form)
+        resp['html'] = profile_form_html
+        # return {'form': form, 'html': profile_form_html}
+        return resp
