@@ -265,6 +265,10 @@ class ProfileUpdateViewTests(test.TestCase):
             self.assertFalse(form[field].value())
 
     def test_ajax_post_invalid_details(self):
+        """
+        tests ProfileUpdate with form fields empty values
+        :return:
+        """
         self.client.login(email='manu@gmail.com', password='manu1234')
         form_data = {
             'first_name': '',
@@ -298,6 +302,10 @@ class ProfileUpdateViewTests(test.TestCase):
          field not in required_fields]
 
     def test_ajax_post_update_details(self):
+        """
+        check whether the user is updating with new details
+        :return:
+        """
         self.client.login(email='manu@gmail.com', password='manu1234')
         form_data = {
             'first_name': 'Sonali',
@@ -331,6 +339,10 @@ class ProfileUpdateViewTests(test.TestCase):
         # self.email address exist table EmailAddress
 
     def test_ajax_post_email_already_exist_error(self):
+        """
+        test whether duplicate emails can exist in User model
+        :return:
+        """
         user = User.objects.create_user(first_name="Pradnya",
                                         email="sai@gmail.com")
         self.client.login(email='manu@gmail.com', password='manu1234')
