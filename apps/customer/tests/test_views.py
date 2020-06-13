@@ -226,8 +226,10 @@ class SocialAccountSignupViewTests(OAuth2TestsMixin, test.TestCase):
     # sociallogin = response.context['form']
 
 
-class ProfileUpdateView(test.TestCase):
+class ProfileUpdateViewTests(test.TestCase):
+    @classmethod
     def setUpTestData(cls):
+        super(ProfileUpdateViewTests, cls).setUpTestData()
         cls.user = User.objects.create_user(first_name='manu',
                                             email='manu@gmail.com', password='manu1234')
 
@@ -263,3 +265,34 @@ class ProfileUpdateView(test.TestCase):
             self.assertFalse(form[field].value())
 
     def test_ajax_post_invalid_details(self):
+        self.client.login(email='manu@gmail.com', password='manu1234')
+        form_data = {
+            'first_name': '',
+            'last_name': '',
+            'gender': '',
+            'birthday': '',
+            'phone_number': '',
+            'email': ''
+        }
+        form = ProfileForm(user=self.user, data=form_data)
+        response = self.client.post(reverse('customer:profile-update'),
+                                    data=form_data,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'application/json')
+        data = response.json()
+        self.assertIn('form', data)
+        # self.assertIsInstance(data['form'], ProfileForm)
+        self.assertIn('html', data)
+        # self.assert Render ProfileUpdate Template with error form context
+        context_form = 'form'
+
+        required_fields = [field_name for field_name, field in form.fields.items() if field.required]
+        # required_fields = [field_name for field_name, field in form.fields.items() if getattr(field, 'required', False)]
+        for field_name in required_fields:
+            variable_name = '%s_REQUIRED_ERROR' % field_name.upper()
+            if hasattr(validators, variable_name):
+                self.assertFormError(response, context_form, field_name, [getattr(validators, variable_name)])
+
+        [self.assertFormError(response, context_form, field, []) for field in form.fields.keys() if
+         field not in required_fields]
