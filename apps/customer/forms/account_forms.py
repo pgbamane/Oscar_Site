@@ -202,6 +202,7 @@ class ProfileForm(UserForm):
 
     def __init__(self, user, *args, **kwargs):
         super(ProfileForm, self).__init__(user, *args, **kwargs)
+        self.fields['email'].widget.attrs['placeholder'] = "Enter Email Address"
         self.fields['gender'].required = False
         self.fields['birthday'].required = False
         self.fields['phone_number'].required = False
@@ -231,7 +232,7 @@ class ProfileForm(UserForm):
         helper = FormHelper()
         helper.form_id = 'id-Profile-Update-Form'
         helper.form_method = 'POST'
-        # helper.form_action = reverse('customer:profile-update')
+        helper.form_action = reverse('customer:profile-update')
         helper.layout = Layout(
             Row(
                 Column('first_name', css_class="form-group col-sm-5 mb-0"),
