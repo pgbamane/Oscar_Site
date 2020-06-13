@@ -6,10 +6,16 @@ from oscar.apps.customer.views import ProfileUpdateView as CoreProfileUpdateView
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse_lazy
 from apps.customer.forms.account_forms import SignupForm, ProfileForm
-from oscar.core.compat import (get_user_model)
+from oscar.core.compat import (get_user_model, get_model)
 from Oscar_Site.utils import ajax_response_form
+from django.contrib.sites.shortcuts import get_current_site
+from oscar.apps.customer.utils import get_password_reset_url
+from django.contrib import messages
+from oscar.core.loading import get_class
 
 User = get_user_model()
+Dispatcher = get_class('customer.utils', 'Dispatcher')
+CommunicationEventType = get_model('customer', 'CommunicationEventType')
 
 SIGNUP_PAGE_MESSAGE = "Signup here"
 
@@ -98,3 +104,36 @@ class ProfileUpdateView(CoreProfileUpdateView):
         resp['html'] = profile_form_html
         # return {'form': form, 'html': profile_form_html}
         return resp
+
+    @json_view
+    def form_valid(self, form):
+        # Grab current user instance before we save form.  We may need this to
+        # send a warning email if the email address is changed.
+        try:
+            old_user = User.objects.get(id=self.request.user.id)
+        except User.DoesNotExist:
+            old_user = None
+
+        form.save()
+
+        # We have to look up the email address from the form's
+        # cleaned data because the object created by form.save() can
+        # either be a user or profile instance depending whether a profile
+        # class has been specified by the AUTH_PROFILE_MODULE setting.
+        new_email = form.cleaned_data.get('email')
+        if new_email and old_user and new_email != old_user.email:
+            # Email address has changed - send a confirmation email to the old
+            # address including a password reset link in case this is a
+            # suspicious change.
+            ctx = {
+                'user': self.request.user,
+                'site': get_current_site(self.request),
+                'reset_url': get_password_reset_url(old_user),
+                'new_email': new_email,
+            }
+            msgs = CommunicationEventType.objects.get_and_render(
+                code=self.communication_type_code, context=ctx)
+            Dispatcher().dispatch_user_messages(old_user, msgs)
+
+        messages.success(self.request, _("Profile updated"))
+        return {'form': ajax_response_form(form), 'location': self.get_success_url()}
