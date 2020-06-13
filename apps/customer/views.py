@@ -96,6 +96,7 @@ class ProfileUpdateView(CoreProfileUpdateView):
     @json_view
     def form_invalid(self, form):
         resp = {}
+        resp['success'] = False
         # RequestContext ensures CSRF token is placed in newly rendered form_html
         csrf_context = {}
         csrf_context.update(csrf(self.request))
@@ -136,4 +137,4 @@ class ProfileUpdateView(CoreProfileUpdateView):
             Dispatcher().dispatch_user_messages(old_user, msgs)
 
         messages.success(self.request, _("Profile updated"))
-        return {'form': ajax_response_form(form), 'location': self.get_success_url()}
+        return {'success': True, 'form': ajax_response_form(form), 'location': self.get_success_url()}
