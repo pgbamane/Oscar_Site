@@ -296,3 +296,36 @@ class ProfileUpdateViewTests(test.TestCase):
 
         [self.assertFormError(response, context_form, field, []) for field in form.fields.keys() if
          field not in required_fields]
+
+    def test_ajax_post_update_details(self):
+        self.client.login(email='manu@gmail.com', password='manu1234')
+        form_data = {
+            'first_name': 'Sonali',
+            'last_name': 'Bhende',
+            'gender': '',
+            'birthday': '',
+            'phone_number': '',
+            'email': 'sonali@gmail.com'
+        }
+        form = ProfileForm(user=self.user, data=form_data)
+        response = self.client.post(reverse('customer:profile-update'),
+                                    data=form_data,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'application/json')
+        # self.assertRedirects(response, reverse('customer:profile-view'))
+        data = response.json()
+        self.assertIn('form', data)
+        self.assertIn('location', data)
+        form = data['form']
+        location = data['location']
+        self.assertEqual(location, reverse('customer:profile-view'))
+        # check the same user updated with
+        new_user = User.objects.get(email=form_data['email'])
+        self.assertEqual(self.user.id, new_user.id)
+        # This fails bcz still self.user has in memory data i.e. old data in setUpTestData
+        # self.assertEqual(self.user.first_name, form_data['first_name'])
+        self.assertEqual(new_user.last_name, form_data['last_name'])
+        self.assertFalse(new_user.gender)
+        self.assertEqual(new_user.email, form_data['email'])
+#         self.email address exist table EmailAddress
