@@ -227,7 +227,12 @@ class SocialAccountSignupViewTests(OAuth2TestsMixin, test.TestCase):
 
 
 class ProfileUpdateView(test.TestCase):
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(first_name='manu',
+                                            email='manu@gmail.com', password='manu1234')
+
     def setUp(self):
+        self.user.refresh_from_db()
         self.client = Client()
 
     def test_get_request_page_redirects_login(self):
@@ -245,8 +250,6 @@ class ProfileUpdateView(test.TestCase):
         """
         checks whether Form display initial User's details
         """
-        user = User.objects.create_user(first_name='manu',
-                                        email='manu@gmail.com', password='manu1234')
         self.client.login(email='manu@gmail.com', password='manu1234')
         response = self.client.get(reverse('customer:profile-update'))
         self.assertEqual(response.status_code, 200)
@@ -258,3 +261,5 @@ class ProfileUpdateView(test.TestCase):
         fields = [field for field in form.fields if field not in ['first_name', 'email']]
         for field in fields:
             self.assertFalse(form[field].value())
+
+    def test_ajax_post_invalid_details(self):
