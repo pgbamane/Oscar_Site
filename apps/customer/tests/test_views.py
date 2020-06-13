@@ -10,7 +10,7 @@ from oscar.core.compat import get_user_model
 from django.test import Client, RequestFactory
 from django.urls import reverse
 from .. import validators
-from apps.customer.forms.account_forms import SignupForm, BIRTHDAY_FORMAT
+from apps.customer.forms.account_forms import SignupForm, BIRTHDAY_FORMAT, ProfileForm
 from apps.customer.forms.socialaccount_forms import SignupForm as SocialAccountSignupForm
 from ..views import SIGNUP_PAGE_MESSAGE
 from apps.users.models import FEMALE, MALE
@@ -224,3 +224,37 @@ class SocialAccountSignupViewTests(OAuth2TestsMixin, test.TestCase):
     # response_form = response.context['form']
     # self.assertTrue(isinstance(response_form, SocialAccountSignupForm))
     # sociallogin = response.context['form']
+
+
+class ProfileUpdateView(test.TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_get_request_page_redirects_login(self):
+        """
+        Checks whether if user not already logged in , the profile-update page redirects to account_login or not
+        :return:
+        """
+        response = self.client.get(reverse('customer:profile-update'))
+        self.assertEqual(response.status_code, 302)
+        expecting_url = "{}?next={}".format(reverse('account_login'), reverse('customer:profile-update'))
+        # print(expecting_url)
+        self.assertRedirects(response, expecting_url)
+
+    def test_get_request_with_logged_in_user(self):
+        """
+        checks whether Form display initial User's details
+        """
+        user = User.objects.create_user(first_name='manu',
+                                        email='manu@gmail.com', password='manu1234')
+        self.client.login(email='manu@gmail.com', password='manu1234')
+        response = self.client.get(reverse('customer:profile-update'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customer/profile/profile_form.html')
+        form = response.context['form']
+        self.assertIsInstance(form, ProfileForm)
+        self.assertEqual(form['first_name'].value(), 'manu')
+        self.assertEqual(form['email'].value(), 'manu@gmail.com')
+        fields = [field for field in form.fields if field not in ['first_name', 'email']]
+        for field in fields:
+            self.assertFalse(form[field].value())
