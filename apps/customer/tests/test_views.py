@@ -328,4 +328,28 @@ class ProfileUpdateViewTests(test.TestCase):
         self.assertEqual(new_user.last_name, form_data['last_name'])
         self.assertFalse(new_user.gender)
         self.assertEqual(new_user.email, form_data['email'])
-#         self.email address exist table EmailAddress
+        # self.email address exist table EmailAddress
+
+    def test_ajax_post_email_already_exist_error(self):
+        user = User.objects.create_user(first_name="Pradnya",
+                                        email="sai@gmail.com")
+        self.client.login(email='manu@gmail.com', password='manu1234')
+        form_data = {
+            'first_name': 'Manu',
+            'last_name': 'Bhende',
+            'email': 'sai@gmail.com'
+        }
+        form = ProfileForm(user=self.user, data=form_data)
+        response = self.client.post(reverse('customer:profile-update'),
+                                    data=form_data,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['content-type'], 'application/json')
+        # self.assertRedirects(response, reverse('customer:profile-view'))
+        data = response.json()
+        self.assertIn('form', data)
+        self.assertNotIn('location', data)
+        self.assertIn('html', data)
+        form = data['form']
+        # check the response form email error
+        self.assertFormError(response, 'form', 'email', [validators.USERFORM_EMAIL_EXISTS_ERROR])
