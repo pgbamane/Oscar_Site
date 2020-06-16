@@ -6,15 +6,17 @@ from oscar.apps.catalogue.abstract_models import AbstractProduct
 from django.utils.functional import cached_property
 from oscar.core.loading import get_model
 
-WEIGHT_UNIT_CHOICES = (
-    ('kilogram', 'Kg'),
-    ('litre', 'Ltr'),
-    ('millilitre', 'ML')
-    # ('none', None),
-)
-
 
 class Product(AbstractProduct):
+    KILOGRAM, GRAM, LITRE, MILLILITRE = 'Kg', 'g', 'Ltr', 'ML'
+    WEIGHT_UNIT_CHOICES = (
+        (KILOGRAM, 'Kg'),
+        (GRAM, 'g'),
+        (LITRE, 'Ltr'),
+        (MILLILITRE, 'ML')
+        # ('none', None),
+    )
+
     # id = models.AutoField(primary_key=True, )
     # product_name = models.CharField(max_length=50, default='')
 
@@ -33,7 +35,8 @@ class Product(AbstractProduct):
                                        'Unit used to measure Weight. Ex. Kilogram used to measure quanitity of Pulses. '
                                        'Optional for child product. For parent specify it.'))
 
-    weight = models.IntegerField(help_text=_('Total weight of this Product Purchase'), null=True, blank=True)
+    weight = models.IntegerField(help_text=_('Total weight of this Product Purchase. Empty for Parent'), null=True,
+                                 blank=True)
     # total_price = models.FloatField(help_text=_('Total price of this Product Purchase'), null=True, blank=True)
 
     # is_active = models.BooleanField(default=True,
@@ -102,11 +105,15 @@ class Product(AbstractProduct):
         """
         StockRecord = get_model('partner', 'StockRecord')
         if self.is_parent:
-            child_product = self.child_products()[0]
-            stock_record = StockRecord.objects.filter(product=child_product)[0]
+            # child_product = self.child_products()[0]
+            child_records = StockRecord.objects.filter(product__in=self.child_products())
         else:
-            stock_record = StockRecord.objects.filter(product=self)[0]
-        return stock_record.price_currency
+            child_records = StockRecord.objects.filter(product=self)
+        if child_records.exists():
+            stock_record = child_records[0]
+            return stock_record.price_currency
+        else:
+            return 'INR'
 
 
 from oscar.apps.catalogue.models import *
