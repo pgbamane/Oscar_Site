@@ -37,14 +37,11 @@ class Product(AbstractProduct):
 
     weight = models.IntegerField(help_text=_('Total weight of this Product Purchase. Empty for Parent'), null=True,
                                  blank=True)
-    # total_price = models.FloatField(help_text=_('Total price of this Product Purchase'), null=True, blank=True)
-
-    # is_active = models.BooleanField(default=True,
-    #                                 help_text=_("Is it ready to sale or not ?."))
-    tag = models.CharField(max_length=100,
-                           default='',
-                           blank=True,
-                           help_text=_('Specify tag for child product only. Ex. Certified Organic'))
+    certified = models.BooleanField(_('Is Certified Organic'),
+                                    default=False,
+                                    help_text=_(
+                                        "This flag indicates if this product is certified organic or not. "
+                                        "Specify for only child product."))
 
     # objects = MyProductManager()
     # browsable = MyBrowsableProductManager()
