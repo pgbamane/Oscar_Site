@@ -22,7 +22,15 @@ class TestDefaultStrategy(TestCase):
         self.strategy = strategy.Default()
 
     def test_no_stockrecords_for_parent(self):
-        ""
+        """
+        test parent product which has not stockrecords
+        :return:
+        """
+        info = self.strategy.fetch_for_parent(self.parent_product)
+        self.assertFalse(info.availability.is_available_to_buy)
+        self.assertIsNone(info.stockrecord)
+        self.assertIsNone(info.pricing_strategy)
+        self.assertIsNone(info.weight)
 
     def test_no_stockrecords_for_child(self):
         """
