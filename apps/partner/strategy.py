@@ -23,7 +23,7 @@ class Structured(CoreStructured):
 
     def fetch_weight_for_parent(self, product):
         children_stock = self.select_children_stockrecords(product)
-        if children_stock:
+        if children_stock and children_stock[0][1]:
             # first variant weight is the parent weight
             first_child = children_stock[0][0]
             parent_weight_with_unit = "{} {}".format(first_child.weight, first_child.weight_unit)
