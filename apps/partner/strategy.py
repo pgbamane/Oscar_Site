@@ -42,8 +42,11 @@ class Structured(CoreStructured):
         # select child stock records for parent product() its a tuple of product and stockrecord
         children_stock = self.select_children_stockrecords(product)
         #         select first child stock record pricing strategy as prices and availability are also of first child
-        pricing_strategy = children_stock[0][1].pricing_strategy
-        return pricing_strategy
+        if children_stock:
+            pricing_strategy = (children_stock[0][1].pricing_strategy if children_stock[0][1] else None)
+            return pricing_strategy
+
+        return None
 
 
 # class NoTax(CoreNoTax):
