@@ -17,15 +17,18 @@ class Structured(CoreStructured):
             availability=purchase_info.availability,
             stockrecord=purchase_info.stockrecord,
             pricing_strategy=pricing_strategy,
+            # weight is determined from product.weight property of child product
             weight=None,
         )
 
     def fetch_weight_for_parent(self, product):
         children_stock = self.select_children_stockrecords(product)
-        # first variant weight is the parent weight
-        first_child = children_stock[0][0]
-        parent_weight_with_unit = "{} {}".format(first_child.weight, first_child.weight_unit)
-        return parent_weight_with_unit
+        if children_stock:
+            # first variant weight is the parent weight
+            first_child = children_stock[0][0]
+            parent_weight_with_unit = "{} {}".format(first_child.weight, first_child.weight_unit)
+            return parent_weight_with_unit
+        return None
 
     def fetch_for_parent(self, product):
         purchase_info = super(Structured, self).fetch_for_parent(product)
@@ -45,7 +48,6 @@ class Structured(CoreStructured):
         if children_stock:
             pricing_strategy = (children_stock[0][1].pricing_strategy if children_stock[0][1] else None)
             return pricing_strategy
-
         return None
 
 
